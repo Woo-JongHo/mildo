@@ -10,3 +10,7 @@
 - Spring Boot DevTools
 - Spring Boot Starter Test
 - MyBatis Spring Boot Starter Test
+
+
+# ERD 
+![image](https://github.com/user-attachments/assets/df030931-b491-4870-8774-3af445b75081)
