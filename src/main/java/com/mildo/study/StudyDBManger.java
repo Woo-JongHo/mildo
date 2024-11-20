@@ -1,4 +1,4 @@
-package com.example.mildo.study;
+package com.mildo.study;
 
 public class StudyDBManger {
 }

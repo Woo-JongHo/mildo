@@ -1,4 +1,4 @@
-package com.example.mildo.db;
+package com.mildo.db;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;

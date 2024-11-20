@@ -1,4 +1,4 @@
-package com.example.mildo.code;
+package com.mildo.code;
 
 public class CodeController {
 }

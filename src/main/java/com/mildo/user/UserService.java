@@ -1,4 +1,4 @@
-package com.example.mildo.user;
+package com.mildo.user;
 
 public class UserService {
 }
