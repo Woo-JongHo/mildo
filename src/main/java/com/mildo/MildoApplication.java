@@ -1,4 +1,4 @@
-package com.example.mildo;
+package com.mildo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
