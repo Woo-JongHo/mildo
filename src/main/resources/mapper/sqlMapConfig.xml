@@ -4,14 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <properties resource="com/example/podofarm/db/db.properties"></properties>
+    <properties resource="com/mildo/db/db.properties"></properties>
 
     <typeAliases>
 
         <!-- 우종호 -->
-        <typeAlias type="com.example.mildo.user.UserVO" alias="userVO"/>
-        <typeAlias type="com.example.mildo.study.StudyVO" alias="studyVO"/>
-        <typeAlias type="com.example.mildo.code.CodeVO" alias="codeVO"/>
+        <typeAlias type="com.mildo.user.UserVO" alias="userVO"/>
+        <typeAlias type="com.mildo.study.StudyVO" alias="studyVO"/>
+        <typeAlias type="com.mildo.code.CodeVO" alias="codeVO"/>
 
     </typeAliases>
 
@@ -28,9 +28,9 @@
 
     </environments>
     <mappers>
-        <mapper resource="com/example/mildo/mapper/userMapper.xml" />
-        <mapper resource="com/example/mildo/mapper/codeMapper.xml" />
-        <mapper resource="com/example/mildo/mapper/studyMapper.xml" />
+        <mapper resource="resources/mapper/UserMapper.xml" />
+        <mapper resource="resources/mapper/codeMapper.xml" />
+        <mapper resource="resources/mapper/studyMapper.xml" />
 
     </mappers>
 </configuration>
