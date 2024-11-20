@@ -28,7 +28,7 @@
 
     </environments>
     <mappers>
-        <mapper resource="resources/mapper/UserMapper.xml" />
+        <mapper resource="resources/mapper/userMapper.xml" />
         <mapper resource="resources/mapper/codeMapper.xml" />
         <mapper resource="resources/mapper/studyMapper.xml" />
 
