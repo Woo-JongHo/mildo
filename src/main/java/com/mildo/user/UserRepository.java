@@ -1,4 +1,5 @@
 package com.mildo.user;
 
-public class UserRepository {
+public interface UserRepository {
+    void signup(UserVO dummyUser);
 }
