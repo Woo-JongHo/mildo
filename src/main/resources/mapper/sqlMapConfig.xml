@@ -3,11 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
-    <properties resource="com/mildo/db/db.properties"></properties>
+    <properties resource="db.properties"/>
 
     <typeAliases>
-
         <!-- 우종호 -->
         <typeAlias type="com.mildo.user.UserVO" alias="userVO"/>
         <typeAlias type="com.mildo.study.StudyVO" alias="studyVO"/>
@@ -17,20 +15,19 @@
 
     <environments default="development">
         <environment id="development">
-            <transactionManager type="JDBC" />
+            <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="${driver}" />
-                <property name="url" value="${url}" />
-                <property name="username" value="${username}" />
-                <property name="password" value="${password}" />
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
 
     </environments>
     <mappers>
-        <mapper resource="resources/mapper/userMapper.xml" />
-        <mapper resource="resources/mapper/codeMapper.xml" />
-        <mapper resource="resources/mapper/studyMapper.xml" />
-
+        <mapper resource="mapper/userMapper.xml"/>
+        <mapper resource="mapper/codeMapper.xml"/>
+        <mapper resource="mapper/studyMapper.xml"/>
     </mappers>
 </configuration>
