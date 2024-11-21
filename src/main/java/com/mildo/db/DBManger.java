@@ -12,7 +12,7 @@ public class DBManger {
 
     static {
         try {
-            String resource = "com/example/podofarm/mapper/sqlMapConfig.xml";
+            String resource = "resources/mapper/sqlMapConfig.xml";
             InputStream inputStream = Resources.getResourceAsStream(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             inputStream.close();
