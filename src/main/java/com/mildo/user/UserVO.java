@@ -16,9 +16,9 @@ public class UserVO {
 
     public UserVO(){}
 
-    public UserVO(String userId, int userNumber, String userName, String userGoogleId, String userEmail, String userParticipant, String userLeader, int userSolvedProblem) {
+    public UserVO(String userId, String userName, String userGoogleId, String userEmail, String userParticipant, String userLeader, int userSolvedProblem) {
         this.userId = userId;
-        this.userNumber = userNumber;
+        this.userNumber = 0;        // 시퀀스로 값 변경될 예정
         this.userName = userName;
         this.userGoogleId = userGoogleId;
         this.userEmail = userEmail;
