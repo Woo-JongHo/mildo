@@ -9,16 +9,12 @@ import com.mildo.db.DBManger;
 public class StudyDBManger extends DBManger {
 
     public static int create(StudyVO s) {
-        log.info("StudyDBManger: study create {}", s);
         int re = -1;
-        if (sqlSessionFactory == null) {
-            log.error("StudyDBManger: session is null");
-        } else {
-            SqlSession session = sqlSessionFactory.openSession();
-            re = session.insert("Study.create", s);
-            session.commit();
-            session.close();
-        }
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.insert("Study.create", s);
+        session.commit();
+        session.close();
+
         return re;
     }
 }
