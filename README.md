@@ -15,6 +15,9 @@
 # ERD 
 ![image](https://github.com/user-attachments/assets/df030931-b491-4870-8774-3af445b75081)
 
+
+![image](https://github.com/user-attachments/assets/c250ccfa-1a52-4024-ab2b-b3913a1c4826)
+
 # 밀도 커밋 컨벤션
 1. 제목과 본문을 한 줄 띄워 분리하기
 
