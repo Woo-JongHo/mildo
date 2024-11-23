@@ -6,6 +6,7 @@ import lombok.Data;
 public class UserVO {
 
     private String userId;              // 회원 아이디 ex) #G090
+    private int studyId;                // 스터디 아이디
     private int userNumber;             // 사용자 번호
     private String userName;            // 사용자 이름
     private String userGoogleId;        // 구글 아이디
@@ -16,14 +17,5 @@ public class UserVO {
 
     public UserVO(){}
 
-    public UserVO(String userId, String userName, String userGoogleId, String userEmail, String userParticipant, String userLeader, int userSolvedProblem) {
-        this.userId = userId;
-        this.userNumber = 0;        // 시퀀스로 값 변경될 예정
-        this.userName = userName;
-        this.userGoogleId = userGoogleId;
-        this.userEmail = userEmail;
-        this.userParticipant = userParticipant;
-        this.userLeader = userLeader;
-        this.userSolvedProblem = userSolvedProblem;
-    }
+
 }
