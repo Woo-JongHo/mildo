@@ -4,16 +4,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="User">
-    <insert id="signup" parameterType="userVO">
+<!--    <insert id="signup" parameterType="userVO">-->
+<!--        INSERT INTO USERS(user_id,-->
+<!--                          user_number,-->
+<!--                          user_name,-->
+<!--                          user_googleid,-->
+<!--                          user_email,-->
+<!--                          user_participant,-->
+<!--                          user_leader,-->
+<!--                          user_solved_problem)-->
+<!--        VALUES (#{userId},nextval('user_number_seq'), #{userName}, #{userGoogleId}, #{userEmail}, #{userParticipant}, #{userLeader}, #{userSolvedProblem})-->
+<!--    </insert>-->
+
+<!--    <insert id="signup" parameterType="userVO">-->
+<!--        INSERT INTO USERS(user_id,-->
+<!--                          user_name,-->
+<!--                          user_googleid,-->
+<!--                          user_email,-->
+<!--                          user_solvedproblem)-->
+<!--        VALUES (#{userId}, #{userName}, #{userGoogleId}, #{userEmail}, #{userSolvedProblem})-->
+<!--    </insert>-->
+
+    <resultMap id="userResultMap" type="userVO">
+        <result property="userId" column="user_id" />
+        <result property="studyId" column="study_id" />
+        <result property="userNumber" column="user_number" />
+        <result property="userName" column="user_name" />
+        <result property="userGoogleId" column="user_googleid" />
+        <result property="userEmail" column="user_email" />
+        <result property="userSolvedProblem" column="user_solvedproblem" />
+        <result property="userParticipant" column="user_isparticipant" />
+        <result property="userLeader" column="user_leader" />
+    </resultMap>
+
+    <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
+        SELECT * FROM USERS
+        WHERE user_googleid = #{number}
+    </select>
+
+    <insert id="save" parameterType="userVO">
         INSERT INTO USERS(user_id,
-                          user_number,
                           user_name,
                           user_googleid,
-                          user_email,
-                          user_participant,
-                          user_leader,
-                          user_solved_problem)
-        VALUES (#{userId},nextval('user_number_seq'), #{userName}, #{userGoogleId}, #{userEmail}, #{userParticipant}, #{userLeader}, #{userSolvedProblem})
+                          user_email
+                          )
+        VALUES (#{userId}, #{userName}, #{userGoogleId}, #{userEmail})
     </insert>
 
 </mapper>

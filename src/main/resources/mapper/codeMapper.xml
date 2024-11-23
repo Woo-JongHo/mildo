@@ -4,7 +4,16 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="code">
-
+    <insert id="dummyCode" parameterType="CodeVo">
+        INSERT INTO CODE (
+        user_id,
+        study_id,
+        code_title,
+        code_level,
+        code_problemid
+        )
+        VALUES (#{userId}, 1, 'code_title', 'code_level', 1)
+    </insert>
 
 
 </mapper>
