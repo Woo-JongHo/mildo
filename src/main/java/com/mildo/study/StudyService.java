@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -34,4 +35,13 @@ public class StudyService {
 
         studyRepository.create(newStudy);
     }
+
+    public List<StudyVO> studyList(String studyCode){
+        return studyRepository.studyList(studyCode);
+    }
+
+    public int totalMembers(String studyCode){
+        return studyRepository.totalMembers(studyCode);
+    }
+
 }
