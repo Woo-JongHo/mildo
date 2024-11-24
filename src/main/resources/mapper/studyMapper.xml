@@ -4,18 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Study">
-<!--    <insert id="create" parameterType="studyVO">-->
-<!--        INSERT INTO STUDY (-->
-<!--                           study_id,-->
-<!--                           user_id,-->
-<!--                           study_code,-->
-<!--                           study_name,-->
-<!--                           study_password,-->
-<!--                           study_start,-->
-<!--                           study_end)-->
-<!--        VALUES (nextval('user_number_seq'), #{userId}, #{studyCode}, #{studyName}, #{studyPassword}, #{studyStart},-->
-<!--                #{studyEnd})-->
-<!--    </insert>-->
+
+    <resultMap id="studyResultMap" type="studyVO">
+        <result property="studyId" column="study_id" />
+        <result property="userId" column="user_id" />
+        <result property="studyCode" column="study_code" />
+        <result property="studyName" column="study_name" />
+        <result property="studyPassword" column="study_password" />
+        <result property="studyStart" column="study_start" />
+        <result property="studyEnd" column="study_end" />
+    </resultMap>
+
     <insert id="create" parameterType="studyVO">
         INSERT INTO STUDY (
             study_code,
@@ -25,4 +24,17 @@
             study_end)
         VALUES (#{studyCode}, #{studyName}, #{studyPassword}, #{studyStart}, #{studyEnd})
     </insert>
+
+    <select id="studyList" resultMap="studyResultMap">
+        select *
+          from STUDY
+         where study_code = #{stduyCode}
+    </select>
+
+    <select id="totalMembers" resultType="_int">
+        SELECT COUNT(*)
+        FROM STUDY
+        WHERE study_code = #{stduyCode}
+    </select>
+
 </mapper>
