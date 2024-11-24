@@ -13,4 +13,10 @@ public class HomeController {
         log.info("aaaaaaaaaaaaaaa");
         return "index";
     }
+
+    @GetMapping("/google-logout")
+    public String googleLogout() {
+        // Google 로그아웃 URL로 리다이렉트
+        return "redirect:https://accounts.google.com/logout";
+    }
 }

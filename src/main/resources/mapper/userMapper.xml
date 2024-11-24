@@ -4,26 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="User">
-<!--    <insert id="signup" parameterType="userVO">-->
-<!--        INSERT INTO USERS(user_id,-->
-<!--                          user_number,-->
-<!--                          user_name,-->
-<!--                          user_googleid,-->
-<!--                          user_email,-->
-<!--                          user_participant,-->
-<!--                          user_leader,-->
-<!--                          user_solved_problem)-->
-<!--        VALUES (#{userId},nextval('user_number_seq'), #{userName}, #{userGoogleId}, #{userEmail}, #{userParticipant}, #{userLeader}, #{userSolvedProblem})-->
-<!--    </insert>-->
-
-<!--    <insert id="signup" parameterType="userVO">-->
-<!--        INSERT INTO USERS(user_id,-->
-<!--                          user_name,-->
-<!--                          user_googleid,-->
-<!--                          user_email,-->
-<!--                          user_solvedproblem)-->
-<!--        VALUES (#{userId}, #{userName}, #{userGoogleId}, #{userEmail}, #{userSolvedProblem})-->
-<!--    </insert>-->
 
     <resultMap id="userResultMap" type="userVO">
         <result property="userId" column="user_id" />
@@ -35,6 +15,18 @@
         <result property="userSolvedProblem" column="user_solvedproblem" />
         <result property="userParticipant" column="user_isparticipant" />
         <result property="userLeader" column="user_leader" />
+    </resultMap>
+
+    <resultMap id="userResultMap2" type="LevelCountDTO">
+        <result property="codeLevel" column="code_level" />
+        <result property="solvedCount" column="solved_count" />
+    </resultMap>
+
+    <resultMap id="codeResult" type="codeVO">
+        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeTitle" column="code_title" />
+        <result property="codeLevel" column="code_level" />
+        <result property="codeSolvedTime" column="code_solvedtime" />
     </resultMap>
 
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
@@ -50,5 +42,31 @@
                           )
         VALUES (#{userId}, #{userName}, #{userGoogleId}, #{userEmail})
     </insert>
+
+    <select id="finduserId" parameterType="java.lang.String" resultMap="userResultMap">
+        SELECT *
+            FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="userResultMap2">
+        SELECT c.code_level, COUNT(*) AS solved_count
+        FROM USERS u JOIN CODE c ON (u.user_id = c.user_id)
+        WHERE u.user_id = #{userId}
+        GROUP BY c.code_level
+        ORDER BY c.code_level
+    </select>
+
+    <select id="totalSolved" resultType="_int">
+        SELECT user_solvedproblem
+          FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="solvedList" resultMap="codeResult">
+        SELECT code_solvedate, code_title, code_level,code_solvedtime
+        FROM code
+        where user_id = #{userId};
+    </select>
 
 </mapper>
