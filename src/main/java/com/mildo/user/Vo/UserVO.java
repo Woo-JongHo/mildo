@@ -1,4 +1,4 @@
-package com.mildo.user;
+package com.mildo.user.Vo;
 
 import lombok.Data;
 

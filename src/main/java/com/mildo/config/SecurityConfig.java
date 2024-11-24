@@ -12,14 +12,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/google-login", "/google-login2").permitAll()
-//                        .requestMatchers("/", "/**").permitAll()
+//                        .requestMatchers("/", "/login", "/google-login", "/google-login2").permitAll()
+                        .requestMatchers("/", "/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
@@ -33,14 +31,15 @@ public class SecurityConfig {
         http
                 .logout((auth) -> auth
                 .logoutUrl("/logout")  // 로그아웃 URL
-                .logoutSuccessUrl("/google-logout")  // 로그아웃 성공 시 이동할 페이지
+//                .logoutSuccessUrl("/google-logout")  // 로그아웃 성공 시 이동할 페이지
+                .logoutSuccessUrl("/logoutSucc")
                 .invalidateHttpSession(true)  // 세션 무효화
                 .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
         );
 
         http
                 .csrf((auth) -> auth.disable()
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
+//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
                 );
 
         return http.build();
