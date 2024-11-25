@@ -1,11 +1,7 @@
 package com.mildo.code;
 
-import com.mildo.study.StudyVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
-import java.util.Calendar;
 
 @Service
 @RequiredArgsConstructor

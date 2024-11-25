@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -36,6 +37,24 @@ public class StudyDBManger extends DBManger {
         session.close();
 
         return totalMembers;
+    }
+
+    public static List<StudyVO> studyDays(String studyCode) {
+        SqlSession session = sqlSessionFactory.openSession();
+        List<StudyVO> studyDays = session.selectList("Study.studyDays", studyCode);
+        session.commit();
+        session.close();
+
+        return studyDays;
+    }
+
+    public static List<StudyVO> totalrank(String studyCode) {
+        SqlSession session = sqlSessionFactory.openSession();
+        List<StudyVO> totalrank = session.selectList("Study.totalrank", studyCode);
+        session.commit();
+        session.close();
+
+        return totalrank;
     }
 
 }
