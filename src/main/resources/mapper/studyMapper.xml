@@ -15,6 +15,18 @@
         <result property="studyEnd" column="study_end" />
     </resultMap>
 
+    <resultMap id="daysResultMap" type="remainingDaysDTO">
+        <result property="studyId" column="study_id" />
+        <result property="remainingDays" column="remaining_days" />
+        <result property="elapsedDays" column="elapsed_days" />
+    </resultMap>
+
+    <resultMap id="rankResultMap" type="rankDTO">
+        <result property="rank" column="rank" />
+        <result property="userName" column="user_name" />
+        <result property="solvedProblem" column="user_solvedproblem" />
+    </resultMap>
+
     <insert id="create" parameterType="studyVO">
         INSERT INTO STUDY (
             study_code,
@@ -35,6 +47,30 @@
         SELECT COUNT(*)
         FROM STUDY
         WHERE study_code = #{stduyCode}
+    </select>
+
+    <select id="studyDays" resultMap="daysResultMap">
+        SELECT
+            study_id,
+            GREATEST(0, CURRENT_DATE - study_start) AS elapsed_days,
+            CASE
+                WHEN CURRENT_DATE &lt; study_start THEN study_start - CURRENT_DATE
+                WHEN study_end IS NOT NULL AND CURRENT_DATE &gt; study_end THEN 0
+                ELSE study_end - CURRENT_DATE
+                END AS remaining_days
+        FROM STUDY
+        WHERE study_code = #{studyCode}
+    </select>
+
+    <select id="totalrank" resultMap="rankResultMap">
+        SELECT
+            user_Id,
+            user_Name,
+            user_solvedproblem,
+            study.study_code,
+            RANK() OVER (ORDER BY user_solvedproblem DESC) AS rank
+        FROM USERS JOIN study on study.study_id = USERS.study_id
+        WHERE study_code = #{studyCode}
     </select>
 
 </mapper>
