@@ -6,6 +6,7 @@ import com.mildo.common.Page.PageInfo;
 import com.mildo.common.Page.Pagenation;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.UserVO;
+import com.mildo.utill.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -27,6 +28,8 @@ public class UserService {
 
         UserVO users = new UserVO();
         users.setUserId("#G909"); // #G909
+        String userId = CodeGenerator.UserId();
+        users.setUserId(userId); // #G909
         users.setUserEmail(email);
         users.setUserName(name);
         users.setUserGoogleId(number);

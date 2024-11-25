@@ -26,8 +26,10 @@ public class StudyController {
 
     @PostMapping("/create")
     public String create(String name, String password) {
+    public String create(String userId, String name, String password) {
 
         studyService.create(name, password);
+        studyService.create(userId, name, password);
 
         return "Create Study";
     }

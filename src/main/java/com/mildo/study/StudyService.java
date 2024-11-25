@@ -1,6 +1,7 @@
 package com.mildo.study;
 
 import com.mildo.study.Vo.StudyVO;
+import com.mildo.utill.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
 
 
-    public void create(String name, String password) {
+    public void create( String userId,String name, String password) {
         Date date = new Date(System.currentTimeMillis()); // 현재 시간
         System.out.println("현재 날짜: " + date);
 
@@ -31,6 +32,8 @@ public class StudyService {
         Date newDate = new Date(calendar.getTimeInMillis());
 
         StudyVO newStudy = new StudyVO("#Q1W2", "#E3R4", name, password, date, newDate);
+        String studyCode = CodeGenerator.generateRandomCode();
+        StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
 
         log.info("[Test] Create study : {}", newStudy);
 
