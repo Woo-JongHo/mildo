@@ -1,8 +1,8 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.StudyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
@@ -38,13 +38,14 @@ public class StudyController {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         log.info("studyCode = {}", studyCode);
 
-        List<StudyVO> list = studyService.studyList(studyCode);
-        int totalMembers = studyService.totalMembers(studyCode);
-        log.info("list = {}", list);
+        List<StudyVO> list = studyService.studyList(studyCode); // 멤버 리스트
+        int totalMembers = studyService.totalMembers(studyCode);  // 멤버 수
+        List<StudyVO> studyDays = studyService.studyDays(studyCode); // 남은 일수, 진행 한 수
 
         Map<String, Object> response = new HashMap<>();
         response.put("members", list);
         response.put("totalMembers", totalMembers);
+        response.put("studyDays", studyDays);
 
         return response;
     }
