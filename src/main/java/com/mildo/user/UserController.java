@@ -29,24 +29,24 @@ public class UserController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
 
-    @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
-    public ResponseEntity<Map<String, Serializable>> home(@AuthenticationPrincipal OidcUser principal) {
-
-        log.info("principal = {}", principal);
-
-        UserVO user = userService.login(principal);
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        log.info("accessToken = {}", accessToken);
-
-        Date expiration = getExpirationFromToken(accessToken);
-        log.info("Access Token 만료 시간: {}", expiration);
-
-        return ResponseEntity.ok(Map.of(
-                "expiration", expiration,
-                "accessToken", accessToken,
-                "userId", user.getUserId()
-        ));
-    }
+//    @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
+//    public ResponseEntity<Map<String, Serializable>> home(@AuthenticationPrincipal OidcUser principal) {
+//
+//        log.info("principal = {}", principal);
+//
+//        UserVO user = userService.login(principal);
+//        String accessToken = jwtTokenProvider.createAccessToken(user);
+//        log.info("accessToken = {}", accessToken);
+//
+//        Date expiration = getExpirationFromToken(accessToken);
+//        log.info("Access Token 만료 시간: {}", expiration);
+//
+//        return ResponseEntity.ok(Map.of(
+//                "expiration", expiration,
+//                "accessToken", accessToken,
+//                "userId", user.getUserId()
+//        ));
+//    }
 
     @PostMapping("/google-login2") // 테스트 메서드
     public String googleLogin2(@RequestParam("userNumber") String userNumber) {
@@ -61,8 +61,8 @@ public class UserController {
         return "OKAY22222222";
     }
 
-    // userId로 회원 조회 | 요청 방법:/api/%23G909/userName
-    @GetMapping("/api/{userId}/userName")
+    // userId로 회원 조회 | 요청 방법:/api/%23G909/info
+    @GetMapping("/api/{userId}/info")
     public UserVO userNameId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         UserVO user = userService.finduserId(userId);

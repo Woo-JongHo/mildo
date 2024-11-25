@@ -26,7 +26,7 @@ public class UserService {
         String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
 
         UserVO users = new UserVO();
-        users.setUserId("#G909"); // #G909
+        users.setUserId("#G777"); // #G909
         users.setUserEmail(email);
         users.setUserName(name);
         users.setUserGoogleId(number);
