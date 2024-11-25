@@ -15,6 +15,7 @@ public class StudyVO {
     private Date studyStart;        // 스터디 시작일
     private Date studyEnd;          // 스터디 끝 나는 일
 
+    public StudyVO(){}
 
     public StudyVO(String userId, String studyCode, String studyName, String studyPassword, Date studyStart, Date studyEnd) {
         this.studyId = 0;
@@ -25,4 +26,7 @@ public class StudyVO {
         this.studyStart = studyStart;
         this.studyEnd = studyEnd;
     }
+
+
+
 }

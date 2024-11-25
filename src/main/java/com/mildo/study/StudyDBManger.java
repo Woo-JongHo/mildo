@@ -41,10 +41,20 @@ public class StudyDBManger extends DBManger {
 
     public static List<StudyVO> studyDays(String studyCode) {
         SqlSession session = sqlSessionFactory.openSession();
-        List<StudyVO> list = session.selectList("Study.studyDays", studyCode);
+        List<StudyVO> studyDays = session.selectList("Study.studyDays", studyCode);
         session.commit();
         session.close();
 
-        return list;
+        return studyDays;
     }
+
+    public static List<StudyVO> totalrank(String studyCode) {
+        SqlSession session = sqlSessionFactory.openSession();
+        List<StudyVO> totalrank = session.selectList("Study.totalrank", studyCode);
+        session.commit();
+        session.close();
+
+        return totalrank;
+    }
+
 }

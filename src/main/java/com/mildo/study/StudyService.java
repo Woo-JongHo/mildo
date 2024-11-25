@@ -49,4 +49,8 @@ public class StudyService {
     public List<StudyVO> studyDays(String studyCode){
         return studyRepository.studyDays(studyCode);
     }
+
+    public List<StudyVO> totalrank(String studyCode){
+        return studyRepository.totalrank(studyCode);
+    }
 }

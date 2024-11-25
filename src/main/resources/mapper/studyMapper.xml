@@ -21,6 +21,12 @@
         <result property="elapsedDays" column="elapsed_days" />
     </resultMap>
 
+    <resultMap id="rankResultMap" type="rankDTO">
+        <result property="rank" column="rank" />
+        <result property="userName" column="user_name" />
+        <result property="solvedProblem" column="user_solvedproblem" />
+    </resultMap>
+
     <insert id="create" parameterType="studyVO">
         INSERT INTO STUDY (
             study_code,
@@ -53,6 +59,17 @@
                 ELSE study_end - CURRENT_DATE
                 END AS remaining_days
         FROM STUDY
+        WHERE study_code = #{studyCode}
+    </select>
+
+    <select id="totalrank" resultMap="rankResultMap">
+        SELECT
+            user_Id,
+            user_Name,
+            user_solvedproblem,
+            study.study_code,
+            RANK() OVER (ORDER BY user_solvedproblem DESC) AS rank
+        FROM USERS JOIN study on study.study_id = USERS.study_id
         WHERE study_code = #{studyCode}
     </select>
 
