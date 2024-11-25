@@ -31,8 +31,10 @@ public class StudyService {
         // 업데이트된 Date 객체 가져오기
         Date newDate = new Date(calendar.getTimeInMillis());
 
-        StudyVO newStudy = new StudyVO("#Q1W2", "#E3R4", name, password, date, newDate);
         String studyCode = CodeGenerator.generateRandomCode();
+
+        // TODO 해당 스터디 코드가 무결성을 해치지 않는지 확인 필요
+
         StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
 
         log.info("[Test] Create study : {}", newStudy);

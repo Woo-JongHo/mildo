@@ -24,12 +24,16 @@ public class StudyController {
         return "Study Home";
     }
 
+    // HACK 유저 아이디를 제공해주어야 할 것같아 임시로 추가
     @PostMapping("/create")
-    public String create(String name, String password) {
     public String create(String userId, String name, String password) {
+        // XXX 유저 아이디를 받는다면 이 또한 유효성 검증 필요
 
-        studyService.create(name, password);
+        // TODO 스터디 이름과 비밀번호 유효성 검증
+
         studyService.create(userId, name, password);
+
+        // TODO 결과가 온전히 나오게 된다면, 유저 테이블의 값 변경하는 로직 추가
 
         return "Create Study";
     }

@@ -27,8 +27,9 @@ public class UserService {
         String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
 
         UserVO users = new UserVO();
-        users.setUserId("#G909"); // #G909
         String userId = CodeGenerator.UserId();
+        // TODO userId가 무결성을 해치지 않는지 검증하는 코드 필요할 것으로 추정
+
         users.setUserId(userId); // #G909
         users.setUserEmail(email);
         users.setUserName(name);
