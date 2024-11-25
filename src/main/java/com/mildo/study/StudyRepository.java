@@ -29,4 +29,8 @@ public class StudyRepository {
         return StudyDBManger.studyDays(studyCode);
     }
 
+    public List<StudyVO> totalrank(String studyCode){
+        return StudyDBManger.totalrank(studyCode);
+    }
+
 }
