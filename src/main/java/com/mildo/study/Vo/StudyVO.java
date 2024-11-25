@@ -1,4 +1,4 @@
-package com.mildo.study;
+package com.mildo.study.Vo;
 
 import lombok.Data;
 

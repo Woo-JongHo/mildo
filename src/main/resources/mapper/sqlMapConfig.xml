@@ -8,9 +8,10 @@
     <typeAliases>
         <!-- 우종호 -->
         <typeAlias type="com.mildo.user.Vo.UserVO" alias="userVO"/>
-        <typeAlias type="com.mildo.study.StudyVO" alias="studyVO"/>
+        <typeAlias type="com.mildo.study.Vo.StudyVO" alias="studyVO"/>
         <typeAlias type="com.mildo.code.CodeVO" alias="codeVO"/>
         <typeAlias type="com.mildo.user.Vo.LevelCountDTO" alias="LevelCountDTO"/>
+        <typeAlias type="com.mildo.study.Vo.RemainingDaysDTO" alias="remainingDaysDTO"/>
 
     </typeAliases>
 

@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.StudyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,4 +45,8 @@ public class StudyService {
         return studyRepository.totalMembers(studyCode);
     }
 
+
+    public List<StudyVO> studyDays(String studyCode){
+        return studyRepository.studyDays(studyCode);
+    }
 }
