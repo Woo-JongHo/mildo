@@ -38,5 +38,10 @@ public class StudyRepository {
     }
 
     public Object getStudyMemberByMonth(String studyCode, String month) {
+        return StudyDBManger.getStudyMemberByMonth(studyCode, month);
+    }
+
+    public Object getStudyMemberIdByMonth(String studyCode, String month) {
+        return StudyDBManger.getStudyMemberIdByMonth(studyCode, month);
     }
 }

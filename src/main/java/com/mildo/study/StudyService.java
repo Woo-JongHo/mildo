@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.code.CodeService;
 import com.mildo.study.Vo.StudyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class StudyService {
     private final StudyRepository studyRepository;
+    private final CodeService codeService;
 
     LocalDate currentDate = LocalDate.now();
 
@@ -55,6 +57,8 @@ public class StudyService {
     public List<StudyVO> totalrank(String studyCode){
         return studyRepository.totalrank(studyCode);
     }
+
+
 
 
     //Study의 시작일(YYYY-MM) 현재 날짜까지의 리스트를 뽑는 메소드
@@ -118,12 +122,19 @@ public class StudyService {
         return daysInMonth;
     }
 
+    //날짜 입력란. 이번달의 일수를 확인
+    public int DayCheck(){
+        LocalDate currentDate = LocalDate.now();
+        YearMonth yearMonth = YearMonth.of(currentDate.getYear(), currentDate.getMonth());
+        int daysInMonth = yearMonth.lengthOfMonth();
+
+        return daysInMonth;
+    }
+
+
     private int getLastDayOfMonth(int year, int month){
         return java.time.YearMonth.of(year, month).lengthOfMonth();
     }
-
-        //month를 돌면서 member를 가지고옵니다
-        //member들이 각 푼 문제를 가지고 옵니다
 
 
     //밀도심기 로직
@@ -135,16 +146,62 @@ public class StudyService {
         Map<String, Integer> dayData = new LinkedHashMap<>();
 
         for( String month : monthData){
+            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyCode, month);
             List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyCode,month);
 
             int countMember = memberName.size();
-            System.out.println("MontMember : " + countMember + monthData + ": Month");
+            System.out.println("MonthData : " + countMember + monthData + ": Month");
 
             Map<String, List<String>> memberData = new LinkedHashMap<>();
             mildoList.put(month,memberData);
 
             dayData.put(month, DayCheck(month));
+            for (int i = 0; i < countMember; i++) {
 
+                ArrayList<Map<String, String>> solvedList;
+                List<String> solvedDataTypeList = new ArrayList<>();
+                solvedList = codeService.getSolvedByDaySelectedMonth(memberID.get(i), month);
+                int[] MonthDay = new int[DayCheck(month)];
+
+                //리스트를 일단 가져옵니다 아예없을수도있음.
+                for (Map<String, String> map : solvedList) {
+                    System.out.println("Map contents: " + map);
+
+                    String dataDay = map.get("c_date");
+                    System.out.println(dataDay + "dateDay");
+
+                    int day = Integer.parseInt(dataDay.substring(8, 10)); // 일(day)을 가져와야 하므로 8, 10 인덱스 사용
+                    System.out.println(day + "day----------");
+
+                    String solved = String.valueOf(map.get("solved"));
+                    System.out.println(solved + "solved------------");
+                    MonthDay[day - 1] += Integer.parseInt(solved); // 합산하기 위해 += 사용
+                }
+
+                //데이터를 내 방식대로 바꾸기위한 배열을 선언하고
+                for (int j = 0; j < DayCheck(month); j++) {
+                    switch (MonthDay[j]) {
+                        case 0:
+                            solvedDataTypeList.add("solved-0");
+                            break;
+                        case 1:
+                            solvedDataTypeList.add("solved-1");
+                            break;
+                        case 2:
+                            solvedDataTypeList.add("solved-2");
+                            break;
+                        case 3:
+                            solvedDataTypeList.add("solved-3");
+                            break;
+                        default:
+                            solvedDataTypeList.add("solved-4");
+                            break;
+                    }
+                }
+                memberData.put(memberName.get(i),solvedDataTypeList);
+            }
+            mildoList.put(month,memberData);
+        }// month
         }
     }
 }

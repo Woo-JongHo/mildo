@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.mildo.db.DBManger;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class StudyDBManger extends DBManger {
@@ -67,4 +69,34 @@ public class StudyDBManger extends DBManger {
     }
 
 
+    public static Object getStudyMemberByMonth(String studyCode, String month) {
+        List<String> names;
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("study_code", studyCode);
+            params.put("study_start", month);
+
+            names = session.selectList("study.getStudyMemberByMonth", params);
+        } finally {
+            session.close();
+        }
+        return names;
+    }
+
+    public static List<String> getStudyMemberIdByMonth(String studyCode, String month) {
+        List<String> names;
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("study_code", studyCode);
+            params.put("study_start", month);
+
+            names = session.selectList("study.getStudyMemberIdByMonth", params);
+            System.out.println(names + "스터디원아이디");
+        } finally {
+            session.close();
+        }
+        return names;
+    }
 }
