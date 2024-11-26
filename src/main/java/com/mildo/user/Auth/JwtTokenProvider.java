@@ -15,19 +15,18 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-//    private static final String SECRET_KEY = Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded());
     // public을 사용해서 JwtAuthenticationFilter 에도 참조 할 수 있게 만듬
     public static final String SECRET_KEY = Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded());
 
     // accessToken 생성
-    public static String createAccessToken(UserVO user) {
+    public static String createAccessToken(String userId) {
         log.info("SECRET_KEY = {}", SECRET_KEY);
 
         return Jwts.builder()
-                .setSubject(user.getUserId()) // 유저 번호를 subject로 설정 // #G909
-                .claim("username", user.getUserName()) // 추가 정보 저장
+                .setSubject(userId) // 유저 번호를 subject로 설정 // #G909
+//                .claim("username", user.getUserName()) // 추가 정보 저장
                 .setIssuedAt(new Date()) // 발급 시간 (현재 시간으로 자동 설정)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1시간 후 만료
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 1시간 후 만료
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // 서명
                 .compact();
     }
