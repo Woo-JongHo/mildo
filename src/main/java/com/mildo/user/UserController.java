@@ -78,7 +78,7 @@ public class UserController {
     @GetMapping("/logoutSucc") // 로그인 성공시 리다이렉트
     public String logout( ) {
         // 토큰 만료는 서버 쪽에서 처리
-        return "OKAY22222222";
+        return "OKAY222222";
     }
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/userName
@@ -91,16 +91,18 @@ public class UserController {
         return user;
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @GetMapping("/api/{userId}/info")
-    public Map<String, Object> userNameId(@PathVariable String userId){
+    public UserVO userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-        UserVO user = userService.finduserId(userId);
+        return userService.finduserId(userId);
+    }
 
+    @GetMapping("/api/{userId}/tokenInfo")
+    public Map<String, Object> tokenInfo(@PathVariable String userId){
+        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
 //        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
         TokenVO token = userService.makeToken(userId);
-        log.info("token = {}", token);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("user", user);
         response.put("token", token);
 
         return response;
