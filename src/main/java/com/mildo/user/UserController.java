@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping("/logoutSucc") // 로그인 성공시 리다이렉트
     public String logout( ) {
         // 토큰 만료는 서버 쪽에서 처리
-        return "OKAY222222";
+        return "OKAY22222222";
     }
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
