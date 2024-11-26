@@ -57,4 +57,14 @@ public class StudyDBManger extends DBManger {
         return totalrank;
     }
 
+    public static String getStartMonth(String studyCode){
+        SqlSession session = sqlSessionFactory.openSession();
+        String getStartMonth = session.selectOne("Study.getStartMonth", studyCode);
+        session.commit();
+        session.close();
+        return getStartMonth;
+
+    }
+
+
 }

@@ -73,4 +73,8 @@
         WHERE study_code = #{studyCode}
     </select>
 
+    <select id="getStartMonth" resultType="java.lang.String">
+        SELECT STUDY_START from study where study_code = #{studyCode}
+    </select>
+
 </mapper>

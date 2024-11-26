@@ -33,4 +33,10 @@ public class StudyRepository {
         return StudyDBManger.totalrank(studyCode);
     }
 
+    public String getStartMonth(String studyCode){
+        return StudyDBManger.getStartMonth(studyCode);
+    }
+
+    public Object getStudyMemberByMonth(String studyCode, String month) {
+    }
 }

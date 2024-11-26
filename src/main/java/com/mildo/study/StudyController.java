@@ -18,6 +18,7 @@ import java.util.Map;
 public class StudyController {
     private final StudyService studyService;
 
+
     @GetMapping
     public String index() {
         log.info("index");
@@ -63,5 +64,6 @@ public class StudyController {
 
         return response;
     }
+
 
 }
