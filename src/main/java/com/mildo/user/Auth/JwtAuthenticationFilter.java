@@ -34,6 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         log.info("token = {}", token);
 
+        if (token == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token is missing");
+            return;
+        }
+
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7); // "Bearer " 부분 제거
             try {

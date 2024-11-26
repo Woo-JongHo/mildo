@@ -26,7 +26,6 @@ public class StudyController {
 
     @PostMapping("/create")
     public String create(String name, String password) {
-
         studyService.create(name, password);
 
         return "Create Study";
@@ -34,20 +33,28 @@ public class StudyController {
 
     // studyCode로 스터디 리스트 가져오기 | 호출 방법 /api/%23E3R4/memberList
     @GetMapping("/api/{studyCode}/memberList")
-    public Map<String, Object> studyList(@PathVariable String studyCode) {
+    public List<StudyVO> studyList(@PathVariable String studyCode) {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
-        log.info("studyCode = {}", studyCode);
+        return studyService.studyList(studyCode); // 멤버 리스트
+    }
 
-        List<StudyVO> studyList = studyService.studyList(studyCode); // 멤버 리스트
+    // 멤버 수
+    @GetMapping("/api/{studyCode}/membersCount")
+    public Map<String, Object> membersCount(@PathVariable String studyCode) {
+        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         int totalMembers = studyService.totalMembers(studyCode);  // 멤버 수
-        List<StudyVO> studyDays = studyService.studyDays(studyCode); // 남은 일수, 진행 한 수
 
         Map<String, Object> response = new HashMap<>();
-        response.put("studyList", studyList);
         response.put("totalMembers", totalMembers);
-        response.put("studyDays", studyDays);
 
         return response;
+    }
+
+    // 남은 일수, 진행 한 수
+    @GetMapping("/api/{studyCode}/studyDays")
+    public List<StudyVO> studyDay(@PathVariable String studyCode) {
+        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
+        return studyService.studyDays(studyCode);
     }
 
     // studyCode로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
