@@ -4,14 +4,19 @@ package com.mildo.user;
 import com.mildo.code.CodeVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.common.Page.Pagenation;
+import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
+import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+
+import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 
 @Slf4j
 @Service
@@ -19,6 +24,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
 
     public UserVO login(OidcUser principal) {
         String email = principal.getAttribute("email");
@@ -43,6 +49,28 @@ public class UserService {
 
     public UserVO finduserId(String userId){
         return userRepository.finduserId(userId);
+    }
+
+    public TokenVO saveToken(String userId){
+
+        TokenVO vo = userRepository.findToken(userId);
+
+        if(vo == null){
+            String accessToken = jwtTokenProvider.createAccessToken(userId);
+            Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
+            // 형변환
+            java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+
+            TokenVO tkoen = new TokenVO();
+            tkoen.setUserId(userId);
+            tkoen.setAccessToken(accessToken);
+            tkoen.setExpirationTime(sqlExpiration);
+
+            userRepository.saveToken(tkoen);
+            vo = userRepository.findToken(userId);
+        }
+
+        return vo;
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId){

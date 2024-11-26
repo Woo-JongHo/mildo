@@ -4,6 +4,7 @@ import com.mildo.code.CodeVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.db.DBManger;
 import com.mildo.user.Vo.LevelCountDTO;
+import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
@@ -41,6 +42,24 @@ public class UserDBManger extends DBManger {
         session.close();
 
         return user;
+    }
+
+    // userId로 토큰 조회
+    public static TokenVO findToken(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        TokenVO findToken = session.selectOne("User.findToken", userId);
+        session.commit();
+        session.close();
+
+        return findToken;
+    }
+
+    // 토큰 생성후 값 넣기
+    public static void saveToken(TokenVO tkoen) {
+        SqlSession session = sqlSessionFactory.openSession();
+        session.insert("User.saveToken", tkoen);
+        session.commit();
+        session.close();
     }
 
     // 코드 레벨별로 갯수 가져오기

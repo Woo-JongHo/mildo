@@ -17,7 +17,7 @@
         <result property="userLeader" column="user_leader" />
     </resultMap>
 
-    <resultMap id="userResultMap2" type="LevelCountDTO">
+    <resultMap id="LevelCountResultMap" type="LevelCountDTO">
         <result property="codeLevel" column="code_level" />
         <result property="solvedCount" column="solved_count" />
     </resultMap>
@@ -27,6 +27,12 @@
         <result property="codeTitle" column="code_title" />
         <result property="codeLevel" column="code_level" />
         <result property="codeSolvedTime" column="code_solvedtime" />
+    </resultMap>
+
+    <resultMap id="TokenResultMap" type="tokenVO">
+        <result property="userId" column="user_id" />
+        <result property="accessToken" column="access_token" />
+        <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
@@ -49,7 +55,21 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="userResultMap2">
+    <select id="findToken" parameterType="java.lang.String" resultMap="TokenResultMap">
+        SELECT *
+        FROM TOKEN
+        WHERE user_id = #{userId}
+    </select>
+
+    <insert id="saveToken" parameterType="tokenVO">
+        INSERT INTO TOKEN(user_id,
+                          access_token,
+                          expiration_time
+        )
+        VALUES (#{userId}, #{accessToken}, #{expirationTime})
+    </insert>
+
+    <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="LevelCountResultMap">
         SELECT c.code_level, COUNT(*) AS solved_count
         FROM USERS u JOIN CODE c ON (u.user_id = c.user_id)
         WHERE u.user_id = #{userId}

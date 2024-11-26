@@ -3,22 +3,17 @@ package com.mildo.user;
 import com.mildo.code.CodeVO;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
+import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 
 
 @Slf4j
@@ -63,12 +58,18 @@ public class UserController {
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @GetMapping("/api/{userId}/info")
-    public UserVO userNameId(@PathVariable String userId){
+    public Map<String, Object> userNameId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         UserVO user = userService.finduserId(userId);
-        log.info("userIdView user = {}", user);
 
-        return user;
+        TokenVO token = userService.saveToken(userId);
+        log.info("token = {}", token);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
+        response.put("token", token);
+
+        return response;
     }
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
