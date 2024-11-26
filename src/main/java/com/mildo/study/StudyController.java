@@ -18,7 +18,6 @@ import java.util.Map;
 public class StudyController {
     private final StudyService studyService;
 
-
     @GetMapping
     public String index() {
         log.info("index");
@@ -27,7 +26,6 @@ public class StudyController {
 
     @PostMapping("/create")
     public String create(String name, String password) {
-
         studyService.create(name, password);
 
         return "Create Study";
@@ -48,7 +46,28 @@ public class StudyController {
         response.put("totalMembers", totalMembers);
         response.put("studyDays", studyDays);
 
+      public List<StudyVO> studyList(@PathVariable String studyCode) {
+        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
+        return studyService.studyList(studyCode); // 멤버 리스트
+    }
+
+    // 멤버 수
+    @GetMapping("/api/{studyCode}/membersCount")
+    public Map<String, Object> membersCount(@PathVariable String studyCode) {
+        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
+        int totalMembers = studyService.totalMembers(studyCode);  // 멤버 수
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalMembers", totalMembers);
+
         return response;
+    }
+
+    // 남은 일수, 진행 한 수
+    @GetMapping("/api/{studyCode}/studyDays")
+    public List<StudyVO> studyDay(@PathVariable String studyCode) {
+        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
+        return studyService.studyDays(studyCode);
     }
 
     // studyCode로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
@@ -64,6 +83,5 @@ public class StudyController {
 
         return response;
     }
-
 
 }

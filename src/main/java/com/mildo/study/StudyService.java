@@ -11,6 +11,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import com.mildo.study.Vo.StudyVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -57,9 +65,6 @@ public class StudyService {
     public List<StudyVO> totalrank(String studyCode){
         return studyRepository.totalrank(studyCode);
     }
-
-
-
 
     //Study의 시작일(YYYY-MM) 현재 날짜까지의 리스트를 뽑는 메소드
     public List<String> studyMonthList(String studyCode) {

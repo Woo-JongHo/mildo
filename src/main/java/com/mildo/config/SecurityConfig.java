@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .logoutUrl("/logout")  // 로그아웃 URL
 //                .logoutSuccessUrl("/google-logout")  // 로그아웃 성공 시 이동할 페이지
                 .logoutSuccessUrl("/logoutSucc")
+                .logoutSuccessUrl("/logoutSucc") // 로그아웃 성공 시 이동할 페이지
                 .invalidateHttpSession(true)  // 세션 무효화
                 .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
         );
@@ -41,6 +42,11 @@ public class SecurityConfig {
                 .csrf((auth) -> auth.disable()
 //                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
                 );
+
+                .csrf((auth) -> auth.disable() // CSRF 비활성화
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
+                );
+
 
         return http.build();
     }
