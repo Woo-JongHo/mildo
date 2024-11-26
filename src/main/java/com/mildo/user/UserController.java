@@ -57,16 +57,18 @@ public class UserController {
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @GetMapping("/api/{userId}/info")
-    public Map<String, Object> userNameId(@PathVariable String userId){
+    public UserVO userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-        UserVO user = userService.finduserId(userId);
+        return userService.finduserId(userId);
+    }
 
+    @GetMapping("/api/{userId}/tokenInfo")
+    public Map<String, Object> tokenInfo(@PathVariable String userId){
+        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
 //        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
         TokenVO token = userService.makeToken(userId);
-        log.info("token = {}", token);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("user", user);
         response.put("token", token);
 
         return response;
