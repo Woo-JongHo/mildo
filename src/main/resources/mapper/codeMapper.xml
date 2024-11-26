@@ -15,5 +15,18 @@
         VALUES (#{userId}, 1, 'code_title', 'code_level', 1)
     </insert>
 
-
+    <!-- 날짜별 푼 문제 -->
+    <select id="getSolvedByDaySelectedMonth" resultType="java.util.Map" parameterType="java.lang.String">
+        WITH date_count AS (
+        SELECT TO_CHAR(c_date, 'YYYY-MM-DD') AS c_date, COUNT(id) AS solved
+        FROM code
+        WHERE id = #{user_id}
+        AND TO_CHAR(code_solvedate, 'YYYY-MM') = #{code_solvedate}
+        GROUP BY TO_CHAR(c_date, 'YYYY-MM-DD')
+        )
+        SELECT c_date, SUM(solved) AS solved
+        FROM date_count
+        GROUP BY c_date
+        ORDER BY c_date ASC
+    </select>
 </mapper>

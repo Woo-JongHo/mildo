@@ -202,6 +202,5 @@ public class StudyService {
             }
             mildoList.put(month,memberData);
         }// month
-        }
     }
 }

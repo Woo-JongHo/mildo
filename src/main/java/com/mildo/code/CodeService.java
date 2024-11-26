@@ -16,6 +16,7 @@ public class CodeService {
         codeRepository.dummyCode(userId);
     }
 
-    public ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String s, String month) {
+    public ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
+        return codeRepository.getSolvedByDaySelectedMonth(userId, month);
     }
 }
