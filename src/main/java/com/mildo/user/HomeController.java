@@ -19,7 +19,7 @@ import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 public class HomeController {
 
     @GetMapping("/")
-    public String home(){
+    public String Page(){
         log.info("aaaaaaaaaaaaaaa");
         return "index";
     }

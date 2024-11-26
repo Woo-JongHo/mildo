@@ -51,6 +51,7 @@ public class UserService {
         return userRepository.finduserId(userId);
     }
 
+    // DB토큰 일단 보류 논의 후에 정리
     public TokenVO saveToken(String userId){
 
         TokenVO vo = userRepository.findToken(userId);
@@ -71,6 +72,20 @@ public class UserService {
         }
 
         return vo;
+    }
+
+    public TokenVO makeToken(String userId){
+            String accessToken = jwtTokenProvider.createAccessToken(userId);
+            Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
+            // 형변환
+            java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+
+            TokenVO tkoen = new TokenVO();
+            tkoen.setUserId(userId);
+            tkoen.setAccessToken(accessToken);
+            tkoen.setExpirationTime(sqlExpiration);
+
+        return tkoen;
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId){

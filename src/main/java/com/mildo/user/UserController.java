@@ -7,13 +7,19 @@ import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 
 
 @Slf4j
@@ -33,22 +39,15 @@ public class UserController {
 //        String accessToken = jwtTokenProvider.createAccessToken(user);
 //        log.info("accessToken = {}", accessToken);
 //
-//        Date expiration = getExpirationFromToken(accessToken);
-//        log.info("Access Token 만료 시간: {}", expiration);
+////        Date expiration = getExpirationFromToken(accessToken);
+////        log.info("Access Token 만료 시간: {}", expiration);
 //
 //        return ResponseEntity.ok(Map.of(
-//                "expiration", expiration,
+////                "expiration", expiration,
 //                "accessToken", accessToken,
 //                "userId", user.getUserId()
 //        ));
 //    }
-
-    @PostMapping("/google-login2") // 테스트 메서드
-    public String googleLogin2(@RequestParam("userNumber") String userNumber) {
-        log.info("user = {}", userNumber);
-
-        return "OK";
-    }
 
     @GetMapping("/logoutSucc") // 로그인 성공시 리다이렉트
     public String logout( ) {
@@ -62,7 +61,8 @@ public class UserController {
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         UserVO user = userService.finduserId(userId);
 
-        TokenVO token = userService.saveToken(userId);
+//        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
+        TokenVO token = userService.makeToken(userId);
         log.info("token = {}", token);
 
         Map<String, Object> response = new HashMap<>();
