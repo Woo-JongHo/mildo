@@ -9,7 +9,6 @@ public class UserTest {
 
     @Test
     void testSuccessLogging() {
-        // 로그를 찍기 전에 테스트가 성공적으로 실행된다는 걸 확인
         log.info("테스트 성공!");
 
         int expected = 1;
