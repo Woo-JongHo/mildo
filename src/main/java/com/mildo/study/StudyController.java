@@ -25,8 +25,10 @@ public class StudyController {
     }
 
     @PostMapping("/create")
-    public String create(String name, String password) {
-        studyService.create(name, password);
+    public String create(String userId, String name, String password) {
+        // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
+
+        studyService.create(userId, name, password);
 
         return "Create Study";
     }

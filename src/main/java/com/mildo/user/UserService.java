@@ -8,6 +8,7 @@ import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
+import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -32,7 +33,13 @@ public class UserService {
         String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
 
         UserVO users = new UserVO();
-        users.setUserId("#G777"); // #G909
+
+        // 유저 아이디가 무결성을 유지하는지 검증 필요
+        String userId = CodeGenerator.generateUserId();
+        while (finduserId(userId) != null)
+            userId = CodeGenerator.generateUserId();
+        users.setUserId(userId); // #G909
+
         users.setUserEmail(email);
         users.setUserName(name);
         users.setUserGoogleId(number);
@@ -47,16 +54,16 @@ public class UserService {
         return user;
     }
 
-    public UserVO finduserId(String userId){
+    public UserVO finduserId(String userId) {
         return userRepository.finduserId(userId);
     }
 
     // DB토큰 일단 보류 논의 후에 정리
-    public TokenVO saveToken(String userId){
+    public TokenVO saveToken(String userId) {
 
         TokenVO vo = userRepository.findToken(userId);
 
-        if(vo == null){
+        if (vo == null) {
             String accessToken = jwtTokenProvider.createAccessToken(userId);
             Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
             // 형변환
@@ -74,21 +81,21 @@ public class UserService {
         return vo;
     }
 
-    public TokenVO makeToken(String userId){
-            String accessToken = jwtTokenProvider.createAccessToken(userId);
-            Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
-            // 형변환
-            java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+    public TokenVO makeToken(String userId) {
+        String accessToken = jwtTokenProvider.createAccessToken(userId);
+        Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
+        // 형변환
+        java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
 
-            TokenVO tkoen = new TokenVO();
-            tkoen.setUserId(userId);
-            tkoen.setAccessToken(accessToken);
-            tkoen.setExpirationTime(sqlExpiration);
+        TokenVO tkoen = new TokenVO();
+        tkoen.setUserId(userId);
+        tkoen.setAccessToken(accessToken);
+        tkoen.setExpirationTime(sqlExpiration);
 
         return tkoen;
     }
 
-    public List<LevelCountDTO> solvedLevelsList(String userId){
+    public List<LevelCountDTO> solvedLevelsList(String userId) {
         // 코드 레벨별로 갯수 가져오기
         List<LevelCountDTO> solvedLevels = userRepository.solvedLevelsList(userId);
         log.info("solvedLevels = {}", solvedLevels);
@@ -96,7 +103,7 @@ public class UserService {
         return solvedLevels;
     }
 
-    public List<CodeVO> solvedList(String userId){
+    public List<CodeVO> solvedList(String userId) {
         // 문제 푼 총 수량
         int totalSolved = userRepository.totalSolved(userId);
         log.info("totalSolved = {}", totalSolved);

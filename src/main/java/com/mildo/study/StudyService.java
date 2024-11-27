@@ -2,6 +2,7 @@ package com.mildo.study;
 
 import com.mildo.code.CodeService;
 import com.mildo.study.Vo.StudyVO;
+import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.core.Local;
@@ -29,10 +30,25 @@ public class StudyService {
 
     LocalDate currentDate = LocalDate.now();
 
-    public void create(String name, String password) {
-        Date date = new Date(System.currentTimeMillis()); // 현재 시간
-        System.out.println("현재 날짜: " + date);
+    public void create(String userId, String name, String password) {
+        String studyCode = CodeGenerator.generateStudyCode();
+        // 해당 코드가 유효한지 판단 필요
+        // while(studyRepository.findStudyCode(studyCode) != null)
+        //    studyCode = CodeGenerator.generateStudyCode();
 
+        Date date = new Date(System.currentTimeMillis()); // 현재 시간
+        log.info("현재 날짜: {}", date);
+
+        Date newDate = addOneYear(date);
+
+        StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
+
+        log.info("[Test] Create study : {}", newStudy);
+
+        studyRepository.create(newStudy);
+    }
+
+    private static Date addOneYear(Date date) {
         // Calendar 객체 생성 및 날짜 설정
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -42,12 +58,7 @@ public class StudyService {
 
         // 업데이트된 Date 객체 가져오기
         Date newDate = new Date(calendar.getTimeInMillis());
-
-        StudyVO newStudy = new StudyVO("#Q1W2", "#E3R4", name, password, date, newDate);
-
-        log.info("[Test] Create study : {}", newStudy);
-
-        studyRepository.create(newStudy);
+        return newDate;
     }
 
     public List<StudyVO> studyList(String studyCode){
