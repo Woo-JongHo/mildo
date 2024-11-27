@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class RemainingDaysDTO {
 
-    private int studyId;
+    private String studyId;
     private int remainingDays;
     private int elapsedDays;
 
     public RemainingDaysDTO(){}
 
-    public RemainingDaysDTO(int studyId, int remainingDays, int elapsedDays) {
+    public RemainingDaysDTO(String studyId, int remainingDays, int elapsedDays) {
         this.studyId = studyId;
         this.remainingDays = remainingDays;
         this.elapsedDays = elapsedDays;

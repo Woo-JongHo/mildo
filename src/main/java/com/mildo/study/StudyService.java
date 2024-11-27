@@ -41,11 +41,13 @@ public class StudyService {
 
         Date newDate = addOneYear(date);
 
-        StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
 
-        log.info("[Test] Create study : {}", newStudy);
+        //create문 VO 변경으로 인한 수정 필요
+        //StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
 
-        studyRepository.create(newStudy);
+        //log.info("[Test] Create study : {}", newStudy);
+
+        //studyRepository.create(newStudy);
     }
 
     private static Date addOneYear(Date date) {
