@@ -49,7 +49,4 @@ public class StudyRepository {
         return StudyDBManger.checkstudyIdPassword(studyId, password);
     }
 
-    public void enterStudy(String studyId, String password, String userId) {
-        StudyDBManger.enterStudy(studyId, password, userId);
-    }
 }
