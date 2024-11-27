@@ -20,7 +20,6 @@ public class JwtTokenProvider {
 
     // accessToken 생성
     public static String createAccessToken(String userId) {
-        log.info("SECRET_KEY = {}", SECRET_KEY);
 
         return Jwts.builder()
                 .setSubject(userId) // 유저 번호를 subject로 설정 // #G909

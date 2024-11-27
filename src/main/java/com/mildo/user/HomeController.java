@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.user.Vo.UserVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,10 @@ import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final UserService userService;
 
     @GetMapping("/")
     public String Page(){
@@ -33,7 +37,11 @@ public class HomeController {
     @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
     public RedirectView home(@AuthenticationPrincipal OidcUser principal) {
         log.info("principal = {}", principal);
-        String userId = "#2442";
+
+        UserVO user = userService.login(principal);
+        log.info("user = {}", user);
+
+        String userId = user.getUserId();
         String social = "google"; // 이러면 social-login/:mildo.com
         String redirectUrl = "/social-login/" + social + "?userId=" + userId;
 
