@@ -63,10 +63,6 @@ public class UserRepository {
         UserDBManger.updateStudyId(userId, studyId);
     }
 
-    public String getStudyId(String userId) {
-        return UserDBManger.getStudyId(userId);
-    }
-
     public boolean checkExtensionSync(String userId, String studyId) {
         return UserDBManger.checkExtensionSync(userId,studyId);
     }
