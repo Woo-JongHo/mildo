@@ -91,4 +91,9 @@ public class StudyController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid study code or password!");
         }
     }
+
+    @GetMapping("{studyId}/monthData")
+    public Map<String, Map<String,List<String>>> monthData(@PathVariable String studyId){
+        return studyService.Mildo(studyId);
+    }
 }
