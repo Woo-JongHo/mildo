@@ -89,4 +89,10 @@
         where user_id = #{userId};
     </select>
 
+    <update id="updateStudyId" parameterType="map">
+        UPDATE users
+        SET study_id = #{studyId}
+        WHERE user_id = #{userId};
+    </update>
+
 </mapper>

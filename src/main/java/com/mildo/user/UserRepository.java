@@ -59,4 +59,7 @@ public class UserRepository {
         return UserDBManger.solvedList(pi, userId);
     }
 
+    public void updateStudyId(String userId, String studyId) {
+        UserDBManger.updateStudyId(userId, studyId);
+    }
 }

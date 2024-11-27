@@ -31,10 +31,10 @@ public class StudyService {
     LocalDate currentDate = LocalDate.now();
 
     public void create(String userId, String name, String password) {
-        String studyCode = CodeGenerator.generateStudyCode();
+        String studyId = CodeGenerator.generatestudyId();
         // 해당 코드가 유효한지 판단 필요
-        // while(studyRepository.findStudyCode(studyCode) != null)
-        //    studyCode = CodeGenerator.generateStudyCode();
+        // while(studyRepository.findstudyId(studyId) != null)
+        //    studyId = CodeGenerator.generatestudyId();
 
         Date date = new Date(System.currentTimeMillis()); // 현재 시간
         log.info("현재 날짜: {}", date);
@@ -43,7 +43,7 @@ public class StudyService {
 
 
         //create문 VO 변경으로 인한 수정 필요
-        //StudyVO newStudy = new StudyVO(userId, studyCode, name, password, date, newDate);
+        //StudyVO newStudy = new StudyVO(userId, studyId, name, password, date, newDate);
 
         //log.info("[Test] Create study : {}", newStudy);
 
@@ -63,27 +63,27 @@ public class StudyService {
         return newDate;
     }
 
-    public List<StudyVO> studyList(String studyCode){
-        return studyRepository.studyList(studyCode);
+    public List<StudyVO> studyList(String studyId){
+        return studyRepository.studyList(studyId);
     }
 
-    public int totalMembers(String studyCode){
-        return studyRepository.totalMembers(studyCode);
+    public int totalMembers(String studyId){
+        return studyRepository.totalMembers(studyId);
     }
 
 
-    public List<StudyVO> studyDays(String studyCode){
-        return studyRepository.studyDays(studyCode);
+    public List<StudyVO> studyDays(String studyId){
+        return studyRepository.studyDays(studyId);
     }
 
-    public List<StudyVO> totalrank(String studyCode){
-        return studyRepository.totalrank(studyCode);
+    public List<StudyVO> totalrank(String studyId){
+        return studyRepository.totalrank(studyId);
     }
 
     //Study의 시작일(YYYY-MM) 현재 날짜까지의 리스트를 뽑는 메소드
-    public List<String> studyMonthList(String studyCode) {
+    public List<String> studyMonthList(String studyId) {
 
-        String study_start = studyRepository.getStartMonth(studyCode);
+        String study_start = studyRepository.getStartMonth(studyId);
         log.info(study_start + "start_month 찍히는것확인");
 
         int start_years = Integer.parseInt(study_start.substring(0,4));
@@ -157,16 +157,16 @@ public class StudyService {
 
 
     //밀도심기 로직
-    public void Mildo(String studyCode){
+    public void Mildo(String studyId){
 
         Map<String, Map<String,List<String>>> mildoList = new LinkedHashMap<>();
 
-        List<String> monthData = studyMonthList(studyCode);
+        List<String> monthData = studyMonthList(studyId);
         Map<String, Integer> dayData = new LinkedHashMap<>();
 
         for( String month : monthData){
-            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyCode, month);
-            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyCode,month);
+            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month);
+            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId,month);
 
             int countMember = memberName.size();
             System.out.println("MonthData : " + countMember + monthData + ": Month");
@@ -222,4 +222,9 @@ public class StudyService {
             mildoList.put(month,memberData);
         }// month
     }
+
+    public boolean checkstudyIdPassword(String studyId, String password) {
+        return studyRepository.checkstudyIdPassword(studyId,password);
+    }
+
 }

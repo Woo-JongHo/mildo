@@ -6,9 +6,9 @@
 <mapper namespace="Study">
 
     <resultMap id="studyResultMap" type="studyVO">
-        <result property="studyId" column="study_id" />
+        <result property="studyId" column="" />
         <result property="userId" column="user_id" />
-        <result property="studyCode" column="study_code" />
+        <result property="studyId" column="study_Id" />
         <result property="studyName" column="study_name" />
         <result property="studyPassword" column="study_password" />
         <result property="studyStart" column="study_start" />
@@ -16,7 +16,7 @@
     </resultMap>
 
     <resultMap id="daysResultMap" type="remainingDaysDTO">
-        <result property="studyId" column="study_id" />
+        <result property="studyId" column="" />
         <result property="remainingDays" column="remaining_days" />
         <result property="elapsedDays" column="elapsed_days" />
     </resultMap>
@@ -29,29 +29,29 @@
 
     <insert id="create" parameterType="studyVO">
         INSERT INTO STUDY (
-            study_code,
+            study_Id,
             study_name,
             study_password,
             study_start,
             study_end)
-        VALUES (#{studyCode}, #{studyName}, #{studyPassword}, #{studyStart}, #{studyEnd})
+        VALUES (#{studyId}, #{studyName}, #{studyPassword}, #{studyStart}, #{studyEnd})
     </insert>
 
     <select id="studyList" resultMap="studyResultMap">
         select *
           from STUDY
-         where study_code = #{stduyCode}
+         where study_Id = #{stduyCode}
     </select>
 
     <select id="totalMembers" resultType="_int">
         SELECT COUNT(*)
         FROM STUDY
-        WHERE study_code = #{stduyCode}
+        WHERE study_Id = #{stduyCode}
     </select>
 
     <select id="studyDays" resultMap="daysResultMap">
         SELECT
-            study_id,
+            ,
             GREATEST(0, CURRENT_DATE - study_start) AS elapsed_days,
             CASE
                 WHEN CURRENT_DATE &lt; study_start THEN study_start - CURRENT_DATE
@@ -59,7 +59,7 @@
                 ELSE study_end - CURRENT_DATE
                 END AS remaining_days
         FROM STUDY
-        WHERE study_code = #{studyCode}
+        WHERE study_Id = #{studyId}
     </select>
 
     <select id="totalrank" resultMap="rankResultMap">
@@ -67,21 +67,21 @@
             user_Id,
             user_Name,
             user_solvedproblem,
-            study.study_code,
+            study.study_Id,
             RANK() OVER (ORDER BY user_solvedproblem DESC) AS rank
-        FROM USERS JOIN study on study.study_id = USERS.study_id
-        WHERE study_code = #{studyCode}
+        FROM USERS JOIN study on study. = USERS.
+        WHERE study_Id = #{studyId}
     </select>
 
     <select id="getStartMonth" resultType="java.lang.String">
-        SELECT STUDY_START from study where study_code = #{studyCode}
+        SELECT STUDY_START from study where study_Id = #{studyId}
     </select>
 
     <select id="getStudyMemberByMonth" resultType="java.lang.String" parameterType="java.lang.String">
         SELECT u.name
         FROM USERS u
                  JOIN STUDY s ON u.id = s.id
-        WHERE s.study_code = #{study_code}
+        WHERE s.study_Id = #{study_Id}
           AND #{study_start} BETWEEN TO_CHAR(s.study_start, 'YYYY-MM') AND TO_CHAR(study.study_end, 'YYYY-MM')
     </select>
 
@@ -89,8 +89,15 @@
         SELECT u.id
         FROM USERS u
                  JOIN STUDY s ON u.id = s.id
-        WHERE s.study_code = #{study_code}
+        WHERE s.study_Id = #{studyId}
           AND #{study_start} BETWEEN TO_CHAR(s.study_start, 'YYYY-MM') AND TO_CHAR(s.study_end, 'YYYY-MM')
+    </select>
+
+    <select id="checkstudyIdPassword" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM study
+        WHERE study_Id = #{study_Id}
+          AND study_password = #{study_password}
     </select>
 
 </mapper>

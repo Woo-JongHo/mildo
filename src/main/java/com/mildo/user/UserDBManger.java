@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class UserDBManger extends DBManger {
@@ -93,5 +95,23 @@ public class UserDBManger extends DBManger {
         session.commit();
         session.close();
         return solvedList;
+    }
+
+    public static void updateStudyId(String userId, String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        log.info(userId + "userId-----" + studyId + "--------studyId");
+        try {
+            Map<String, String> params = new HashMap<>();
+            params.put("userId", userId);
+            params.put("studyId", studyId);
+
+            session.update("User.updateStudyId", params);
+            session.commit(); // 변경 사항 적용
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.rollback(); // 에러 발생 시 롤백
+        } finally {
+            session.close(); // 세션 닫기
+        }
     }
 }
