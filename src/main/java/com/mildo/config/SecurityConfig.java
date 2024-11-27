@@ -36,10 +36,11 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
         );
 
-        //http
-        //        .csrf((auth) -> auth.disable() // CSRF 비활성화
-        //        .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
-        //        );
+
+        http
+                .csrf((auth) -> auth.disable() // CSRF 비활성화
+//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
+                );
 
 
         return http.build();

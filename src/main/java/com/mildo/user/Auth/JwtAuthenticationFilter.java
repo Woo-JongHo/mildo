@@ -25,14 +25,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         // 인증이 필요 없는 URL
-        if (pathMatcher.match("/api/{userId}/info", requestURI) || requestURI.startsWith("/public")) {
+        if (pathMatcher.match("/api/{userId}/info", requestURI)||
+            pathMatcher.match("/api/{userId}/tokenInfo", requestURI) ||
+            requestURI.startsWith("/public")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // 헤더에서 토큰 추출
         String token = request.getHeader("Authorization");
-        log.info("token = {}", token);
 
         if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

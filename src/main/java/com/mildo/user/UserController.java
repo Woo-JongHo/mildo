@@ -7,6 +7,7 @@ import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -81,7 +82,11 @@ public class UserController {
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
 
-        return solvedLevels;
+        if (solvedLevels == null || solvedLevels.isEmpty()) {
+            // 상태코드를 404 로 보내고 본문에 null이라고 보냄 비워도 됨!
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(solvedLevels);
     }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
