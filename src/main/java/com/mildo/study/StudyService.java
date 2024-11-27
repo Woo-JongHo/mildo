@@ -1,11 +1,13 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.StudyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -33,5 +35,22 @@ public class StudyService {
         log.info("[Test] Create study : {}", newStudy);
 
         studyRepository.create(newStudy);
+    }
+
+    public List<StudyVO> studyList(String studyCode){
+        return studyRepository.studyList(studyCode);
+    }
+
+    public int totalMembers(String studyCode){
+        return studyRepository.totalMembers(studyCode);
+    }
+
+
+    public List<StudyVO> studyDays(String studyCode){
+        return studyRepository.studyDays(studyCode);
+    }
+
+    public List<StudyVO> totalrank(String studyCode){
+        return studyRepository.totalrank(studyCode);
     }
 }
