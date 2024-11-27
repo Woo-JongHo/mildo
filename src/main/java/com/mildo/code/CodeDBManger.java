@@ -3,6 +3,11 @@ package com.mildo.code;
 import com.mildo.db.DBManger;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CodeDBManger extends DBManger {
 
     public static int dummyCode(String userId) {
@@ -13,5 +18,26 @@ public class CodeDBManger extends DBManger {
         session.close();
 
         return re;
+    }
+
+    public static ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
+        ArrayList<Map<String, String>> results = new ArrayList<>();
+        SqlSession session = sqlSessionFactory.openSession();
+
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("user_id", userId);
+            params.put("code_solvedate", month);
+
+            List<Map<String, String>> rows = session.selectList("code.getSolvedByDaySelectedMonth", params);
+            session.close();
+            for (Map<String, String> row : rows) {
+                results.add(row);
+            }
+        } finally {
+            session.close();
+        }
+
+        return results;
     }
 }

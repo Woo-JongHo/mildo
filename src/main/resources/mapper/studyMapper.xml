@@ -73,4 +73,24 @@
         WHERE study_code = #{studyCode}
     </select>
 
+    <select id="getStartMonth" resultType="java.lang.String">
+        SELECT STUDY_START from study where study_code = #{studyCode}
+    </select>
+
+    <select id="getStudyMemberByMonth" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT u.name
+        FROM USERS u
+                 JOIN STUDY s ON u.id = s.id
+        WHERE s.study_code = #{study_code}
+          AND #{study_start} BETWEEN TO_CHAR(s.study_start, 'YYYY-MM') AND TO_CHAR(study.study_end, 'YYYY-MM')
+    </select>
+
+    <select id="getStudyMemberIdByMonth" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT u.id
+        FROM USERS u
+                 JOIN STUDY s ON u.id = s.id
+        WHERE s.study_code = #{study_code}
+          AND #{study_start} BETWEEN TO_CHAR(s.study_start, 'YYYY-MM') AND TO_CHAR(s.study_end, 'YYYY-MM')
+    </select>
+
 </mapper>
