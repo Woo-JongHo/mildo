@@ -58,21 +58,27 @@ public class UserController {
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @GetMapping("/api/{userId}/info")
-    public UserVO userInfo(@PathVariable String userId){
+    public ResponseEntity<UserVO> userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-        return userService.finduserId(userId);
+        UserVO user = userService.finduserId(userId);
+        log.info("user = {}", user);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 상태코드를 401 로 보냄
+        }
+
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/api/{userId}/tokenInfo")
-    public Map<String, Object> tokenInfo(@PathVariable String userId){
+    public ResponseEntity<TokenVO> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
 //        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
         TokenVO token = userService.makeToken(userId);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-
-        return response;
+        if (token == null || token.getAccessToken() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 상태코드를 401 로 보냄
+        }
+        return ResponseEntity.ok(token);
     }
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
@@ -82,7 +88,7 @@ public class UserController {
             // 잘못된 인코딩 처리
             userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         } catch (IllegalArgumentException e) {
-            log.error("encoding error : {}", userId, e);
+            log.info("encoding error : {}", userId, e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
         }
 
