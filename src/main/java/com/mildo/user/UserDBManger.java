@@ -114,4 +114,25 @@ public class UserDBManger extends DBManger {
             session.close(); // 세션 닫기
         }
     }
+
+    public static boolean checkExtensionSync(String userId, String studyId) {
+        boolean isValid = false;
+        SqlSession session = sqlSessionFactory.openSession();
+
+        try {
+            // 파라미터 맵 생성
+            Map<String, Object> params = new HashMap<>();
+            params.put("userId", userId);
+            params.put("studyId", studyId);
+
+            Integer count = session.selectOne("User.checkExtensionSync", params);
+
+            if (count != null && count > 0) {
+                isValid = true;
+            }
+        } finally {
+            session.close(); // 세션 닫기
+        }
+        return isValid; // 유효 여부 반환
+    }
 }

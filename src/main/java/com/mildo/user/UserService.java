@@ -122,4 +122,8 @@ public class UserService {
     public void updateStudyId(String userId, String studyId) {
         userRepository.updateStudyId(userId, studyId);
     }
+
+    public boolean checkExtensionSync(String userId, String studyId) {
+        return userRepository.checkExtensionSync(userId, studyId);
+    }
 }
