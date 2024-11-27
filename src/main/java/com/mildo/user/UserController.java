@@ -7,6 +7,7 @@ import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -76,11 +77,22 @@ public class UserController {
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
     @GetMapping("/api/{userId}/solvedLevels")
-    public List<LevelCountDTO> solvedLevelsId(@PathVariable String userId){
-        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+    public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
+        try {
+            // 잘못된 인코딩 처리
+            userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+        } catch (IllegalArgumentException e) {
+            log.error("encoding error : {}", userId, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
+        }
+
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
 
-        return solvedLevels;
+        if (solvedLevels == null || solvedLevels.isEmpty()) {
+            // 상태코드를 404 로 보내고 본문에 null이라고 보냄 비워도 됨!
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(solvedLevels);
     }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
