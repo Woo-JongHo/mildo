@@ -44,4 +44,6 @@ public class StudyRepository {
     public Object getStudyMemberIdByMonth(String studyCode, String month) {
         return StudyDBManger.getStudyMemberIdByMonth(studyCode, month);
     }
+    public List<StudyVO> totalrank(String studyCode){return StudyDBManger.totalrank(studyCode);}
+
 }

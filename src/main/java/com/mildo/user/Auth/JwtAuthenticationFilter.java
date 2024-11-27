@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -19,9 +20,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String requestURI = request.getRequestURI();
+        // AntPathMatcher 으로 쉽게 동적 경로를 처리할 수 있다.
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+
+        // 인증이 필요 없는 URL
+        if (pathMatcher.match("/api/{userId}/info", requestURI) || requestURI.startsWith("/public")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // 헤더에서 토큰 추출
         String token = request.getHeader("Authorization");
         log.info("token = {}", token);
+
+        if (token == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token is missing");
+            return;
+        }
 
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7); // "Bearer " 부분 제거
