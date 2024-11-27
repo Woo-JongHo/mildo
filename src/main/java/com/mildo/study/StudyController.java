@@ -3,6 +3,8 @@ package com.mildo.study;
 import com.mildo.study.Vo.StudyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
@@ -74,16 +76,18 @@ public class StudyController {
     }
 
     //스터디 참가하기
-    @GetMapping("/enterStudy")
-    public String enterStudy(@RequestParam(required = false, defaultValue = "423XDF") String studyCode,
-                             @RequestParam(required = false, defaultValue = "1111") String password) {
+    @PutMapping("/enterStudy")
+    public ResponseEntity<String> enterStudy(@RequestParam String studyCode,
+                                             @RequestParam String password,
+                                             @RequestParam String userId) {
         boolean isValid = studyService.checkStudyCodePassword(studyCode, password);
 
-        log.info(studyCode + "studyCode");
-        log.info(password + "password");
-        log.info(isValid + "------------------isValid 값 테스트");
+        if (isValid) {
+            studyService.enterStudy(studyCode,password,userId);
+            return ResponseEntity.ok("스터디 접속 완료"); // 200 OK 응답
+        } else {
 
-        return isValid ? "success" : "errorPage";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid study code or password!");
+        }
     }
-    //스터디 생성
 }

@@ -121,4 +121,9 @@ public class StudyDBManger extends DBManger {
         }
         return isValid; // 유효 여부 반환
     }
+
+    public static void enterStudy(String studyCode, String password, String userId) {
+
+
+    }
 }
