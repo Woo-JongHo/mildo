@@ -25,6 +25,7 @@ import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -56,13 +57,13 @@ public class UserController {
     }
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
-    @GetMapping("/api/{userId}/info")
+    @GetMapping("/{userId}/info")
     public UserVO userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         return userService.finduserId(userId);
     }
 
-    @GetMapping("/api/{userId}/tokenInfo")
+    @GetMapping("/{userId}/tokenInfo")
     public Map<String, Object> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
 //        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
-    @GetMapping("/api/{userId}/solvedLevels")
+    @GetMapping("/{userId}/solvedLevels")
     public List<LevelCountDTO> solvedLevelsId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
@@ -84,7 +85,7 @@ public class UserController {
     }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
-    @GetMapping("/api/{userId}/solvedList")
+    @GetMapping("/{userId}/solvedList")
     public List<CodeVO> solvedListId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<CodeVO> solvedList = userService.solvedList(userId);

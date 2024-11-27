@@ -222,4 +222,12 @@ public class StudyService {
             mildoList.put(month,memberData);
         }// month
     }
+
+    public boolean checkStudyCodePassword(String studyCode, String password) {
+        return studyRepository.checkStudyCodePassword(studyCode,password);
+    }
+
+    public void enterStudy(String studyCode, String password, String userId) {
+        studyRepository.enterStudy(studyCode, password, userId);
+    }
 }
