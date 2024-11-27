@@ -25,6 +25,7 @@ import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;

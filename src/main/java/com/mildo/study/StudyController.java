@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/study")
+@RequestMapping("/api/study")
 public class StudyController {
     private final StudyService studyService;
 
@@ -72,5 +72,7 @@ public class StudyController {
 
         return response;
     }
+
+
 
 }
