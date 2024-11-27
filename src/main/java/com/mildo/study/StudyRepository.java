@@ -2,6 +2,7 @@ package com.mildo.study;
 
 
 import com.mildo.study.Vo.StudyVO;
+import com.mildo.user.UserDBManger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,9 @@ public class StudyRepository {
 
     public void enterStudy(String studyId, String password, String userId) {
         StudyDBManger.enterStudy(studyId, password, userId);
+    }
+
+    public StudyVO updateStudyName(String studyCode, String studyName) {
+        return StudyDBManger.updateStudyName(studyCode, studyName);
     }
 }

@@ -100,4 +100,10 @@
           AND study_password = #{study_password}
     </select>
 
+    <update id="updateStudyName" parameterType="studyVO">
+        UPDATE study
+        SET study_name = #{study_Name}
+        WHERE study_code = #{study_Code} RETURNING study_name
+    </update>
+
 </mapper>
