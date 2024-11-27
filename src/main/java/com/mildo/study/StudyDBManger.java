@@ -78,7 +78,7 @@ public class StudyDBManger extends DBManger {
             params.put("study_code", studyCode);
             params.put("study_start", month);
 
-            names = session.selectList("study.getStudyMemberByMonth", params);
+            names = session.selectList("Study.getStudyMemberByMonth", params);
         } finally {
             session.close();
         }
@@ -93,11 +93,32 @@ public class StudyDBManger extends DBManger {
             params.put("study_code", studyCode);
             params.put("study_start", month);
 
-            names = session.selectList("study.getStudyMemberIdByMonth", params);
+            names = session.selectList("Study.getStudyMemberIdByMonth", params);
             System.out.println(names + "스터디원아이디");
         } finally {
             session.close();
         }
         return names;
+    }
+
+    public static boolean checkStudyCodePassword(String studyCode, String password) {
+        boolean isValid = false;
+        SqlSession session = sqlSessionFactory.openSession();
+
+        try {
+            // 파라미터 맵 생성
+            Map<String, Object> params = new HashMap<>();
+            params.put("study_code", studyCode);
+            params.put("study_password", password);
+
+            Integer count = session.selectOne("Study.checkStudyCodePassword", params);
+
+            if (count != null && count > 0) {
+                isValid = true;
+            }
+        } finally {
+            session.close(); // 세션 닫기
+        }
+        return isValid; // 유효 여부 반환
     }
 }

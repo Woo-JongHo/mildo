@@ -93,4 +93,11 @@
           AND #{study_start} BETWEEN TO_CHAR(s.study_start, 'YYYY-MM') AND TO_CHAR(s.study_end, 'YYYY-MM')
     </select>
 
+    <select id="checkStudyCodePassword" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM study
+        WHERE study_code = #{study_code}
+          AND study_password = #{study_password}
+    </select>
+
 </mapper>

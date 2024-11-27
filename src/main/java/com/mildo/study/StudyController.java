@@ -73,6 +73,17 @@ public class StudyController {
         return response;
     }
 
+    //스터디 참가하기
+    @GetMapping("/enterStudy")
+    public String enterStudy(@RequestParam(required = false, defaultValue = "423XDF") String studyCode,
+                             @RequestParam(required = false, defaultValue = "1111") String password) {
+        boolean isValid = studyService.checkStudyCodePassword(studyCode, password);
 
+        log.info(studyCode + "studyCode");
+        log.info(password + "password");
+        log.info(isValid + "------------------isValid 값 테스트");
 
+        return isValid ? "success" : "errorPage";
+    }
+    //스터디 생성
 }

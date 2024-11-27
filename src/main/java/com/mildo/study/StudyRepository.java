@@ -45,4 +45,7 @@ public class StudyRepository {
         return StudyDBManger.getStudyMemberIdByMonth(studyCode, month);
     }
 
+    public boolean checkStudyCodePassword(String studyCode, String password) {
+        return StudyDBManger.checkStudyCodePassword(studyCode, password);
+    }
 }
