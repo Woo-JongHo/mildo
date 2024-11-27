@@ -34,14 +34,14 @@ public class StudyController {
     }
 
     // studyCode로 스터디 리스트 가져오기 | 호출 방법 /api/%23E3R4/memberList
-    @GetMapping("/api/{studyCode}/memberList")
+    @GetMapping("/{studyCode}/memberList")
     public List<StudyVO> studyList(@PathVariable String studyCode) {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         return studyService.studyList(studyCode); // 멤버 리스트
     }
 
     // 멤버 수
-    @GetMapping("/api/{studyCode}/membersCount")
+    @GetMapping("/{studyCode}/membersCount")
     public Map<String, Object> membersCount(@PathVariable String studyCode) {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         int totalMembers = studyService.totalMembers(studyCode);  // 멤버 수
@@ -53,14 +53,14 @@ public class StudyController {
     }
 
     // 남은 일수, 진행 한 수
-    @GetMapping("/api/{studyCode}/studyDays")
+    @GetMapping("/{studyCode}/studyDays")
     public List<StudyVO> studyDay(@PathVariable String studyCode) {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         return studyService.studyDays(studyCode);
     }
 
     // studyCode로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
-    @GetMapping("/api/{studyCode}/rank")
+    @GetMapping("/{studyCode}/rank")
     public Map<String, Object> ranks(@PathVariable String studyCode) {
         studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
         log.info("studyCode = {}", studyCode);
