@@ -24,45 +24,45 @@ public class StudyDBManger extends DBManger {
         return re;
     }
 
-    public static List<StudyVO> studyList(String studyCode) {
+    public static List<StudyVO> studyList(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        List<StudyVO> list = session.selectList("Study.studyList", studyCode);
+        List<StudyVO> list = session.selectList("Study.studyList", studyId);
         session.commit();
         session.close();
 
         return list;
     }
 
-    public static int totalMembers(String studyCode) {
+    public static int totalMembers(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        int totalMembers = session.selectOne("Study.totalMembers", studyCode);
+        int totalMembers = session.selectOne("Study.totalMembers", studyId);
         session.commit();
         session.close();
 
         return totalMembers;
     }
 
-    public static List<StudyVO> studyDays(String studyCode) {
+    public static List<StudyVO> studyDays(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        List<StudyVO> studyDays = session.selectList("Study.studyDays", studyCode);
+        List<StudyVO> studyDays = session.selectList("Study.studyDays", studyId);
         session.commit();
         session.close();
 
         return studyDays;
     }
 
-    public static List<StudyVO> totalrank(String studyCode) {
+    public static List<StudyVO> totalrank(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        List<StudyVO> totalrank = session.selectList("Study.totalrank", studyCode);
+        List<StudyVO> totalrank = session.selectList("Study.totalrank", studyId);
         session.commit();
         session.close();
 
         return totalrank;
     }
 
-    public static String getStartMonth(String studyCode){
+    public static String getStartMonth(String studyId){
         SqlSession session = sqlSessionFactory.openSession();
-        String getStartMonth = session.selectOne("Study.getStartMonth", studyCode);
+        String getStartMonth = session.selectOne("Study.getStartMonth", studyId);
         session.commit();
         session.close();
         return getStartMonth;
@@ -70,12 +70,12 @@ public class StudyDBManger extends DBManger {
     }
 
 
-    public static Object getStudyMemberByMonth(String studyCode, String month) {
+    public static Object getStudyMemberByMonth(String studyId, String month) {
         List<String> names;
         SqlSession session = sqlSessionFactory.openSession();
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("study_code", studyCode);
+            params.put("study_Id", studyId);
             params.put("study_start", month);
 
             names = session.selectList("Study.getStudyMemberByMonth", params);
@@ -85,12 +85,12 @@ public class StudyDBManger extends DBManger {
         return names;
     }
 
-    public static List<String> getStudyMemberIdByMonth(String studyCode, String month) {
+    public static List<String> getStudyMemberIdByMonth(String studyId, String month) {
         List<String> names;
         SqlSession session = sqlSessionFactory.openSession();
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("study_code", studyCode);
+            params.put("study_Id", studyId);
             params.put("study_start", month);
 
             names = session.selectList("Study.getStudyMemberIdByMonth", params);
@@ -101,17 +101,17 @@ public class StudyDBManger extends DBManger {
         return names;
     }
 
-    public static boolean checkStudyCodePassword(String studyCode, String password) {
+    public static boolean checkstudyIdPassword(String studyId, String password) {
         boolean isValid = false;
         SqlSession session = sqlSessionFactory.openSession();
 
         try {
             // 파라미터 맵 생성
             Map<String, Object> params = new HashMap<>();
-            params.put("study_code", studyCode);
+            params.put("study_Id", studyId);
             params.put("study_password", password);
 
-            Integer count = session.selectOne("Study.checkStudyCodePassword", params);
+            Integer count = session.selectOne("Study.checkstudyIdPassword", params);
 
             if (count != null && count > 0) {
                 isValid = true;
@@ -122,7 +122,7 @@ public class StudyDBManger extends DBManger {
         return isValid; // 유효 여부 반환
     }
 
-    public static void enterStudy(String studyCode, String password, String userId) {
+    public static void enterStudy(String studyId, String password, String userId) {
 
 
     }

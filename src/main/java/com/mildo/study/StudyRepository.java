@@ -17,39 +17,39 @@ public class StudyRepository {
         StudyDBManger.create(study);
     }
 
-    public List<StudyVO> studyList(String studyCode){
-        return StudyDBManger.studyList(studyCode);
+    public List<StudyVO> studyList(String studyId){
+        return StudyDBManger.studyList(studyId);
     }
 
-    public int totalMembers(String studyCode){
-        return StudyDBManger.totalMembers(studyCode);
+    public int totalMembers(String studyId){
+        return StudyDBManger.totalMembers(studyId);
     }
 
-    public List<StudyVO> studyDays(String studyCode){
-        return StudyDBManger.studyDays(studyCode);
+    public List<StudyVO> studyDays(String studyId){
+        return StudyDBManger.studyDays(studyId);
     }
 
-    public List<StudyVO> totalrank(String studyCode){
-        return StudyDBManger.totalrank(studyCode);
+    public List<StudyVO> totalrank(String studyId){
+        return StudyDBManger.totalrank(studyId);
     }
 
-    public String getStartMonth(String studyCode){
-        return StudyDBManger.getStartMonth(studyCode);
+    public String getStartMonth(String studyId){
+        return StudyDBManger.getStartMonth(studyId);
     }
 
-    public Object getStudyMemberByMonth(String studyCode, String month) {
-        return StudyDBManger.getStudyMemberByMonth(studyCode, month);
+    public Object getStudyMemberByMonth(String studyId, String month) {
+        return StudyDBManger.getStudyMemberByMonth(studyId, month);
     }
 
-    public Object getStudyMemberIdByMonth(String studyCode, String month) {
-        return StudyDBManger.getStudyMemberIdByMonth(studyCode, month);
+    public Object getStudyMemberIdByMonth(String studyId, String month) {
+        return StudyDBManger.getStudyMemberIdByMonth(studyId, month);
     }
 
-    public boolean checkStudyCodePassword(String studyCode, String password) {
-        return StudyDBManger.checkStudyCodePassword(studyCode, password);
+    public boolean checkstudyIdPassword(String studyId, String password) {
+        return StudyDBManger.checkstudyIdPassword(studyId, password);
     }
 
-    public void enterStudy(String studyCode, String password, String userId) {
-        StudyDBManger.enterStudy(studyCode, password, userId);
+    public void enterStudy(String studyId, String password, String userId) {
+        StudyDBManger.enterStudy(studyId, password, userId);
     }
 }

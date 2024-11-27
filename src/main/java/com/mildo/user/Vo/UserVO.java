@@ -6,7 +6,7 @@ import lombok.Data;
 public class UserVO {
 
     private String userId;              // 회원 아이디 ex) #G090
-    private String studyId;                // 스터디 아이디
+    private String studyId;             // 스터디 아이디
     private int userNumber;             // 사용자 번호
     private String userName;            // 사용자 이름
     private String userGoogleId;        // 구글 아이디
