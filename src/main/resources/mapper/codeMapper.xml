@@ -7,7 +7,7 @@
     <insert id="dummyCode" parameterType="CodeVo">
         INSERT INTO CODE (
         user_id,
-        study_id,
+        ,
         code_title,
         code_level,
         code_problemid

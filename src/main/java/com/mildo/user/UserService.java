@@ -122,4 +122,7 @@ public class UserService {
         return solvedList;
     }
 
+    public void updateStudyId(String userId, String studyId) {
+        userRepository.updateStudyId(userId, studyId);
+    }
 }
