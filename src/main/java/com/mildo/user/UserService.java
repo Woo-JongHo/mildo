@@ -43,10 +43,10 @@ public class UserService {
         users.setUserEmail(email);
         users.setUserName(name);
         users.setUserGoogleId(number);
-
+        users.setUserTheme("#FFFFFF");
         UserVO user = userRepository.findUser(number);
 
-        if(user == null){
+        if (user == null) {
             userRepository.save(users);
             user = userRepository.findUser(number);
         }

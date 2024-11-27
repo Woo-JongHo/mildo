@@ -14,6 +14,7 @@ public class UserVO {
     private String userParticipant;     // 스터디 참가여부
     private String userLeader;          // 리더 여부
     private int userSolvedProblem;      // 해결 문제 수
+    private String userTheme;           // 유저 테마
 
     public UserVO(){}
 
