@@ -101,7 +101,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(solvedLevels);
-    }*/
+    }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @GetMapping("/api/{userId}/solvedList")
@@ -112,14 +112,6 @@ public class UserController {
         return solvedList;
     }
 
-//    @PutMapping("/update-leader/{userId}")
-//    public void updateLeader(@PathVariable String userId) {
-//        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-//
-//        // 리더 변경 회원 테이블에 리더인지 스터디 회원이지 유무 확인 하고 당사자는 N으로 변경 권한 위임 당하는 사람은 Y로 변경
-//        List<UserVO> updateLeader = userService.updateLeader(userId);
-//        log.info("updateLeader = {}", updateLeader);
-//
-//    }
+
 
 }
