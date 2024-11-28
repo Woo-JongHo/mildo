@@ -74,4 +74,10 @@ public class StudyRepository {
 
         return newLeaderId;
     }
+
+    public boolean deleteStudy(String studyId) {
+        int success = StudyDBManger.deleteStudy(studyId);
+
+        return success != 0;
+    }
 }

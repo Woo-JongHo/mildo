@@ -116,4 +116,17 @@
         WHERE user_id = #{new_Leader_Id}
           AND study_id = #{study_Id};
     </update>
+
+    <update id="resetUserStudyInfo">
+        UPDATE USERS
+        SET user_leader      = 'N',
+            user_isparticipant = null
+        WHERE study_id = #{study_id};
+    </update>
+
+    <delete id="deleteStudy">
+        DELETE
+        FROM STUDY
+        WHERE study_id = #{studyId};
+    </delete>
 </mapper>

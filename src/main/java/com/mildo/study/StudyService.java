@@ -235,4 +235,8 @@ public class StudyService {
     public String updateLeader(String studyId, String newLeaderId) {
         return studyRepository.updateLeader(studyId, newLeaderId);
     }
+
+    public boolean deleteStudy(String studyId) {
+        return studyRepository.deleteStudy(studyId);
+    }
 }
