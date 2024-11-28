@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/code")
 public class CodeController {
 
     private final CodeService codeService;
@@ -69,24 +69,12 @@ public class CodeController {
             // 필요한 정보 추출
             String userId = convertData.get("id").asText();
             String studyId = convertData.get("studyCode").asText();
-            String sourceText = convertData.get("sourceText").asText();
-            String readmeText = convertData.get("readmeText").asText();
-            String filename = convertData.get("filename").asText();
-            String commitMessage = convertData.get("commitMessage").asText();
-
-
             /*
              * sourceText - 답안
              * readme - 문제설명
              * filename - 문제명
              * commitMessage - 시간초 매모리.USERNO
              * */
-
-            System.out.println("sourceText는 다음과 같습니다 : " + sourceText);
-            System.out.println("readme는 다음과 같습니다 : " + readmeText);
-            System.out.println("filename는 다음과 같습니다 : " + filename);
-            System.out.println("commitMessage는 다음과 같습니다 : " + commitMessage);
-
 
             // DB에 데이터가 있는지 확인
             boolean isValid = userService.checkExtensionSync(userId, studyId);
@@ -100,5 +88,14 @@ public class CodeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request");
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(method = RequestMethod.POST, value = "/upload")
+    public ResponseEntity<String> upload(@RequestBody UploadDTO request) throws ParseException {
+
+        codeService.codeUpload(request);
+        return ResponseEntity.ok("Upload successful");
+    }
+
 
 }
