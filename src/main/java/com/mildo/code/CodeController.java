@@ -55,9 +55,50 @@ public class CodeController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request");
         }
-
-
     }
 
+    @CrossOrigin(origins = {"chrome-extension://ghbibjdmcondjdiebninoidgihdklndj", "https://school.programmers.co.kr"})
+    @PostMapping("/receive-data")
+    public ResponseEntity<String> receiveData(@RequestBody String data) {
+        try {
+
+            /* 파싱된 데이터를 옮기는 작업*/
+            ObjectMapper Data = new ObjectMapper();
+            JsonNode convertData = Data.readTree(data);
+
+            // 필요한 정보 추출
+            String userId = convertData.get("id").asText();
+            String studyId = convertData.get("studyCode").asText();
+            String sourceText = convertData.get("sourceText").asText();
+            String readmeText = convertData.get("readmeText").asText();
+            String filename = convertData.get("filename").asText();
+            String commitMessage = convertData.get("commitMessage").asText();
+
+
+            /*
+             * sourceText - 답안
+             * readme - 문제설명
+             * filename - 문제명
+             * commitMessage - 시간초 매모리.USERNO
+             * */
+
+            System.out.println("sourceText는 다음과 같습니다 : " + sourceText);
+            System.out.println("readme는 다음과 같습니다 : " + readmeText);
+            System.out.println("filename는 다음과 같습니다 : " + filename);
+            System.out.println("commitMessage는 다음과 같습니다 : " + commitMessage);
+
+
+            // DB에 데이터가 있는지 확인
+            boolean isValid = userService.checkExtensionSync(userId, studyId);
+            if (isValid) {
+                return ResponseEntity.ok("success");
+            } else {
+                return ResponseEntity.ok("fail");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request");
+        }
+    }
 
 }
