@@ -95,4 +95,11 @@
         WHERE user_id = #{userId};
     </update>
 
+    <select id="checkExtensionSync" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+        WHERE user_id = #{userId}
+          AND study_id = #{studyId}
+    </select>
+
 </mapper>

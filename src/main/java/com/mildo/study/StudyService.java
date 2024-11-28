@@ -157,7 +157,7 @@ public class StudyService {
 
 
     //밀도심기 로직
-    public void Mildo(String studyId){
+    public Map<String, Map<String,List<String>>> Mildo(String studyId){
 
         Map<String, Map<String,List<String>>> mildoList = new LinkedHashMap<>();
 
@@ -221,6 +221,7 @@ public class StudyService {
             }
             mildoList.put(month,memberData);
         }// month
+        return mildoList;
     }
 
     public boolean checkstudyIdPassword(String studyId, String password) {
