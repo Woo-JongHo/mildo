@@ -111,14 +111,6 @@ public class UserController {
         return solvedList;
     }
 
-//    @PutMapping("/update-leader/{userId}")
-//    public void updateLeader(@PathVariable String userId) {
-//        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-//
-//        // 리더 변경 회원 테이블에 리더인지 스터디 회원이지 유무 확인 하고 당사자는 N으로 변경 권한 위임 당하는 사람은 Y로 변경
-//        List<UserVO> updateLeader = userService.updateLeader(userId);
-//        log.info("updateLeader = {}", updateLeader);
-//
-//    }
+
 
 }
