@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,7 +55,15 @@ public class StudyRepository {
         StudyDBManger.enterStudy(studyId, password, userId);
     }
 
-    public StudyVO updateStudyName(String studyCode, String studyName) {
-        return StudyDBManger.updateStudyName(studyCode, studyName);
+    public List<StudyVO> updateStudyName(String studyId, String studyName) {
+        List<StudyVO> list = new ArrayList<>();
+
+        int success = StudyDBManger.updateStudyName(studyId, studyName);
+        if(success >= 1){
+            list = StudyDBManger.studyList(studyId);
+            log.info("list = {}", list);
+        }
+
+        return list;
     }
 }

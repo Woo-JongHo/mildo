@@ -127,14 +127,14 @@ public class StudyDBManger extends DBManger {
 
     }
 
-    public static StudyVO updateStudyName(String studyCode, String studyName) {
+    public static int  updateStudyName(String studyId, String studyName) {
         SqlSession session = sqlSessionFactory.openSession();
         Map<String, Object> params = new HashMap<>();
-        params.put("study_Code", studyCode);
+        params.put("study_Id", studyId);
         params.put("study_Name", studyName);
-        StudyVO updateStudyName = session.selectOne("User.updateStudyName", params);
+        int rowsAffected = session.update("Study.updateStudyName", params);
         session.commit();
         session.close();
-        return updateStudyName;
+        return rowsAffected;
     }
 }

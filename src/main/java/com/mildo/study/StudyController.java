@@ -92,19 +92,16 @@ public class StudyController {
         }
     }
 
-    // 스터디 이름 바꾸기 구현 중 ~~
-    @PutMapping("/{studyCode}/rename/{newStudyName}")
-    public ResponseEntity<StudyVO> updateUser(@PathVariable String studyCode, @PathVariable String studyName) {
-//        studyCode = URLDecoder.decode(studyCode, StandardCharsets.UTF_8);
-        log.info("studyCode = {}", studyCode);
-        log.info("studyName = {}", studyName);
-
-        StudyVO updatedUser = studyService.updateStudyName(studyCode, studyName);
+    // 스터디 이름 바꾸기 구현
+    @GetMapping("/{studyId}/rename")
+    public ResponseEntity<List<StudyVO>> updateUser(@PathVariable String studyId, String studyName) {
+        List<StudyVO> updatedUser = studyService.updateStudyName(studyId, studyName);
         log.info("updatedUser = {}", updatedUser);
 
         if (updatedUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
         }
-        return ResponseEntity.ok(updatedUser); // 200 OK, 업데이트된 유저 정보 반환
+        return ResponseEntity.ok(updatedUser);
     }
+
 }

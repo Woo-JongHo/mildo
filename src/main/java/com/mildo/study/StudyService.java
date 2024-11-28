@@ -227,8 +227,9 @@ public class StudyService {
         return studyRepository.checkstudyIdPassword(studyId,password);
     }
 
-    public StudyVO updateStudyName(String studyCode, String studyName){
-        return studyRepository.updateStudyName(studyCode, studyName);
+    public List<StudyVO> updateStudyName(String studyId, String studyName){
+
+        return studyRepository.updateStudyName(studyId, studyName);
     }
 
 }

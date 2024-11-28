@@ -7,7 +7,6 @@
 
     <resultMap id="studyResultMap" type="studyVO">
         <result property="studyId" column="" />
-        <result property="userId" column="user_id" />
         <result property="studyId" column="study_Id" />
         <result property="studyName" column="study_name" />
         <result property="studyPassword" column="study_password" />
@@ -100,10 +99,10 @@
           AND study_password = #{study_password}
     </select>
 
-    <update id="updateStudyName" parameterType="studyVO">
+    <update id="updateStudyName" parameterType="map">
         UPDATE study
         SET study_name = #{study_Name}
-        WHERE study_code = #{study_Code} RETURNING study_name
+        WHERE study_id = #{study_Id}
     </update>
 
 </mapper>
