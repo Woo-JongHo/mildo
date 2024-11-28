@@ -92,6 +92,11 @@ public class StudyController {
         }
     }
 
+    @GetMapping("{studyId}/monthData")
+    public Map<String, Map<String,List<String>>> monthData(@PathVariable String studyId){
+        return studyService.Mildo(studyId);
+    }
+
     // 스터디 이름 바꾸기 구현
     @PutMapping("/{studyId}/rename")
     public ResponseEntity<List<StudyVO>> updateUser(@PathVariable String studyId, String studyName) {
