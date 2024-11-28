@@ -91,4 +91,17 @@ public class StudyController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid study code or password!");
         }
     }
+
+    // 스터디 이름 바꾸기 구현
+    @PutMapping("/{studyId}/rename")
+    public ResponseEntity<List<StudyVO>> updateUser(@PathVariable String studyId, String studyName) {
+        List<StudyVO> updatedUser = studyService.updateStudyName(studyId, studyName);
+        log.info("updatedUser = {}", updatedUser);
+
+        if (updatedUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+        }
+        return ResponseEntity.ok(updatedUser);
+    }
+
 }

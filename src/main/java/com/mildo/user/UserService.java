@@ -82,17 +82,20 @@ public class UserService {
     }
 
     public TokenVO makeToken(String userId) {
-        String accessToken = jwtTokenProvider.createAccessToken(userId);
-        Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
-        // 형변환
-        java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+        TokenVO token = new TokenVO();
+        UserVO user = userRepository.finduserId(userId);
 
-        TokenVO tkoen = new TokenVO();
-        tkoen.setUserId(userId);
-        tkoen.setAccessToken(accessToken);
-        tkoen.setExpirationTime(sqlExpiration);
+        if(user != null){
+            String accessToken = jwtTokenProvider.createAccessToken(userId);
+            Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
+            // 형변환
+            java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
 
-        return tkoen;
+            token.setUserId(userId);
+            token.setAccessToken(accessToken);
+            token.setExpirationTime(sqlExpiration);
+        }
+        return token;
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId) {

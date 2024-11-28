@@ -126,4 +126,15 @@ public class StudyDBManger extends DBManger {
 
 
     }
+
+    public static int  updateStudyName(String studyId, String studyName) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("study_Id", studyId);
+        params.put("study_Name", studyName);
+        int rowsAffected = session.update("Study.updateStudyName", params);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
 }

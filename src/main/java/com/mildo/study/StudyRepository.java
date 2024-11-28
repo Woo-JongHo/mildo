@@ -2,10 +2,12 @@ package com.mildo.study;
 
 
 import com.mildo.study.Vo.StudyVO;
+import com.mildo.user.UserDBManger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -51,5 +53,17 @@ public class StudyRepository {
 
     public void enterStudy(String studyId, String password, String userId) {
         StudyDBManger.enterStudy(studyId, password, userId);
+    }
+
+    public List<StudyVO> updateStudyName(String studyId, String studyName) {
+        List<StudyVO> list = new ArrayList<>();
+
+        int success = StudyDBManger.updateStudyName(studyId, studyName);
+        if(success >= 1){
+            list = StudyDBManger.studyList(studyId);
+            log.info("list = {}", list);
+        }
+
+        return list;
     }
 }
