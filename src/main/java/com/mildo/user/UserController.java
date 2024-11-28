@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.code.CodeVO;
+import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
@@ -37,15 +38,15 @@ public class UserController {
 //        log.info("principal = {}", principal);
 //
 //        UserVO user = userService.login(principal);
-//        String accessToken = jwtTokenProvider.createAccessToken(user);
-//        log.info("accessToken = {}", accessToken);
+////        String accessToken = jwtTokenProvider.createAccessToken(user);
+////        log.info("accessToken = {}", accessToken);
 //
 ////        Date expiration = getExpirationFromToken(accessToken);
 ////        log.info("Access Token 만료 시간: {}", expiration);
 //
 //        return ResponseEntity.ok(Map.of(
 ////                "expiration", expiration,
-//                "accessToken", accessToken,
+////                "accessToken", accessToken,
 //                "userId", user.getUserId()
 //        ));
 //    }
@@ -109,5 +110,15 @@ public class UserController {
 
         return solvedList;
     }
+
+//    @PutMapping("/update-leader/{userId}")
+//    public void updateLeader(@PathVariable String userId) {
+//        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+//
+//        // 리더 변경 회원 테이블에 리더인지 스터디 회원이지 유무 확인 하고 당사자는 N으로 변경 권한 위임 당하는 사람은 Y로 변경
+//        List<UserVO> updateLeader = userService.updateLeader(userId);
+//        log.info("updateLeader = {}", updateLeader);
+//
+//    }
 
 }

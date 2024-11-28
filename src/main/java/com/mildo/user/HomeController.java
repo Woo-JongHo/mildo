@@ -43,10 +43,12 @@ public class HomeController {
 
         String userId = user.getUserId();
         String social = "google"; // 이러면 social-login/:mildo.com
-        String redirectUrl = "/social-login/" + social + "?userId=" + userId;
+//        String redirectUrl = "/social-login/" + social + "?userId=" + userId;
+
+//        String redirectUrl = "http://podofarm.xyz/";
 
 //        예상 도메인
-//        String redirectUrl = "https://mildo.com/social-login/" + social + "?userId=" + userId;
+        String redirectUrl = "http://podofarm.xyz/social-login/" + social + "?userId=" + userId;
 
         return new RedirectView(redirectUrl);
     }

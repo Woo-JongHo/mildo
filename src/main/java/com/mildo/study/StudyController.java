@@ -93,7 +93,7 @@ public class StudyController {
     }
 
     // 스터디 이름 바꾸기 구현
-    @GetMapping("/{studyId}/rename")
+    @PutMapping("/{studyId}/rename")
     public ResponseEntity<List<StudyVO>> updateUser(@PathVariable String studyId, String studyName) {
         List<StudyVO> updatedUser = studyService.updateStudyName(studyId, studyName);
         log.info("updatedUser = {}", updatedUser);
