@@ -109,4 +109,29 @@ public class StudyController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    // 스터디 리더 변경 기능 구현
+    @PutMapping("/{studyId}/update-leader")
+    public ResponseEntity<String> updateLeader(@PathVariable String studyId, @RequestBody Map<String, String> requestBody){
+        String newLeaderId = requestBody.get("newLeaderId");
+        log.info("newLeaderId = {}", newLeaderId);
+
+        String leaderId = studyService.updateLeader(studyId, newLeaderId);
+
+        if (leaderId.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+
+        return ResponseEntity.ok(newLeaderId);
+    }
+
+    // 스터디 삭제 기능 구현
+    @DeleteMapping("/{studyId}/delete-study")
+    public ResponseEntity<Boolean> deleteStudy(@PathVariable String studyId){
+        // 유저 아이디를 받아 해당 유저가 리더가 맞는지 판단하는 것도 좋을 것같음
+
+        boolean isValid =  studyService.deleteStudy(studyId);
+        if (isValid)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+
+        return ResponseEntity.ok(true);
+    }
 }

@@ -66,4 +66,18 @@ public class StudyRepository {
 
         return list;
     }
+
+    public String updateLeader(String studyId,  String newLeaderId) {
+        int success = StudyDBManger.updateLeader(studyId, newLeaderId);
+        if(success != 1)
+            return "";
+
+        return newLeaderId;
+    }
+
+    public boolean deleteStudy(String studyId) {
+        int success = StudyDBManger.deleteStudy(studyId);
+
+        return success != 0;
+    }
 }
