@@ -122,4 +122,19 @@ public class StudyDBManger extends DBManger {
         return isValid; // 유효 여부 반환
     }
 
+    public static void enterStudy(String studyId, String password, String userId) {
+
+
+    }
+
+    public static int  updateStudyName(String studyId, String studyName) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("study_Id", studyId);
+        params.put("study_Name", studyName);
+        int rowsAffected = session.update("Study.updateStudyName", params);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
 }
