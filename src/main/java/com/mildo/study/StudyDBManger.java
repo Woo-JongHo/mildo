@@ -137,4 +137,15 @@ public class StudyDBManger extends DBManger {
         session.close();
         return rowsAffected;
     }
+
+    public static int updateLeader(String studyId, String newLeaderId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("new_Leader_Id", newLeaderId);
+        params.put("study_Id", studyId);
+        int rowsAffected = session.update("Study.updateLeader", params);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
 }
