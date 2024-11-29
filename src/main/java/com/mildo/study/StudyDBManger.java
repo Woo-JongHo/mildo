@@ -137,4 +137,30 @@ public class StudyDBManger extends DBManger {
         session.close();
         return rowsAffected;
     }
+
+    public static int updateLeader(String studyId, String newLeaderId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("new_Leader_Id", newLeaderId);
+        params.put("study_Id", studyId);
+        int rowsAffected = session.update("Study.updateLeader", params);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
+
+    public static int deleteStudy(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+
+        int rowsAffected = session.update("Study.deleteStudy", studyId);
+        if(rowsAffected == 0)   // 해당 스터디가 존재하지 않을 경우 삭제되지 않음
+            return rowsAffected;
+
+        rowsAffected = session.update("Study.resetUserStudyInfo", studyId);
+
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
 }

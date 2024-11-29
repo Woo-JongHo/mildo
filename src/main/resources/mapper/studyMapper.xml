@@ -105,4 +105,28 @@
         WHERE study_id = #{study_Id}
     </update>
 
+    <update id="updateLeader" parameterType="map">
+        UPDATE USERS
+        SET user_leader = 'N'
+        WHERE study_id = #{study_Id}
+          AND user_leader = 'Y';
+
+        UPDATE USERS
+        SET user_leader = 'Y'
+        WHERE user_id = #{new_Leader_Id}
+          AND study_id = #{study_Id};
+    </update>
+
+    <update id="resetUserStudyInfo">
+        UPDATE USERS
+        SET user_leader      = 'N',
+            user_isparticipant = null
+        WHERE study_id = #{study_id};
+    </update>
+
+    <delete id="deleteStudy">
+        DELETE
+        FROM STUDY
+        WHERE study_id = #{studyId};
+    </delete>
 </mapper>
