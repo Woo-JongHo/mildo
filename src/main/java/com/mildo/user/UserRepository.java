@@ -67,4 +67,15 @@ public class UserRepository {
     public boolean checkExtensionSync(String userId, String studyId) {
         return UserDBManger.checkExtensionSync(userId,studyId);
     }
+
+    public int studyGetOut(String userId) {
+        // 스터디 탈되로 업데이트
+        int result = UserDBManger.studyGetOut(userId);
+        // 코드 삭제
+        int result2 = UserDBManger.userIdDeleteCode(userId);
+        // 댓글 삭제
+        int result3 = UserDBManger.userIdDeleteComment(userId);
+
+        return result;
+    }
 }

@@ -30,4 +30,14 @@
         ORDER BY c_date ASC
     </select>
 
+    <insert id="saveComment">
+        INSERT INTO COMMENT (
+        code_id,
+        user_id,
+        comment_content,
+        comment_date
+        )
+        VALUES (#{codeId}, #{userId}, #{commentContent}, NOW())
+    </insert>
+
 </mapper>

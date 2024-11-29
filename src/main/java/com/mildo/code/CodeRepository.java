@@ -17,4 +17,9 @@ public class CodeRepository {
     public ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
         return CodeDBManger.getSolvedByDaySelectedMonth(userId, month);
     }
+
+    public int saveComment(CommentVO comment){
+        return CodeDBManger.saveComment(comment);
+    }
+
 }

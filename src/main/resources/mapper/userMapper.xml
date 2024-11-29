@@ -102,4 +102,19 @@
           AND study_id = #{studyId}
     </select>
 
+    <update id="studyGetOut">
+        UPDATE users
+        SET study_id = null
+        WHERE user_id = #{userId}
+    </update>
+
+    <delete id="userIdDeleteCode">
+        DELETE FROM CODE
+        WHERE user_id = #{userId}
+    </delete>
+
+    <delete id="userIdDeleteComment">
+        DELETE FROM COMMENT
+        WHERE user_id = #{userId}
+    </delete>
 </mapper>

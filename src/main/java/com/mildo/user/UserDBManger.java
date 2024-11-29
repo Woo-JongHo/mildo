@@ -136,4 +136,28 @@ public class UserDBManger extends DBManger {
         }
         return isValid; // 유효 여부 반환
     }
+
+    public static int studyGetOut(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.studyGetOut", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int userIdDeleteCode(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.userIdDeleteCode", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int userIdDeleteComment(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.userIdDeleteComment", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
 }

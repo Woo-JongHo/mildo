@@ -129,4 +129,8 @@ public class UserService {
     public boolean checkExtensionSync(String userId, String studyId) {
         return userRepository.checkExtensionSync(userId, studyId);
     }
+
+    public int studyGetOut(String userId) {
+        return userRepository.studyGetOut(userId);
+    }
 }

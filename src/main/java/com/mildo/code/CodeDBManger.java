@@ -40,4 +40,13 @@ public class CodeDBManger extends DBManger {
 
         return results;
     }
+
+    public static int saveComment(CommentVO comment) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int re = session.insert("code.saveComment", comment);
+        session.commit();
+        session.close();
+
+        return re;
+    }
 }

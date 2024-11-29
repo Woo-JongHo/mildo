@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.code.CodeVO;
+import com.mildo.code.CommentVO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
@@ -112,6 +113,18 @@ public class UserController {
         return solvedList;
     }
 
+    @ResponseBody
+    @RequestMapping(value="/api/{userId}/studyOut", method = RequestMethod.DELETE, produces="application/json; charset=UTF-8")
+    public ResponseEntity<String> studyOut(@PathVariable String userId){
+        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+        int res = userService.studyGetOut(userId);
 
+        if (res > 0) {
+            return ResponseEntity.ok("삭제 성공");
+        } else {
+            // 실패한 경우 400 에러 보냄
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
+        }
+    }
 
 }

@@ -52,4 +52,8 @@ public class CodeService {
         log.info("ProblemID: {}", problemId);
         log.info("Level: {}", level);
     }
+
+    public int saveComment(CommentVO comment){
+        return codeRepository.saveComment(comment);
+    }
 }
