@@ -1,4 +1,4 @@
-package com.example.mildo.user;
+package com.mildo.user;
 
 import com.mildo.user.UserController;
 import lombok.extern.slf4j.Slf4j;
