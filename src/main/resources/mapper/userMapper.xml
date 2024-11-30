@@ -36,7 +36,15 @@
     </resultMap>
 
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
-        SELECT * FROM USERS
+        SELECT user_id,
+               study_id,
+               user_number,
+               user_name,
+               user_email,
+               user_solvedproblem,
+               user_isparticipant,
+               user_leader
+        FROM USERS
         WHERE user_googleid = #{number}
     </select>
 
@@ -50,7 +58,14 @@
     </insert>
 
     <select id="finduserId" parameterType="java.lang.String" resultMap="userResultMap">
-        SELECT *
+        SELECT user_id,
+               study_id,
+               user_number,
+               user_name,
+               user_email,
+               user_solvedproblem,
+               user_isparticipant,
+               user_leader
             FROM users
         WHERE user_id = #{userId}
     </select>
