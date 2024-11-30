@@ -59,7 +59,8 @@ public class UserController {
     }
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
-    @GetMapping("/api/{userId}/info")
+    @ResponseBody
+    @RequestMapping(value="/api/{userId}/info", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<UserVO> userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         UserVO user = userService.finduserId(userId);
@@ -71,7 +72,8 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/api/{userId}/tokenInfo")
+    @ResponseBody
+    @RequestMapping(value="/api/{userId}/tokenInfo", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<TokenVO> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
 //        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
@@ -84,8 +86,8 @@ public class UserController {
     }
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
-
-    @GetMapping("/api/{userId}/solvedLevels")
+    @ResponseBody
+    @RequestMapping(value="/api/{userId}/solvedLevels", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
         try {
             // 잘못된 인코딩 처리
@@ -105,26 +107,22 @@ public class UserController {
     }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
-    @GetMapping("/api/{userId}/solvedList")
-    public List<CodeVO> solvedListId(@PathVariable String userId){
+    @ResponseBody
+    @RequestMapping(value="/api/{userId}/solvedList", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<CodeVO> solvedList = userService.solvedList(userId);
 
-        return solvedList;
+        return ResponseEntity.ok(solvedList);
     }
 
-    @ResponseBody
+    @ResponseBody // userId로 스터디 탈퇴
     @RequestMapping(value="/api/{userId}/studyOut", method = RequestMethod.DELETE, produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         int res = userService.studyGetOut(userId);
 
-        if (res > 0) {
-            return ResponseEntity.ok("삭제 성공");
-        } else {
-            // 실패한 경우 400 에러 보냄
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
-        }
+        return res > 0 ? ResponseEntity.ok("삭제 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
     }
 
 }
