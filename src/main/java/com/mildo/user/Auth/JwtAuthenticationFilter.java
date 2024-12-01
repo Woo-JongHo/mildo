@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token is missing");
+            response.getWriter().write("Access Token is missing");
             return;
         }
 
@@ -64,24 +64,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .parseClaimsJws(token)
                         .getBody();
 
-                // 만료 시간 확인
-                if (claims.getExpiration().before(new Date())) {
-//                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                    response.getWriter().write("Token has expired");
-                    validateRefreshToken(request, response, filterChain);
-                    return;
-                }
-
                 // 토큰이 유효한 경우 추가 작업 가능
                 request.setAttribute("user", claims.getSubject());
 
-            } catch (ExpiredJwtException e) {
+            } catch (ExpiredJwtException e) { // Access Token 만료 시 발생
                 validateRefreshToken(request, response, filterChain);
                 return;
 
             }catch (Exception e) {
+                log.error("Exception e = {}", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Invalid Token");
+                response.getWriter().write("Access Invalid Token");
                 return;
             }
         }
@@ -92,6 +85,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void validateRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         String refreshToken = request.getHeader("RefreshToken");
+        log.info("refreshToken = {}", refreshToken);
 
 //        if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
         if (refreshToken == null) { // refreshToken이 없을 때
@@ -108,12 +102,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(refreshToken)
                     .getBody();
-
-            if (claims.getExpiration().before(new Date())) { // refreshToken이 만료되었는지 확인
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Refresh Token has expired");
-                return;
-            }
 
             // refreshToken이 DB에 있는지 확인
             String userId = claims.getSubject(); // Refresh Token에서 userId 추출
@@ -139,7 +127,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("Access Token refreshed successfully");
 
-        } catch (Exception e) {
+        } catch (ExpiredJwtException e) { // Refresh Token 만료 시 발생
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Refresh Token has expired");
+            return;
+        }catch (Exception e) {
+            log.error("Exception e = {}", e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid Refresh Token");
         }
