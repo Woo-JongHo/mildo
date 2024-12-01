@@ -32,6 +32,7 @@
     <resultMap id="TokenResultMap" type="tokenVO">
         <result property="userId" column="user_id" />
         <result property="accessToken" column="access_token" />
+        <result property="refreshToken" column="refresh_token" />
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
@@ -79,10 +80,25 @@
     <insert id="saveToken" parameterType="tokenVO">
         INSERT INTO TOKEN(user_id,
                           access_token,
+                          refresh_token,
                           expiration_time
         )
-        VALUES (#{userId}, #{accessToken}, #{expirationTime})
+        VALUES (#{userId}, #{accessToken}, #{refreshToken}, #{expirationTime})
     </insert>
+
+    <update id="saveUpdateToken">
+        UPDATE TOKEN
+        SET access_token = #{accessToken},
+            refresh_token = #{refreshToken},
+            expiration_time = #{expirationTime}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="findRefreshTokenByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT refresh_token
+        FROM TOKEN
+        WHERE user_id = #{userId}
+    </select>
 
     <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="LevelCountResultMap">
         SELECT c.code_level, COUNT(*) AS solved_count
@@ -107,7 +123,7 @@
     <update id="updateStudyId" parameterType="map">
         UPDATE users
         SET study_id = #{studyId}
-        WHERE user_id = #{userId};
+        WHERE user_id = #{userId}
     </update>
 
     <select id="checkExtensionSync" parameterType="map" resultType="int">

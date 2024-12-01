@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.user.Vo.UserVO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,9 @@ public class HomeController {
         String userId = user.getUserId();
         String social = "google"; // 이러면 social-login/:mildo.com
 
-//        String redirectUrl = "https://podofarm.xyz/";
-//        String redirectUrl = "http://podofarm.xyz/social-login/" + social + "?userId=" + userId;
-        String redirectUrl = "https://d32cyw4f4wdlpd.cloudfront.net/social-login/" + social + "?userId=" + userId;
+        String redirectUrl = "http://podofarm.xyz/social-login/" + social + "?userId=" + userId;
+//        String redirectUrl = "https://d32cyw4f4wdlpd.cloudfront.net/social-login/" + social + "?userId=" + userId;
+        log.info("redirectUrl = {}", redirectUrl);
 
         return new RedirectView(redirectUrl);
     }

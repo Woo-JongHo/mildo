@@ -76,10 +76,9 @@ public class UserController {
     @RequestMapping(value="/api/{userId}/tokenInfo", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<TokenVO> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-//        TokenVO token = userService.saveToken(userId); // DB에 토큰 저장 할꺼면 사용
         TokenVO token = userService.makeToken(userId);
 
-        if (token == null || token.getAccessToken() == null) {
+        if (token == null || token.getRefreshToken() == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 상태코드를 401 로 보냄
         }
         return ResponseEntity.ok(token);
@@ -93,7 +92,6 @@ public class UserController {
             // 잘못된 인코딩 처리
             userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         } catch (IllegalArgumentException e) {
-            log.info("encoding error : {}", userId, e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
         }
 
