@@ -10,6 +10,7 @@ import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,8 +42,18 @@ public class UserRepository {
     }
 
     // 토큰 저장
-    public void saveToken(TokenVO tkoen){
-        UserDBManger.saveToken(tkoen);
+    public void saveToken(TokenVO token){
+        UserDBManger.saveToken(token);
+    }
+
+    // 토큰 업데이트
+    public void saveUpdateToken(TokenVO token){
+        UserDBManger.saveUpdateToken(token);
+    }
+
+    // 필터에서 토큰 조회
+    public String findRefreshTokenByUserId(String userId){
+        return UserDBManger.findRefreshTokenByUserId(userId);
     }
 
     // 코드 레벨별로 갯수 가져오기
@@ -66,5 +77,17 @@ public class UserRepository {
 
     public boolean checkExtensionSync(String userId, String studyId) {
         return UserDBManger.checkExtensionSync(userId,studyId);
+    }
+
+    @Transactional
+    public int studyGetOut(String userId) {
+        // 댓글 삭제
+        int result3 = UserDBManger.userIdDeleteComment(userId);
+        // 코드 삭제
+        int result2 = UserDBManger.userIdDeleteCode(userId);
+        // 스터디 탈되로 업데이트
+        int result = UserDBManger.studyGetOut(userId);
+
+        return result;
     }
 }

@@ -32,11 +32,20 @@
     <resultMap id="TokenResultMap" type="tokenVO">
         <result property="userId" column="user_id" />
         <result property="accessToken" column="access_token" />
+        <result property="refreshToken" column="refresh_token" />
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
-        SELECT * FROM USERS
+        SELECT user_id,
+               study_id,
+               user_number,
+               user_name,
+               user_email,
+               user_solvedproblem,
+               user_isparticipant,
+               user_leader
+        FROM USERS
         WHERE user_googleid = #{number}
     </select>
 
@@ -50,7 +59,14 @@
     </insert>
 
     <select id="finduserId" parameterType="java.lang.String" resultMap="userResultMap">
-        SELECT *
+        SELECT user_id,
+               study_id,
+               user_number,
+               user_name,
+               user_email,
+               user_solvedproblem,
+               user_isparticipant,
+               user_leader
             FROM users
         WHERE user_id = #{userId}
     </select>
@@ -64,10 +80,25 @@
     <insert id="saveToken" parameterType="tokenVO">
         INSERT INTO TOKEN(user_id,
                           access_token,
+                          refresh_token,
                           expiration_time
         )
-        VALUES (#{userId}, #{accessToken}, #{expirationTime})
+        VALUES (#{userId}, #{accessToken}, #{refreshToken}, #{expirationTime})
     </insert>
+
+    <update id="saveUpdateToken">
+        UPDATE TOKEN
+        SET access_token = #{accessToken},
+            refresh_token = #{refreshToken},
+            expiration_time = #{expirationTime}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="findRefreshTokenByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT refresh_token
+        FROM TOKEN
+        WHERE user_id = #{userId}
+    </select>
 
     <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="LevelCountResultMap">
         SELECT c.code_level, COUNT(*) AS solved_count
@@ -92,7 +123,7 @@
     <update id="updateStudyId" parameterType="map">
         UPDATE users
         SET study_id = #{studyId}
-        WHERE user_id = #{userId};
+        WHERE user_id = #{userId}
     </update>
 
     <select id="checkExtensionSync" parameterType="map" resultType="int">
@@ -102,4 +133,19 @@
           AND study_id = #{studyId}
     </select>
 
+    <update id="studyGetOut">
+        UPDATE users
+        SET study_id = null
+        WHERE user_id = #{userId}
+    </update>
+
+    <delete id="userIdDeleteCode">
+        DELETE FROM CODE
+        WHERE user_id = #{userId}
+    </delete>
+
+    <delete id="userIdDeleteComment">
+        DELETE FROM COMMENT
+        WHERE user_id = #{userId}
+    </delete>
 </mapper>

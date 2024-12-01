@@ -32,9 +32,15 @@ public class UserDBManger extends DBManger {
     // 구글 회원 가입
     public static void save(UserVO users) {
         SqlSession session = sqlSessionFactory.openSession();
-        session.insert("User.save", users);
-        session.commit();
-        session.close();
+        try{
+            session.insert("User.save", users);
+            session.commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.rollback(); // 에러 발생 시 롤백
+        } finally {
+            session.close(); // 세션 닫기
+        }
     }
 
     // userId로 회원 조회
@@ -58,11 +64,39 @@ public class UserDBManger extends DBManger {
     }
 
     // 토큰 생성후 값 넣기
-    public static void saveToken(TokenVO tkoen) {
+    public static void saveToken(TokenVO token) {
         SqlSession session = sqlSessionFactory.openSession();
-        session.insert("User.saveToken", tkoen);
+        try{
+            session.insert("User.saveToken", token);
+            session.commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.rollback(); // 에러 발생 시 롤백
+        } finally {
+            session.close(); // 세션 닫기
+        }
+    }
+
+    // 토큰 업데이트
+    public static void saveUpdateToken(TokenVO token) {
+        SqlSession session = sqlSessionFactory.openSession();
+        try{
+            session.update("User.saveUpdateToken", token);
+            session.commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.rollback(); // 에러 발생 시 롤백
+        } finally {
+            session.close(); // 세션 닫기
+        }
+    }
+
+    public static String findRefreshTokenByUserId (String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        String Refresh = session.selectOne("User.findRefreshTokenByUserId", userId);
         session.commit();
         session.close();
+        return Refresh;
     }
 
     // 코드 레벨별로 갯수 가져오기
@@ -135,5 +169,29 @@ public class UserDBManger extends DBManger {
             session.close(); // 세션 닫기
         }
         return isValid; // 유효 여부 반환
+    }
+
+    public static int studyGetOut(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.studyGetOut", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int userIdDeleteCode(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.userIdDeleteCode", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int userIdDeleteComment(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.userIdDeleteComment", userId);
+        session.commit();
+        session.close();
+        return res;
     }
 }

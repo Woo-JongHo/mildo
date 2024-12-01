@@ -41,9 +41,9 @@ public class JwtTokenProvider {
     }
 
     // refreshToken 생성
-    public static String createRefreshToken(UserVO user) {
+    public static String createRefreshToken(String userId) {
         return Jwts.builder()
-                .setSubject(user.getUserEmail()) // 사용자 이메일을 subject로 설정
+                .setSubject(userId) // 사용자 userId를 subject로 설정
                 .setIssuedAt(new Date()) // 발급 시간
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7일 후 만료
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // 서명
