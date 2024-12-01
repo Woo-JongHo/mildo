@@ -1,4 +1,4 @@
-package com.example.mildo;
+package com.mildo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
