@@ -41,7 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 인증이 필요 없는 URL
         if (pathMatcher.match("/api/{userId}/info", requestURI)||
             pathMatcher.match("/api/{userId}/tokenInfo", requestURI) ||
-                pathMatcher.match("/", requestURI) ||
+            pathMatcher.match("/", requestURI) ||
+            pathMatcher.match("/login/oauth2/code/google", requestURI) ||
             requestURI.startsWith("/public")) {
             filterChain.doFilter(request, response);
             return;
