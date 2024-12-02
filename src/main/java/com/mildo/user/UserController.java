@@ -30,6 +30,7 @@ import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -62,7 +63,7 @@ public class UserController {
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @ResponseBody
-    @RequestMapping(value="/api/{userId}/info", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @RequestMapping(value="/{userId}/info", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<UserVO> userInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         UserVO user = userService.finduserId(userId);
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/api/{userId}/tokenInfo", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @RequestMapping(value="/{userId}/tokenInfo", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<TokenVO> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         TokenVO token = userService.makeToken(userId);
@@ -88,7 +89,7 @@ public class UserController {
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
     @ResponseBody
-    @RequestMapping(value="/api/{userId}/solvedLevels", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @RequestMapping(value="/{userId}/solvedLevels", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
         try {
             // 잘못된 인코딩 처리
@@ -108,7 +109,7 @@ public class UserController {
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @ResponseBody
-    @RequestMapping(value="/api/{userId}/solvedList", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @RequestMapping(value="/{userId}/solvedList", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<CodeVO> solvedList = userService.solvedList(userId);
@@ -117,7 +118,7 @@ public class UserController {
     }
 
     @ResponseBody // userId로 스터디 탈퇴
-    @RequestMapping(value="/api/{userId}/studyOut", method = RequestMethod.DELETE, produces="application/json; charset=UTF-8")
+    @RequestMapping(value="/{userId}/studyOut", method = RequestMethod.DELETE, produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         int res = userService.studyGetOut(userId);

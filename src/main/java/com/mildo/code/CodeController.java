@@ -14,7 +14,7 @@ import java.text.ParseException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/code")
+@RequestMapping("/code")
 public class CodeController {
 
     private final CodeService codeService;
