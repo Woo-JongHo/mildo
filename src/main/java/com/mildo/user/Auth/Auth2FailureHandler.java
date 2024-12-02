@@ -17,4 +17,5 @@ public class Auth2FailureHandler implements AuthenticationFailureHandler {
         log.error("로그인 실패 = {}", exception);
         response.sendRedirect("/login-failed");
     }
+
 }
