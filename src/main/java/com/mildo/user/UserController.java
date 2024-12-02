@@ -88,14 +88,14 @@ public class UserController {
 
     // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
     @ResponseBody
-    @RequestMapping(value="/{userId}/solvedLevels", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @GetMapping(value="/{userId}/solvedLevels", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
-        try {
-            // 잘못된 인코딩 처리
-            userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
-        }
+//        try {
+//            // 잘못된 인코딩 처리
+//            userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
+//        }
 
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
 
@@ -108,7 +108,7 @@ public class UserController {
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @ResponseBody
-    @RequestMapping(value="/{userId}/solvedList", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<CodeVO> solvedList = userService.solvedList(userId);
