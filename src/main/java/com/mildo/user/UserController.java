@@ -63,21 +63,19 @@ public class UserController {
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @ResponseBody
-    @RequestMapping(value="/{userId}/info", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
-    public ResponseEntity<UserVO> userInfo(@PathVariable String userId){
-//        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+    @GetMapping(value = "/{userId}/info", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<UserVO> userInfo(@PathVariable String userId) {
         log.info("userId = {}", userId);
         UserVO user = userService.finduserId(userId);
         log.info("user = {}", user);
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 상태코드를 401 로 보냄
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
         return ResponseEntity.ok(user);
     }
 
     @ResponseBody
-    @RequestMapping(value="/{userId}/tokenInfo", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @GetMapping(value="/{userId}/tokenInfo", produces="application/json; charset=UTF-8")
     public ResponseEntity<TokenVO> tokenInfo(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         TokenVO token = userService.makeToken(userId);
