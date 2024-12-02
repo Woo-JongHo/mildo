@@ -36,6 +36,7 @@ public class HomeController {
         return "redirect:https://accounts.google.com/logout";
     }
 
+
     @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
     public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);

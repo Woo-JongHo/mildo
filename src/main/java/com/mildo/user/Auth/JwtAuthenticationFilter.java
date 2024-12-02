@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Slf4j
-@Component
+//@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String SECRET_KEY = JwtTokenProvider.SECRET_KEY;
 

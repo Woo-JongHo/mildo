@@ -7,6 +7,8 @@ import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -121,6 +123,14 @@ public class UserController {
         int res = userService.studyGetOut(userId);
 
         return res > 0 ? ResponseEntity.ok("삭제 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
+    }
+
+    @GetMapping("/login-failed")
+    public String faillLogin(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        log.info("session = {}", session.getId());
+
+        return "FAILL";
     }
 
 }
