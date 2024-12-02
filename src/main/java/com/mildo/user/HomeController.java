@@ -2,6 +2,7 @@ package com.mildo.user;
 
 import com.mildo.user.Vo.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,14 @@ public class HomeController {
     }
 
     @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
-    public RedirectView home(@AuthenticationPrincipal OidcUser principal) {
+    public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);
 
+        HttpSession session = request.getSession();
+        log.info("session = {}", session.getId());
+
         UserVO user = userService.login(principal);
-        log.info("user = {}", user);
+//        log.info("user = {}", user);
 
         String userId = user.getUserId();
         String social = "google"; // 이러면 social-login/:mildo.com
