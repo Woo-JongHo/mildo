@@ -101,7 +101,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(solvedLevels);
-    }*/
+    }
 
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @GetMapping("/api/{userId}/solvedList")

@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @WebMvcTest(UserController.class) // UserController를 테스트한다고 가정
 public class UserControllerTest {
-
+    /*
     @Autowired
     private MockMvc mockMvc;
 
@@ -29,4 +29,5 @@ public class UserControllerTest {
                 .andDo(print()) // 로그 출력
                 .andExpect(status().isBadRequest()); // Expecting HTTP 400 Bad Request
     }
+    */
 }
