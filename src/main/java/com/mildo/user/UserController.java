@@ -65,7 +65,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/{userId}/info", method = RequestMethod.GET, produces="application/json; charset=UTF-8")
     public ResponseEntity<UserVO> userInfo(@PathVariable String userId){
-        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+//        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+        log.info("userId = {}", userId);
         UserVO user = userService.finduserId(userId);
         log.info("user = {}", user);
         if (user == null) {
