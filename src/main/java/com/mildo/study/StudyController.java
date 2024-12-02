@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/study")
+@RequestMapping("/study")
 public class StudyController {
     private final StudyService studyService;
     private final UserService userService;
