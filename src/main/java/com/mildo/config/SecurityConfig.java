@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable() // CSRF 비활성화
 //                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 );
 
 
