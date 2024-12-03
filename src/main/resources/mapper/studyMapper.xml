@@ -161,4 +161,8 @@
         FROM STUDY
         WHERE study_id = #{studyId};
     </delete>
+
+    <insert id="createStudyId">
+        INSERT INTO STUDY(study_id) values (#{studyId})
+    </insert>
 </mapper>

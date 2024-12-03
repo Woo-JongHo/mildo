@@ -93,4 +93,8 @@ public class StudyRepository {
     public int findStudyNextNo() {
         return StudyDBManger.findStudyNextNo();
     }
+
+    public int createStudyId(String studyId) {
+        return StudyDBManger.createStudyId(studyId);
+    }
 }
