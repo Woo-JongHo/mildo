@@ -28,10 +28,10 @@ public class CodeGenerator {
 
     public static String generateUserId() {
 
-        //01 배열은 0~9 와 알파벳으로 구성되어있고, 랜덤으로 배열을 뽑아 #4자리로 구성됩니다
-        StringBuilder studyIdBuilder = new StringBuilder("#");
-        for (int i = 0; i < 4; i++) {
-            int index = RANDOM.nextInt(password.length);
+        //01 배열은 알파벳으로 구성되어있고, 랜덤으로 배열을 뽑아 6자리로 구성됩니다
+        StringBuilder studyIdBuilder = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int index = RANDOM.nextInt(10, password.length);
             studyIdBuilder.append(password[index]);
         }
         return studyIdBuilder.toString();

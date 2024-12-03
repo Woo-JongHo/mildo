@@ -26,15 +26,32 @@
         <result property="solvedProblem" column="user_solvedproblem" />
     </resultMap>
 
-    <insert id="create" parameterType="studyVO">
-        INSERT INTO STUDY (
-            study_Id,
-            study_name,
-            study_password,
-            study_start,
-            study_end)
-        VALUES (#{studyId}, #{studyName}, #{studyPassword}, #{studyStart}, #{studyEnd})
-    </insert>
+    <update id="create" parameterType="studyVO">
+        UPDATE STUDY
+        SET study_name     = #{studyName},
+            study_password = #{studyPassword},
+            study_start    = #{studyStart},
+            study_end      = #{studyEnd}
+        WHERE study_id = #{studyId}
+    </update>
+
+    <select id="findStudyNo" parameterType="int" resultMap="studyResultMap">
+        SELECT study_Id,
+               study_name,
+               study_password,
+               study_start,
+               study_end
+        FROM STUDY
+        WHERE study_no = #{studyNo}
+    </select>
+
+    <select id="findStudyNextNo" resultType="int">
+        SELECT study_no
+        FROM STUDY
+        WHERE study_name IS NULL
+        ORDER BY study_no ASC
+        LIMIT 1
+    </select>
 
     <select id="studyList" resultMap="studyResultMap">
         select *

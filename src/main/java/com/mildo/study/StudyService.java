@@ -2,6 +2,7 @@ package com.mildo.study;
 
 import com.mildo.code.CodeService;
 import com.mildo.study.Vo.StudyVO;
+import com.mildo.user.UserRepository;
 import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,29 +27,50 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudyService {
     private final StudyRepository studyRepository;
+    private final UserRepository userRepository;
     private final CodeService codeService;
+    private static int studyNextNo = 1;
 
     LocalDate currentDate = LocalDate.now();
 
     public void create(String userId, String name, String password) {
-        String studyId = CodeGenerator.generatestudyId();
-        // 해당 코드가 유효한지 판단 필요
-        // while(studyRepository.findstudyId(studyId) != null)
-        //    studyId = CodeGenerator.generatestudyId();
+
+        StudyVO studyVo = findStudyNo(studyNextNo);
+
+        // 스터디 아이디가 무결성을 유지하는지 검증
+        while (studyVo.getStudyName() != null){
+            studyNextNo = findStudyNextNo();
+            studyVo = findStudyNo(studyNextNo);
+        }
+
+        log.info("Study No: {}", studyNextNo);
 
         Date date = new Date(System.currentTimeMillis()); // 현재 시간
         log.info("현재 날짜: {}", date);
 
         Date newDate = addOneYear(date);
 
+        studyVo.setStudyName(name);
+        studyVo.setStudyPassword(password);
+        studyVo.setStudyStart(date);
+        studyVo.setStudyEnd(newDate);
 
-        //create문 VO 변경으로 인한 수정 필요
-        //StudyVO newStudy = new StudyVO(userId, studyId, name, password, date, newDate);
+        studyRepository.create(studyVo);
 
-        //log.info("[Test] Create study : {}", newStudy);
-
-        //studyRepository.create(newStudy);
+        // 유저 Leader 및 studyId값 변경
+        userRepository.createStudy(userId, studyVo.getStudyId(), date);
+        log.info("Created Study: {}, Leader : {}", studyVo, userId);
+        studyNextNo++;
     }
+
+public StudyVO findStudyNo(int studyNo) {
+    return studyRepository.findStudyNo(studyNo);
+}
+
+public int findStudyNextNo() {
+    return studyRepository.findStudyNextNo();
+}
+
 
     private static Date addOneYear(Date date) {
         // Calendar 객체 생성 및 날짜 설정

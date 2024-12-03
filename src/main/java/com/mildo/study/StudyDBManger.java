@@ -17,7 +17,7 @@ public class StudyDBManger extends DBManger {
     public static int create(StudyVO s) {
         int re = -1;
         SqlSession session = sqlSessionFactory.openSession();
-        re = session.insert("Study.create", s);
+        re = session.update("Study.create", s);
         session.commit();
         session.close();
 
@@ -162,5 +162,22 @@ public class StudyDBManger extends DBManger {
         session.commit();
         session.close();
         return rowsAffected;
+    }
+
+    public static StudyVO findStudyNo(int studyNo) {
+        SqlSession session = sqlSessionFactory.openSession();
+        StudyVO study = session.selectOne("Study.findStudyNo", studyNo);
+        session.commit();
+        session.close();
+
+        return study;
+    }
+
+    public static int findStudyNextNo() {
+        SqlSession session = sqlSessionFactory.openSession();
+        int studyNo = session.selectOne("Study.findStudyNextNo");
+        session.commit();
+        session.close();
+        return studyNo;
     }
 }

@@ -194,4 +194,17 @@ public class UserDBManger extends DBManger {
         session.close();
         return res;
     }
+
+    public static int createStudy(String userId, String studyId, Date date) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("studyId", studyId);
+        // params.put("participant", date);
+
+        int res = session.update("User.createStudy", params);
+        session.commit();
+        session.close();
+        return res;
+    }
 }

@@ -2,6 +2,7 @@ package com.mildo.study;
 
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserService;
+import com.mildo.user.Vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,11 @@ public class StudyController {
     @PostMapping("/create")
     public String create(String userId, String name, String password) {
         // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
+        UserVO userVO = userService.finduserId(userId);
+        if(userVO == null)
+            return "Invalid user ID";
+        if(userVO.getStudyId() != null)
+            return "Already own the study";
 
         studyService.create(userId, name, password);
 
