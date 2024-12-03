@@ -14,8 +14,18 @@
         <result property="studyEnd" column="study_end" />
     </resultMap>
 
+    <resultMap id="userResultMap" type="userVO">
+        <result property="userId" column="user_id" />
+        <result property="studyId" column="study_id" />
+        <result property="userNumber" column="user_number" />
+        <result property="userName" column="user_name" />
+        <result property="userEmail" column="user_email" />
+        <result property="userSolvedProblem" column="user_solvedproblem" />
+        <result property="userParticipant" column="user_isparticipant" />
+        <result property="userLeader" column="user_leader" />
+    </resultMap>
+
     <resultMap id="daysResultMap" type="remainingDaysDTO">
-        <result property="studyId" column="" />
         <result property="remainingDays" column="remaining_days" />
         <result property="elapsedDays" column="elapsed_days" />
     </resultMap>
@@ -36,29 +46,34 @@
         VALUES (#{studyId}, #{studyName}, #{studyPassword}, #{studyStart}, #{studyEnd})
     </insert>
 
-    <select id="studyList" resultMap="studyResultMap">
+    <select id="studyList" resultMap="userResultMap">
         select *
-          from STUDY
-         where study_Id = #{stduyCode}
+          from USERS
+         where study_Id = #{studyId}
     </select>
 
     <select id="totalMembers" resultType="_int">
         SELECT COUNT(*)
-        FROM STUDY
-        WHERE study_Id = #{stduyCode}
+        FROM USERS
+        WHERE study_Id = #{studyId}
     </select>
 
-    <select id="studyDays" resultMap="daysResultMap">
+    <select id="studyDays" parameterType="java.lang.String" resultMap="daysResultMap">
+            SELECT
+                GREATEST(0, CURRENT_DATE - study_start) AS elapsed_days
+            FROM STUDY
+            WHERE study_id = #{studyId}
+    </select>
+
+    <select id="studyDaysRe" parameterType="java.lang.String" resultMap="daysResultMap">
         SELECT
-            ,
-            GREATEST(0, CURRENT_DATE - study_start) AS elapsed_days,
             CASE
                 WHEN CURRENT_DATE &lt; study_start THEN study_start - CURRENT_DATE
                 WHEN study_end IS NOT NULL AND CURRENT_DATE &gt; study_end THEN 0
                 ELSE study_end - CURRENT_DATE
-                END AS remaining_days
-        FROM STUDY
-        WHERE study_Id = #{studyId}
+        END AS remaining_days
+            FROM STUDY
+            WHERE study_id = #{studyId}
     </select>
 
     <select id="totalrank" resultMap="rankResultMap">

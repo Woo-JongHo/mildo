@@ -1,6 +1,7 @@
 package com.mildo.study;
 
 
+import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserDBManger;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,12 @@ public class StudyRepository {
         return StudyDBManger.totalMembers(studyId);
     }
 
-    public List<StudyVO> studyDays(String studyId){
+    public RemainingDaysDTO studyDays(String studyId){
         return StudyDBManger.studyDays(studyId);
+    }
+
+    public RemainingDaysDTO studyDaysRe(String studyId){
+        return StudyDBManger.studyDaysRe(studyId);
     }
 
     public List<StudyVO> totalrank(String studyId){

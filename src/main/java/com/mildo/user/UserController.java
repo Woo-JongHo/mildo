@@ -90,19 +90,12 @@ public class UserController {
     @ResponseBody
     @GetMapping(value="/{userId}/solvedLevels", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
-//        try {
-//            // 잘못된 인코딩 처리
-//            userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request 반환
-//        }
-
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
 
-        if (solvedLevels == null || solvedLevels.isEmpty()) {
-            // 상태코드를 404 로 보내고 본문에 null이라고 보냄 비워도 됨!
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+//        if (solvedLevels == null || solvedLevels.isEmpty()) {
+//            // 상태코드를 404 로 보내고 본문에 null이라고 보냄 비워도 됨!
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
         return ResponseEntity.ok(solvedLevels);
     }
 
@@ -117,11 +110,12 @@ public class UserController {
     }
 
     @ResponseBody // userId로 스터디 탈퇴
-    @RequestMapping(value="/{userId}/studyOut", method = RequestMethod.DELETE, produces="application/json; charset=UTF-8")
+    @GetMapping(value="/{userId}/studyOut", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
         userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
+        log.info("userId = {}", userId);
         int res = userService.studyGetOut(userId);
-
+        log.info("res = {}", res);
         return res > 0 ? ResponseEntity.ok("삭제 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
     }
 

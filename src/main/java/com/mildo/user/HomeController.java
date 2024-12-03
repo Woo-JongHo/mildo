@@ -57,5 +57,13 @@ public class HomeController {
         return new RedirectView(redirectUrl);
     }
 
+    @GetMapping("/llogin")
+    public RedirectView home() {
+        log.info("sssssssssss");
+        String redirectUrl = "/oauth2/authorization/google";
+
+        return new RedirectView(redirectUrl);
+    }
+
 
 }

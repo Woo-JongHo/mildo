@@ -98,8 +98,10 @@ public class CodeController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/{codeId}/comment", method = RequestMethod.POST, produces="application/json; charset=UTF-8")
+    @PostMapping(value="/{codeId}/comment", produces="application/json; charset=UTF-8")
     public void comment(@PathVariable int codeId, @RequestBody CommentVO comment){
+        log.info("codeId = {}", codeId);
+        log.info("comment = {}", comment);
         int res = codeService.saveComment(comment);
         // 어떻게 댓글 작성하면 다시 댓글 리스트 줘야 함 프론트랑 상의해서 가져옴
     }
