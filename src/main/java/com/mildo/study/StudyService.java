@@ -7,17 +7,12 @@ import com.mildo.user.UserRepository;
 import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
-import com.mildo.study.Vo.StudyVO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -39,7 +34,7 @@ public class StudyService {
         StudyVO studyVo = findStudyNo(studyNextNo);
 
         // 스터디 아이디가 무결성을 유지하는지 검증
-        while (studyVo.getStudyName() != null){
+        if (studyVo.getStudyName() != null) {
             studyNextNo = findStudyNextNo();
             studyVo = findStudyNo(studyNextNo);
         }
@@ -61,16 +56,24 @@ public class StudyService {
         // 유저 Leader 및 studyId값 변경
         userRepository.createStudy(userId, studyVo.getStudyId(), date);
         log.info("Created Study: {}, Leader : {}", studyVo, userId);
-        studyNextNo++;
+        if (studyNextNo++ % 1000 == 0)
+            create1000StudyId();
     }
 
-public StudyVO findStudyNo(int studyNo) {
-    return studyRepository.findStudyNo(studyNo);
-}
+    public StudyVO findStudyNo(int studyNo) {
+        return studyRepository.findStudyNo(studyNo);
+    }
 
-public int findStudyNextNo() {
-    return studyRepository.findStudyNextNo();
-}
+    public int findStudyNextNo() {
+        return studyRepository.findStudyNextNo();
+    }
+
+    public void create1000StudyId() {
+        int cnt = 0;
+        while (cnt != 1000)
+            cnt += studyRepository.createStudyId(CodeGenerator.generatestudyId());
+
+    }
 
 
     private static Date addOneYear(Date date) {

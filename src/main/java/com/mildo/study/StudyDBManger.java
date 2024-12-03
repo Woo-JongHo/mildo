@@ -190,4 +190,14 @@ public class StudyDBManger extends DBManger {
         session.close();
         return studyNo;
     }
+
+    public static int createStudyId(String studyId) {
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.insert("Study.createStudyId",studyId);
+        session.commit();
+        session.close();
+
+        return re;
+    }
 }
