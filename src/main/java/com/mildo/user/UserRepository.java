@@ -90,4 +90,7 @@ public class UserRepository {
 
         return result;
     }
+    public void createStudy(String userId, String studyId, Date date) {
+        UserDBManger.createStudy(userId, studyId, date);
+    }
 }

@@ -15,6 +15,7 @@
         <result property="userSolvedProblem" column="user_solvedproblem" />
         <result property="userParticipant" column="user_isparticipant" />
         <result property="userLeader" column="user_leader" />
+        <result property="userNo" column="user_no" />
     </resultMap>
 
     <resultMap id="LevelCountResultMap" type="LevelCountDTO">
@@ -148,4 +149,11 @@
         DELETE FROM COMMENT
         WHERE user_id = #{userId}
     </delete>
+
+    <update id="createStudy" parameterType="map">
+        UPDATE users
+        SET study_id = #{studyId},
+            user_leader = 'Y'
+        WHERE user_id = #{userId}
+    </update>
 </mapper>
