@@ -1,6 +1,7 @@
 package com.mildo.study;
 
 import com.mildo.code.CodeService;
+import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserRepository;
 import com.mildo.utills.CodeGenerator;
@@ -94,8 +95,17 @@ public int findStudyNextNo() {
     }
 
 
-    public List<StudyVO> studyDays(String studyId){
-        return studyRepository.studyDays(studyId);
+    public RemainingDaysDTO  studyDays(String studyId){
+        RemainingDaysDTO el = studyRepository.studyDays(studyId);
+        RemainingDaysDTO re = studyRepository.studyDaysRe(studyId);
+        log.info("el = {}", el);
+        log.info("re = {}", re);
+
+        RemainingDaysDTO result = new RemainingDaysDTO();
+        result.setElapsedDays(el.getElapsedDays());
+        result.setRemainingDays(re.getRemainingDays());
+
+        return result;
     }
 
     public List<StudyVO> totalrank(String studyId){

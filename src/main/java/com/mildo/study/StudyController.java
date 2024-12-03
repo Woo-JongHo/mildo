@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserService;
 import com.mildo.user.Vo.UserVO;
@@ -47,6 +48,7 @@ public class StudyController {
     @GetMapping("/{studyId}/memberList")
     public List<StudyVO> studyList(@PathVariable String studyId) {
         studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
+        log.info("studyId = {}", studyId);
         return studyService.studyList(studyId); // 멤버 리스트
     }
 
@@ -64,8 +66,10 @@ public class StudyController {
 
     // 남은 일수, 진행 한 수
     @GetMapping("/{studyId}/studyDays")
-    public List<StudyVO> studyDay(@PathVariable String studyId) {
+    public RemainingDaysDTO studyDay(@PathVariable String studyId) {
         studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
+        log.info("studyId = {}", studyId);
+
         return studyService.studyDays(studyId);
     }
 
@@ -84,7 +88,7 @@ public class StudyController {
     }
 
     //스터디 참가하기
-    @RequestMapping(value = "/enterStudy", method = {RequestMethod.PUT, RequestMethod.GET})
+        @RequestMapping(value = "/enterStudy", method = {RequestMethod.PUT, RequestMethod.GET})
     public ResponseEntity<String> enterStudy(@RequestParam(defaultValue = "423XDF") String studyId,
                                              @RequestParam(defaultValue = "1111")String password ,
                                              @RequestParam(defaultValue = "#3231") String userId) {

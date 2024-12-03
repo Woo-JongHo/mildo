@@ -8,7 +8,6 @@
     <resultMap id="userResultMap" type="userVO">
         <result property="userId" column="user_id" />
         <result property="studyId" column="study_id" />
-        <result property="userNumber" column="user_number" />
         <result property="userName" column="user_name" />
         <result property="userGoogleId" column="user_googleid" />
         <result property="userEmail" column="user_email" />
@@ -16,6 +15,7 @@
         <result property="userParticipant" column="user_isparticipant" />
         <result property="userLeader" column="user_leader" />
         <result property="userNo" column="user_no" />
+        <result property="userTheme" column="user_theme" />
     </resultMap>
 
     <resultMap id="LevelCountResultMap" type="LevelCountDTO">
@@ -40,12 +40,13 @@
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
                study_id,
-               user_number,
                user_name,
                user_email,
                user_solvedproblem,
                user_isparticipant,
-               user_leader
+               user_leader,
+               user_no,
+               user_theme
         FROM USERS
         WHERE user_googleid = #{number}
     </select>
@@ -62,12 +63,13 @@
     <select id="finduserId" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
                study_id,
-               user_number,
                user_name,
                user_email,
                user_solvedproblem,
                user_isparticipant,
-               user_leader
+               user_leader,
+               user_no,
+               user_theme
             FROM users
         WHERE user_id = #{userId}
     </select>

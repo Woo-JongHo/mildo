@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -42,13 +43,22 @@ public class StudyDBManger extends DBManger {
         return totalMembers;
     }
 
-    public static List<StudyVO> studyDays(String studyId) {
+    public static RemainingDaysDTO studyDays(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        List<StudyVO> studyDays = session.selectList("Study.studyDays", studyId);
+        RemainingDaysDTO studyDays = session.selectOne("Study.studyDays", studyId);
         session.commit();
         session.close();
 
         return studyDays;
+    }
+
+    public static RemainingDaysDTO studyDaysRe(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        RemainingDaysDTO studyDaysRe = session.selectOne("Study.studyDaysRe", studyId);
+        session.commit();
+        session.close();
+
+        return studyDaysRe;
     }
 
     public static List<StudyVO> totalrank(String studyId) {

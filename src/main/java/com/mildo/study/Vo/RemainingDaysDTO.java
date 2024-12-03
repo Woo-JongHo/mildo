@@ -2,18 +2,20 @@ package com.mildo.study.Vo;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class RemainingDaysDTO {
 
-    private String studyId;
-    private int remainingDays;
-    private int elapsedDays;
+//    private String studyId;
+    private String remainingDays;
+    private String elapsedDays;
 
     public RemainingDaysDTO(){}
 
-    public RemainingDaysDTO(String studyId, int remainingDays, int elapsedDays) {
-        this.studyId = studyId;
+    public RemainingDaysDTO(String remainingDays, String elapsedDays) {
         this.remainingDays = remainingDays;
         this.elapsedDays = elapsedDays;
     }
+
 }
