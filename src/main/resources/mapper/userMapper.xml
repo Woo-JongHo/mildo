@@ -151,4 +151,11 @@
         DELETE FROM COMMENT
         WHERE user_id = #{userId}
     </delete>
+
+    <update id="createStudy" parameterType="map">
+        UPDATE users
+        SET study_id = #{studyId},
+            user_leader = 'Y'
+        WHERE user_id = #{userId}
+    </update>
 </mapper>

@@ -85,4 +85,12 @@ public class StudyRepository {
 
         return success != 0;
     }
+
+    public StudyVO findStudyNo(int studyNo) {
+        return StudyDBManger.findStudyNo(studyNo);
+    }
+
+    public int findStudyNextNo() {
+        return StudyDBManger.findStudyNextNo();
+    }
 }
