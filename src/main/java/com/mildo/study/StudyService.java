@@ -199,8 +199,10 @@ public class StudyService {
         Map<String, Integer> dayData = new LinkedHashMap<>();
 
         for( String month : monthData){
+
             List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId,month);
             List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId,month);
+
 
             int countMember = memberName.size();
 
@@ -213,13 +215,14 @@ public class StudyService {
                 ArrayList<Map<String, String>> solvedList;
                 List<String> solvedDataTypeList = new ArrayList<>();
                 solvedList = codeService.getSolvedByDaySelectedMonth(memberID.get(i), month);
+
                 int[] MonthDay = new int[DayCheck(month)];
 
                 //리스트를 일단 가져옵니다 아예없을수도있음.
                 for (Map<String, String> map : solvedList) {
                     System.out.println("Map contents: " + map);
 
-                    String dataDay = map.get("c_date");
+                    String dataDay = map.get("code_solvedate");
                     System.out.println(dataDay + "dateDay");
 
                     int day = Integer.parseInt(dataDay.substring(8, 10)); // 일(day)을 가져와야 하므로 8, 10 인덱스 사용
@@ -231,25 +234,8 @@ public class StudyService {
                 }
 
                 //데이터를 내 방식대로 바꾸기위한 배열을 선언하고
-                for (int j = 0; j < DayCheck(month); j++) {
-                    switch (MonthDay[j]) {
-                        case 0:
-                            solvedDataTypeList.add("solved-0");
-                            break;
-                        case 1:
-                            solvedDataTypeList.add("solved-1");
-                            break;
-                        case 2:
-                            solvedDataTypeList.add("solved-2");
-                            break;
-                        case 3:
-                            solvedDataTypeList.add("solved-3");
-                            break;
-                        default:
-                            solvedDataTypeList.add("solved-4");
-                            break;
-                    }
-                }
+                for (int j = 0; j < DayCheck(month); j++)
+                    solvedDataTypeList.add(String.valueOf(MonthDay[j]));
                 memberData.put(memberName.get(i),solvedDataTypeList);
             }
             mildoList.put(month,memberData);

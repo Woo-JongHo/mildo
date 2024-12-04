@@ -80,9 +80,10 @@ public class StudyDBManger extends DBManger {
     }
 
 
-    public static Object getStudyMemberByMonth(String studyId, String month) {
+    public static List<String> getStudyMemberByMonth(String studyId, String month) {
         List<String> names;
         SqlSession session = sqlSessionFactory.openSession();
+
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("study_Id", studyId);
@@ -108,6 +109,9 @@ public class StudyDBManger extends DBManger {
         } finally {
             session.close();
         }
+
+        log.info(names + " : 가지고 나오는 names");
+
         return names;
     }
 

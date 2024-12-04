@@ -18,16 +18,27 @@
     <!-- 날짜별 푼 문제 -->
     <select id="getSolvedByDaySelectedMonth" resultType="java.util.Map" parameterType="java.lang.String">
         WITH date_count AS (
-        SELECT TO_CHAR(c_date, 'YYYY-MM-DD') AS c_date, COUNT(id) AS solved
-        FROM code
-        WHERE id = #{user_id}
-        AND TO_CHAR(code_solvedate, 'YYYY-MM') = #{code_solvedate}
-        GROUP BY TO_CHAR(c_date, 'YYYY-MM-DD')
+        SELECT
+        TO_CHAR(code_solvedate, 'YYYY-MM-DD') AS code_solvedate,
+        COUNT(user_id) AS solved
+        FROM
+        code
+        WHERE
+        user_id = #{user_id}
+        AND TO_CHAR(code_solvedate, 'YYYY-MM') = #{month}
+        GROUP BY
+        TO_CHAR(code_solvedate, 'YYYY-MM-DD')
         )
-        SELECT c_date, SUM(solved) AS solved
-        FROM date_count
-        GROUP BY c_date
-        ORDER BY c_date ASC
+        SELECT
+        code_solvedate,
+        SUM(solved) AS solved
+        FROM
+        date_count
+        GROUP BY
+        code_solvedate
+        ORDER BY
+        code_solvedate ASC;
+
     </select>
 
     <insert id="saveComment">
