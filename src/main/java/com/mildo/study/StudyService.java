@@ -144,6 +144,7 @@ public class StudyService {
 
 
         List<String> monthList = new ArrayList<>();
+        monthList.add(study_start.substring(0,7));
         for (int i = monthDiff; i > 0; i--) {
             String[] parts = study_start.split("-");
             int year = Integer.parseInt(parts[0]);
@@ -160,9 +161,8 @@ public class StudyService {
 
             study_start = yearString + "-" + monthString;
             monthList.add(study_start);
-            System.out.println("study_start가 추가가 되었는가" + study_start);
-
         }
+        System.out.println("STUDY에 맞는 MONTH LIST : " +  monthList);
 
         return monthList;
     }
@@ -195,16 +195,14 @@ public class StudyService {
     public Map<String, Map<String,List<String>>> Mildo(String studyId){
 
         Map<String, Map<String,List<String>>> mildoList = new LinkedHashMap<>();
-
         List<String> monthData = studyMonthList(studyId);
         Map<String, Integer> dayData = new LinkedHashMap<>();
 
         for( String month : monthData){
-            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month);
+            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId,month);
             List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId,month);
 
             int countMember = memberName.size();
-            System.out.println("MonthData : " + countMember + monthData + ": Month");
 
             Map<String, List<String>> memberData = new LinkedHashMap<>();
             mildoList.put(month,memberData);

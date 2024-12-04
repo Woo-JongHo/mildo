@@ -86,7 +86,7 @@ public class StudyDBManger extends DBManger {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("study_Id", studyId);
-            params.put("study_start", month);
+            params.put("month", month);
 
             names = session.selectList("Study.getStudyMemberByMonth", params);
         } finally {
@@ -101,7 +101,7 @@ public class StudyDBManger extends DBManger {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("study_Id", studyId);
-            params.put("study_start", month);
+            params.put("month", month);
 
             names = session.selectList("Study.getStudyMemberIdByMonth", params);
             System.out.println(names + "스터디원아이디");
