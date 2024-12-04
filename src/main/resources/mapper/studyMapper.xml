@@ -118,7 +118,7 @@
             ON
                 u.study_id = s.study_id
         WHERE
-            u.study_id = #{study_id}
+            u.study_id = #{study_Id}
           AND u.user_isparticipant BETWEEN TO_DATE(s.study_start || '-01', 'YYYY-MM-DD')
           AND TO_DATE(#{month} || '-01', 'YYYY-MM-DD') + INTERVAL '1 month' - INTERVAL '1 day';
     </select>
@@ -133,7 +133,7 @@
             ON
                 u.study_id = s.study_id
         WHERE
-            u.study_id = #{study_id}
+            u.study_id = #{study_Id}
           AND u.user_isparticipant BETWEEN TO_DATE(s.study_start || '-01', 'YYYY-MM-DD')
             AND TO_DATE(#{month} || '-01', 'YYYY-MM-DD') + INTERVAL '1 month' - INTERVAL '1 day';
     </select>
