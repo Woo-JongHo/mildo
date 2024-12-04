@@ -98,6 +98,8 @@ public class StudyDBManger extends DBManger {
 
     public static List<String> getStudyMemberIdByMonth(String studyId, String month) {
         List<String> names;
+
+        log.info(studyId + month + "DB에서 studyId and month check");
         SqlSession session = sqlSessionFactory.openSession();
         try {
             Map<String, Object> params = new HashMap<>();
