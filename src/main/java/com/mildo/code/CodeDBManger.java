@@ -27,7 +27,7 @@ public class CodeDBManger extends DBManger {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("user_id", userId);
-            params.put("code_solvedate", month);
+            params.put("month", month);
 
             List<Map<String, String>> rows = session.selectList("code.getSolvedByDaySelectedMonth", params);
             session.close();
@@ -37,6 +37,8 @@ public class CodeDBManger extends DBManger {
         } finally {
             session.close();
         }
+
+        System.out.println("result값 보기 " + results);
 
         return results;
     }

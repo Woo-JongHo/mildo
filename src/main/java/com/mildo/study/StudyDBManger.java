@@ -80,13 +80,14 @@ public class StudyDBManger extends DBManger {
     }
 
 
-    public static Object getStudyMemberByMonth(String studyId, String month) {
+    public static List<String> getStudyMemberByMonth(String studyId, String month) {
         List<String> names;
         SqlSession session = sqlSessionFactory.openSession();
+
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("study_Id", studyId);
-            params.put("study_start", month);
+            params.put("month", month);
 
             names = session.selectList("Study.getStudyMemberByMonth", params);
         } finally {
@@ -101,13 +102,16 @@ public class StudyDBManger extends DBManger {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("study_Id", studyId);
-            params.put("study_start", month);
+            params.put("month", month);
 
             names = session.selectList("Study.getStudyMemberIdByMonth", params);
             System.out.println(names + "스터디원아이디");
         } finally {
             session.close();
         }
+
+        log.info(names + " : 가지고 나오는 names");
+
         return names;
     }
 
