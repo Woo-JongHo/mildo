@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -87,7 +89,6 @@ public class UserController {
     @ResponseBody // userId로 스터디 탈퇴
     @GetMapping(value="/{userId}/studyOut", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
-        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         log.info("userId = {}", userId);
         int res = userService.studyGetOut(userId);
         log.info("res = {}", res);
@@ -100,6 +101,16 @@ public class UserController {
         log.info("session = {}", session.getId());
 
         return "FAILL";
+    }
+
+    @ResponseBody // userId로 스터디 탈퇴
+    @GetMapping(value="/{userId}/userTotalSolved", produces="application/json; charset=UTF-8")
+    public Map<String, Object> userTotalSolved(@PathVariable String userId){
+        int res = userService.userTotalSolved(userId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("user_solvedproblem", res);
+        return response;
     }
 
 }
