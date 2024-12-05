@@ -77,4 +77,13 @@ public class CodeDBManger extends DBManger {
         session.close();
         return solvedList;
     }
+
+    // codeId로 코드 조회
+    public static CodeVO detailCode(int codeId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        CodeVO code = session.selectOne("code.detailCode", codeId);
+        session.commit();
+        session.close();
+        return code;
+    }
 }

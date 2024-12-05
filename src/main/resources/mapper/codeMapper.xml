@@ -6,10 +6,16 @@
 <mapper namespace="code">
 
     <resultMap id="codeResult" type="codeVO">
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeId" column="code_id" />
+        <result property="userId" column="user_id" />
         <result property="codeTitle" column="code_title" />
+        <result property="codeReadme" column="code_readme" />
+        <result property="codeSource" column="code_source" />
+        <result property="codeLikes" column="code_likes" />
         <result property="codeLevel" column="code_level" />
+        <result property="codeProblemId" column="code_problemid" />
         <result property="codeSolvedTime" column="code_solvedtime" />
+        <result property="codeSolvedDate" column="code_solvedate" />
     </resultMap>
 
     <insert id="dummyCode" parameterType="CodeVo">
@@ -66,10 +72,21 @@
     </select>
 
     <select id="solvedList" resultMap="codeResult">
-        SELECT code_solvedate, code_title, code_level,code_solvedtime
+--         SELECT code_solvedate, code_title, code_level,code_solvedtime
+        SELECT code_id,
+               code_title,
+               code_level,
+               code_solvedtime,
+               code_solvedate
         FROM code
         where user_id = #{userId}
         ORDER BY code_solvedate DESC
+    </select>
+
+    <select id="detailCode" resultMap="codeResult">
+        SELECT *
+        FROM code
+        where code_id = #{codeId}
     </select>
 
 </mapper>

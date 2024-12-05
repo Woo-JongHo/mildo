@@ -35,4 +35,8 @@ public class CodeRepository {
         return CodeDBManger.solvedList(pi, userId);
     }
 
+    // codeId로 코드 조회
+    public CodeVO detailCode(int codeId){
+        return CodeDBManger.detailCode(codeId);
+    }
 }

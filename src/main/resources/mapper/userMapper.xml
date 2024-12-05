@@ -152,7 +152,9 @@
 
     <update id="userIdChangNull">
         UPDATE users
-        SET user_leader = null
+        SET user_leader = null,
+            user_isparticipant = null,
+            user_solvedproblem = 0
         WHERE user_id = #{userId}
     </update>
 

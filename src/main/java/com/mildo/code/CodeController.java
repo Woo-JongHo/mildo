@@ -113,10 +113,15 @@ public class CodeController {
     @ResponseBody
     @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
-        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
         List<CodeVO> solvedList = codeService.solvedList(userId);
-
         return ResponseEntity.ok(solvedList);
     }
+
+    @ResponseBody
+    @GetMapping(value="/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
+    public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId){
+        return ResponseEntity.ok(codeService.detailCode(codeId));
+    }
+
 
 }

@@ -75,4 +75,9 @@ public class CodeService {
 
         return solvedList;
     }
+
+    // codeId로 코드 조회
+    public CodeVO detailCode(int codeId){
+        return codeRepository.detailCode(codeId);
+    }
 }
