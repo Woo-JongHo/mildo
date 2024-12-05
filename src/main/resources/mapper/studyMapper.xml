@@ -17,7 +17,7 @@
     <resultMap id="userResultMap" type="userVO">
         <result property="userId" column="user_id" />
         <result property="studyId" column="study_id" />
-        <result property="userNumber" column="user_number" />
+        <result property="userNo" column="user_no" />
         <result property="userName" column="user_name" />
         <result property="userEmail" column="user_email" />
         <result property="userSolvedProblem" column="user_solvedproblem" />
@@ -31,6 +31,8 @@
     </resultMap>
 
     <resultMap id="rankResultMap" type="rankDTO">
+        <result property="userId" column="user_id" />
+        <result property="studyId" column="study_id" />
         <result property="rank" column="rank" />
         <result property="userName" column="user_name" />
         <result property="solvedProblem" column="user_solvedproblem" />
@@ -100,8 +102,9 @@
             user_solvedproblem,
             study.study_Id,
             RANK() OVER (ORDER BY user_solvedproblem DESC) AS rank
-        FROM USERS JOIN study on study. = USERS.
-        WHERE study_Id = #{studyId}
+        FROM USERS
+                 JOIN STUDY ON study.study_Id = USERS.study_Id
+        WHERE study.study_Id = #{studyId}
     </select>
 
     <select id="getStartMonth" resultType="java.lang.String">

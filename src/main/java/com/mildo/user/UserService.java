@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 
+import com.mildo.code.CodeRepository;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CodeRepository codeRepository;
     private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
 
     public UserVO login(OidcUser principal) {
@@ -99,5 +101,9 @@ public class UserService {
     @Transactional
     public int studyGetOut(String userId) {
         return userRepository.studyGetOut(userId);
+    }
+
+    public int userTotalSolved(String userId) {
+        return codeRepository.totalSolved(userId);
     }
 }
