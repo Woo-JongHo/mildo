@@ -118,30 +118,6 @@ public class UserDBManger extends DBManger {
         return solvedLevels;
     }
 
-    // 문제 푼 총 수량
-    public static int totalSolved(String userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-        int totalSolved = session.selectOne("User.totalSolved", userId);
-        session.commit();
-        session.close();
-        return totalSolved;
-    }
-
-    // 문재 리스트
-    public static List<CodeVO> solvedList(PageInfo pi, String userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-
-        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-        int limit = pi.getBoardLimit();
-        RowBounds rowBounds = new RowBounds(offset, limit);
-
-        List<CodeVO> solvedList = session.selectList("User.solvedList", userId, rowBounds);
-
-        session.commit();
-        session.close();
-        return solvedList;
-    }
-
     public static void updateStudyId(String userId, String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
         log.info(userId + "userId-----" + studyId + "--------studyId");
@@ -200,6 +176,14 @@ public class UserDBManger extends DBManger {
     public static int userIdDeleteComment(String userId) {
         SqlSession session = sqlSessionFactory.openSession();
         int res = session.update("User.userIdDeleteComment", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int userIdChangNull(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.userIdChangNull", userId);
         session.commit();
         session.close();
         return res;

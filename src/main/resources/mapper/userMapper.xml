@@ -121,18 +121,6 @@
         ORDER BY c.code_level
     </select>
 
-    <select id="totalSolved" resultType="_int">
-        SELECT user_solvedproblem
-          FROM users
-        WHERE user_id = #{userId}
-    </select>
-
-    <select id="solvedList" resultMap="codeResult">
-        SELECT code_solvedate, code_title, code_level,code_solvedtime
-        FROM code
-        where user_id = #{userId};
-    </select>
-
     <update id="updateStudyId" parameterType="map">
         UPDATE users
         SET study_id = #{studyId}
@@ -148,7 +136,7 @@
 
     <update id="studyGetOut">
         UPDATE users
-        SET study_id = null
+        SET study_id = 'N'
         WHERE user_id = #{userId}
     </update>
 
@@ -161,6 +149,14 @@
         DELETE FROM COMMENT
         WHERE user_id = #{userId}
     </delete>
+
+    <update id="userIdChangNull">
+        UPDATE users
+        SET user_leader = null,
+            user_isparticipant = null,
+            user_solvedproblem = 0
+        WHERE user_id = #{userId}
+    </update>
 
     <update id="createStudy" parameterType="map">
         UPDATE users

@@ -63,16 +63,6 @@ public class UserRepository {
          return UserDBManger.solvedLevelsList(userId);
     }
 
-    // 문제 푼 총 수량
-    public int totalSolved(String userId){
-        return UserDBManger.totalSolved(userId);
-    }
-
-    // 문재 리스트
-    public List<CodeVO> solvedList(PageInfo pi, String userId){
-        return UserDBManger.solvedList(pi, userId);
-    }
-
     public void updateStudyId(String userId, String studyId) {
         UserDBManger.updateStudyId(userId, studyId);
     }
@@ -83,10 +73,12 @@ public class UserRepository {
 
     @Transactional
     public int studyGetOut(String userId) {
+        // 스터디 참가 여부 null로 바꿈
+        int result1 = UserDBManger.userIdChangNull(userId);
         // 댓글 삭제
-        int result3 = UserDBManger.userIdDeleteComment(userId);
+        int result2 = UserDBManger.userIdDeleteComment(userId);
         // 코드 삭제
-        int result2 = UserDBManger.userIdDeleteCode(userId);
+        int result3 = UserDBManger.userIdDeleteCode(userId);
         // 스터디 탈되로 업데이트
         int result = UserDBManger.studyGetOut(userId);
 

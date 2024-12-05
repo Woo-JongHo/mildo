@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -105,5 +108,20 @@ public class CodeController {
         int res = codeService.saveComment(comment);
         // 어떻게 댓글 작성하면 다시 댓글 리스트 줘야 함 프론트랑 상의해서 가져옴
     }
+
+    // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
+    @ResponseBody
+    @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
+        List<CodeVO> solvedList = codeService.solvedList(userId);
+        return ResponseEntity.ok(solvedList);
+    }
+
+    @ResponseBody
+    @GetMapping(value="/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
+    public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId){
+        return ResponseEntity.ok(codeService.detailCode(codeId));
+    }
+
 
 }

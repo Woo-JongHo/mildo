@@ -94,22 +94,6 @@ public class UserService {
         return solvedLevels;
     }
 
-    public List<CodeVO> solvedList(String userId) {
-        // 문제 푼 총 수량
-        int totalSolved = userRepository.totalSolved(userId);
-        log.info("totalSolved = {}", totalSolved);
-
-        // 리스트 페이지 별로 주는 메서드
-        PageInfo pi = Pagenation.getPageInfo(totalSolved, 1, 5, 9);
-        log.info("pi = {}", pi);
-
-        // 문재 리스트
-        List<CodeVO> solvedList = userRepository.solvedList(pi, userId);
-        log.info("solvedList = {}", solvedList);
-
-        return solvedList;
-    }
-
     public void updateStudyId(String userId, String studyId) {
         userRepository.updateStudyId(userId, studyId);
     }

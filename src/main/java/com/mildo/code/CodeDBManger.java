@@ -1,6 +1,8 @@
 package com.mildo.code;
 
+import com.mildo.common.Page.PageInfo;
 import com.mildo.db.DBManger;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -50,5 +52,38 @@ public class CodeDBManger extends DBManger {
         session.close();
 
         return re;
+    }
+
+    // 문제 푼 총 수량
+    public static int totalSolved(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int totalSolved = session.selectOne("code.totalSolved", userId);
+        session.commit();
+        session.close();
+        return totalSolved;
+    }
+
+    // 문재 리스트
+    public static List<CodeVO> solvedList(PageInfo pi, String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+
+        List<CodeVO> solvedList = session.selectList("code.solvedList", userId, rowBounds);
+
+        session.commit();
+        session.close();
+        return solvedList;
+    }
+
+    // codeId로 코드 조회
+    public static CodeVO detailCode(int codeId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        CodeVO code = session.selectOne("code.detailCode", codeId);
+        session.commit();
+        session.close();
+        return code;
     }
 }
