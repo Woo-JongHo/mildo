@@ -91,22 +91,7 @@ public class UserController {
     @GetMapping(value="/{userId}/solvedLevels", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
         List<LevelCountDTO> solvedLevels = userService.solvedLevelsList(userId);
-
-//        if (solvedLevels == null || solvedLevels.isEmpty()) {
-//            // 상태코드를 404 로 보내고 본문에 null이라고 보냄 비워도 됨!
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
         return ResponseEntity.ok(solvedLevels);
-    }
-
-    // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
-    @ResponseBody
-    @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
-    public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
-        userId = URLDecoder.decode(userId, StandardCharsets.UTF_8);
-        List<CodeVO> solvedList = userService.solvedList(userId);
-
-        return ResponseEntity.ok(solvedList);
     }
 
     @ResponseBody // userId로 스터디 탈퇴

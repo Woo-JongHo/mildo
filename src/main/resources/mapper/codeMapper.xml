@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="code">
+
+    <resultMap id="codeResult" type="codeVO">
+        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeTitle" column="code_title" />
+        <result property="codeLevel" column="code_level" />
+        <result property="codeSolvedTime" column="code_solvedtime" />
+    </resultMap>
+
     <insert id="dummyCode" parameterType="CodeVo">
         INSERT INTO CODE (
         user_id,
@@ -50,5 +58,18 @@
         )
         VALUES (#{codeId}, #{userId}, #{commentContent}, NOW())
     </insert>
+
+    <select id="totalSolved" resultType="_int">
+        SELECT user_solvedproblem
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="solvedList" resultMap="codeResult">
+        SELECT code_solvedate, code_title, code_level,code_solvedtime
+        FROM code
+        where user_id = #{userId}
+        ORDER BY code_solvedate DESC
+    </select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.mildo.code;
 
+import com.mildo.common.Page.PageInfo;
+import com.mildo.common.Page.Pagenation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -55,5 +58,21 @@ public class CodeService {
 
     public int saveComment(CommentVO comment){
         return codeRepository.saveComment(comment);
+    }
+
+    public List<CodeVO> solvedList(String userId) {
+        // 문제 푼 총 수량
+        int totalSolved = codeRepository.totalSolved(userId);
+        log.info("totalSolved = {}", totalSolved);
+
+        // 리스트 페이지 별로 주는 메서드
+        PageInfo pi = Pagenation.getPageInfo(totalSolved, 1, 5, 9);
+        log.info("pi = {}", pi);
+
+        // 문재 리스트
+        List<CodeVO> solvedList = codeRepository.solvedList(pi, userId);
+        log.info("solvedList = {}", solvedList);
+
+        return solvedList;
     }
 }
