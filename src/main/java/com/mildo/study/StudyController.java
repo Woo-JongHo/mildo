@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.code.CodeVO;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserService;
@@ -31,17 +32,23 @@ public class StudyController {
     }
 
     @PostMapping("/create")
-    public String create(String userId, String name, String password) {
+    public Map<String, Object> create(String userId, String name, String password) {
         // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
+        Map<String, Object> response = new HashMap<>();
         UserVO userVO = userService.finduserId(userId);
-        if(userVO == null)
-            return "Invalid user ID";
-        if(userVO.getStudyId() != null)
-            return "Already own the study";
+        if(userVO == null) {
+            response.put("studyId", null);
+            return response;
+        }
+        if(userVO.getStudyId() != null) {
+            response.put("studyId", null);
+            return response;
+        }
 
-        studyService.create(userId, name, password);
+        String studyId = studyService.create(userId, name, password);
+        response.put("studyId", studyId);
 
-        return "Create Study";
+        return response;
     }
 
     // studyId로 스터디 리스트 가져오기 | 호출 방법 /api/%23E3R4/memberList

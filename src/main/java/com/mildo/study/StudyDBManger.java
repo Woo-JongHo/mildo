@@ -206,4 +206,21 @@ public class StudyDBManger extends DBManger {
 
         return re;
     }
+
+    public static String findNullStudyId() {
+        SqlSession session = sqlSessionFactory.openSession();
+        String studyId = session.selectOne("Study.findNullStudyId");
+        session.commit();
+        session.close();
+        return studyId;
+    }
+
+    public static void saveStudy(StudyVO studyVo) {
+        SqlSession session = sqlSessionFactory.openSession();
+        session.update("Study.saveStudy", studyVo);
+        session.commit();
+        session.close();
+    }
+
+
 }
