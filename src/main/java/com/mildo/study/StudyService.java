@@ -74,6 +74,10 @@ public class StudyService {
 
         studyRepository.saveStudy(studyVo); // 스터디 생성
         userRepository.createStudy(userId, studyVo.getStudyId(), date); // 스터디 리더, 스터디 아이디 추가
+
+        log.info("studyId = {}", studyId);
+        log.info("studyVo.getStudyId() = {}", studyVo.getStudyId());
+
         return studyId;
     }
 

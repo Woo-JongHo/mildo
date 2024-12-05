@@ -35,18 +35,14 @@ public class StudyController {
         // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
         Map<String, Object> response = new HashMap<>();
         UserVO userVO = userService.finduserId(userId);
-        if(userVO == null) {
-            response.put("studyId", null);
-            return response;
-        }
-        if(userVO.getStudyId() != null) {
+
+        if(userVO.getStudyId() != null) { // 유저 studyId가 있으면 null 반납
             response.put("studyId", null);
             return response;
         }
 
         String studyId = studyService.create(userId, name, password);
         response.put("studyId", studyId);
-
         return response;
     }
 
