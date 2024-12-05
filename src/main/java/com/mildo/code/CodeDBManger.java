@@ -83,9 +83,12 @@ public class CodeDBManger extends DBManger {
     }
 
     // codeId로 코드 조회
-    public static CodeVO detailCode(int codeId) {
+    public static CodeVO detailCode(int codeId, String userId) {
         SqlSession session = sqlSessionFactory.openSession();
-        CodeVO code = session.selectOne("code.detailCode", codeId);
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("codeId", codeId);
+        CodeVO code = session.selectOne("code.detailCode", params);
         session.commit();
         session.close();
         return code;

@@ -94,7 +94,7 @@
     <select id="detailCode" resultMap="codeResult">
         SELECT *
         FROM code
-        where code_id = #{codeId}
+        where code_id = #{codeId} AND user_id = #{userId}
     </select>
 
     <select id="commentCount" resultType="int">

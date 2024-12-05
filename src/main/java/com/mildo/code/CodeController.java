@@ -117,10 +117,12 @@ public class CodeController {
         return ResponseEntity.ok(solvedList);
     }
 
-    @ResponseBody
-    @GetMapping(value="/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
-    public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId){
-        return ResponseEntity.ok(codeService.detailCode(codeId));
+    @ResponseBody // 상세 코드 페이지
+    @GetMapping(value="/{userId}/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
+    public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId, @PathVariable String userId){
+        log.info("userId = {}", userId);
+        log.info("codeId = {}", codeId);
+        return ResponseEntity.ok(codeService.detailCode(codeId, userId));
     }
 
     @ResponseBody
