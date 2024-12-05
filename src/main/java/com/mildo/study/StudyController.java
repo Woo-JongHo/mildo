@@ -71,6 +71,7 @@ public class StudyController {
         return response;
     }
 
+
     // 남은 일수, 진행 한 수
     @GetMapping("/{studyId}/studyDays")
     public RemainingDaysDTO studyDay(@PathVariable String studyId) {
@@ -96,9 +97,9 @@ public class StudyController {
 
     //스터디 참가하기
         @RequestMapping(value = "/enterStudy", method = {RequestMethod.PUT, RequestMethod.GET})
-    public ResponseEntity<String> enterStudy(@RequestParam(defaultValue = "423XDF") String studyId,
-                                             @RequestParam(defaultValue = "1111")String password ,
-                                             @RequestParam(defaultValue = "#3231") String userId) {
+    public ResponseEntity<String> enterStudy(@RequestParam String studyId,
+                                             @RequestParam String password ,
+                                             @RequestParam String userId) {
         boolean isValid = studyService.checkstudyIdPassword(studyId, password);
 
         if (isValid) {
