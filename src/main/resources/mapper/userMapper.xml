@@ -16,6 +16,7 @@
         <result property="userLeader" column="user_leader" />
         <result property="userNo" column="user_no" />
         <result property="userTheme" column="user_theme" />
+        <result property="userDate" column="user_date" />
     </resultMap>
 
     <resultMap id="LevelCountResultMap" type="LevelCountDTO">
@@ -46,19 +47,27 @@
                user_isparticipant,
                user_leader,
                user_no,
-               user_theme
+               user_theme,
+               user_date
         FROM USERS
         WHERE user_googleid = #{number}
     </select>
 
-    <insert id="save" parameterType="userVO">
-        INSERT INTO USERS(user_id,
-                          user_name,
-                          user_googleid,
-                          user_email
-                          )
-        VALUES (#{userId}, #{userName}, #{userGoogleId}, #{userEmail})
-    </insert>
+    <select id="findNullUserId" resultType="java.lang.String">
+        SELECT user_id
+        FROM users
+        WHERE user_googleid IS NULL
+        LIMIT 1
+    </select>
+
+    <update id="saveUpdateUser">
+        UPDATE users
+        SET user_name = #{userName},
+            user_googleid = #{userGoogleId},
+            user_email = #{userEmail},
+            user_date = CURRENT_DATE
+        WHERE user_id = #{userId}
+    </update>
 
     <select id="finduserId" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
@@ -69,7 +78,8 @@
                user_isparticipant,
                user_leader,
                user_no,
-               user_theme
+               user_theme,
+               user_date
             FROM users
         WHERE user_id = #{userId}
     </select>
