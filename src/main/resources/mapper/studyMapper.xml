@@ -179,4 +179,21 @@
     <insert id="createStudyId">
         INSERT INTO STUDY(study_id) values (#{studyId})
     </insert>
+
+    <select id="findNullStudyId" resultType="java.lang.String">
+        SELECT study_id
+        FROM study
+        WHERE study_name IS NULL
+            LIMIT 1
+    </select>
+
+    <update id="saveStudy">
+        UPDATE study
+        SET study_name = #{studyName},
+            study_password = #{studyPassword},
+            study_start = #{studyStart},
+            study_end = #{studyEnd}
+        WHERE study_id = #{studyId}
+    </update>
+
 </mapper>

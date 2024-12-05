@@ -29,35 +29,52 @@ public class StudyService {
 
     LocalDate currentDate = LocalDate.now();
 
-    public void create(String userId, String name, String password) {
+    public String create(String userId, String name, String password) {
 
-        StudyVO studyVo = findStudyNo(studyNextNo);
+//        StudyVO studyVo = findStudyNo(studyNextNo);
+//
+//        // 스터디 아이디가 무결성을 유지하는지 검증
+//        if (studyVo.getStudyName() != null) {
+//            studyNextNo = findStudyNextNo();
+//            studyVo = findStudyNo(studyNextNo);
+//        }
+//
+//        log.info("Study No: {}", studyNextNo);
+//
+//        Date date = new Date(System.currentTimeMillis()); // 현재 시간
+//        log.info("현재 날짜: {}", date);
+//
+//        Date newDate = addOneYear(date);
+//
+//        studyVo.setStudyName(name);
+//        studyVo.setStudyPassword(password);
+//        studyVo.setStudyStart(date);
+//        studyVo.setStudyEnd(newDate);
+//
+//        studyRepository.create(studyVo);
+//
+//        // 유저 Leader 및 studyId값 변경
+//        userRepository.createStudy(userId, studyVo.getStudyId(), date);
+//        log.info("Created Study: {}, Leader : {}", studyVo, userId);
+//        if (studyNextNo++ % 1000 == 0)
+//            create1000StudyId();
 
-        // 스터디 아이디가 무결성을 유지하는지 검증
-        if (studyVo.getStudyName() != null) {
-            studyNextNo = findStudyNextNo();
-            studyVo = findStudyNo(studyNextNo);
-        }
-
-        log.info("Study No: {}", studyNextNo);
+        String studyId = studyRepository.findNullStudyId();
 
         Date date = new Date(System.currentTimeMillis()); // 현재 시간
-        log.info("현재 날짜: {}", date);
-
         Date newDate = addOneYear(date);
 
+        StudyVO studyVo = new StudyVO();
+        studyVo.setStudyId(studyId);
         studyVo.setStudyName(name);
         studyVo.setStudyPassword(password);
         studyVo.setStudyStart(date);
         studyVo.setStudyEnd(newDate);
+        log.info("studyVo = {}", studyVo);
 
-        studyRepository.create(studyVo);
-
-        // 유저 Leader 및 studyId값 변경
-        userRepository.createStudy(userId, studyVo.getStudyId(), date);
-        log.info("Created Study: {}, Leader : {}", studyVo, userId);
-        if (studyNextNo++ % 1000 == 0)
-            create1000StudyId();
+        studyRepository.saveStudy(studyVo); // 스터디 생성
+        userRepository.createStudy(userId, studyVo.getStudyId(), date); // 스터디 리더, 스터디 아이디 추가
+        return studyId;
     }
 
     public StudyVO findStudyNo(int studyNo) {

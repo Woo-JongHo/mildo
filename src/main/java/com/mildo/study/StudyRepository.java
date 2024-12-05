@@ -97,4 +97,9 @@ public class StudyRepository {
     public int createStudyId(String studyId) {
         return StudyDBManger.createStudyId(studyId);
     }
+
+    public String findNullStudyId(){return StudyDBManger.findNullStudyId();}
+
+    public void saveStudy(StudyVO studyVo) {StudyDBManger.saveStudy(studyVo);}
+
 }
