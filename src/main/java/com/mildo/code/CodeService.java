@@ -79,8 +79,8 @@ public class CodeService {
     }
 
     // codeId로 코드 조회
-    public CodeVO detailCode(int codeId){
-        return codeRepository.detailCode(codeId);
+    public CodeVO detailCode(int codeId, String userId){
+        return codeRepository.detailCode(codeId, userId);
     }
 
     // 댓글 리스트

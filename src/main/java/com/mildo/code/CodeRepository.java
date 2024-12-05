@@ -37,8 +37,8 @@ public class CodeRepository {
     }
 
     // codeId로 코드 조회
-    public CodeVO detailCode(int codeId){
-        return CodeDBManger.detailCode(codeId);
+    public CodeVO detailCode(int codeId, String userId){
+        return CodeDBManger.detailCode(codeId, userId);
     }
 
     // 댓글 총 갯수
