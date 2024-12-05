@@ -1,5 +1,7 @@
 package com.mildo.code;
 
+import com.mildo.code.Vo.CodeVO;
+import com.mildo.code.Vo.CommentVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.common.Page.Pagenation;
 import lombok.RequiredArgsConstructor;
@@ -79,5 +81,12 @@ public class CodeService {
     // codeId로 코드 조회
     public CodeVO detailCode(int codeId){
         return codeRepository.detailCode(codeId);
+    }
+
+    // 댓글 리스트
+    public List<CommentVO> CommentList(int codeId){
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(codeId), 1, 5, 5);
+
+        return codeRepository.CommentList(codeId, pi);
     }
 }

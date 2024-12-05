@@ -2,6 +2,8 @@ package com.mildo.code;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mildo.code.Vo.CodeVO;
+import com.mildo.code.Vo.CommentVO;
 import com.mildo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.List;
 
@@ -121,6 +121,13 @@ public class CodeController {
     @GetMapping(value="/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
     public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId){
         return ResponseEntity.ok(codeService.detailCode(codeId));
+    }
+
+    @ResponseBody
+    @GetMapping(value="/{codeId}/getCommentList", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId){
+        List<CommentVO> list = codeService.CommentList(codeId);
+        return ResponseEntity.ok(list);
     }
 
 

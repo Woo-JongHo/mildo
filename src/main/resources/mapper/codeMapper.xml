@@ -18,6 +18,14 @@
         <result property="codeSolvedDate" column="code_solvedate" />
     </resultMap>
 
+    <resultMap id="commentResult" type="commentVO">
+        <result property="commentId" column="comment_id" />
+        <result property="codeId" column="code_id" />
+        <result property="userId" column="user_id" />
+        <result property="commentContent" column="comment_content" />
+        <result property="commentDate" column="comment_date" />
+    </resultMap>
+
     <insert id="dummyCode" parameterType="CodeVo">
         INSERT INTO CODE (
         user_id,
@@ -87,6 +95,23 @@
         SELECT *
         FROM code
         where code_id = #{codeId}
+    </select>
+
+    <select id="commentCount" resultType="int">
+        SELECT COUNT(*)
+        FROM COMMENT
+        where code_id = #{codeId}
+    </select>
+
+
+    <select id="CommentList" resultMap="commentResult">
+        SELECT comment_id,
+               code_id,
+               comment_content,
+               comment_date
+        FROM COMMENT
+        where code_id = #{codeId}
+        ORDER BY comment_id DESC
     </select>
 
 </mapper>

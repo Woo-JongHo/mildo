@@ -1,14 +1,10 @@
 package com.mildo.user;
 
 
-import com.mildo.code.CodeVO;
-import com.mildo.common.Page.PageInfo;
-import com.mildo.common.Page.Pagenation;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
-import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -17,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.mildo.user.Auth.JwtTokenProvider.getExpirationFromToken;
 
 @Slf4j
 @Service

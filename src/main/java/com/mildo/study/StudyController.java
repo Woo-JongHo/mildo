@@ -1,6 +1,5 @@
 package com.mildo.study;
 
-import com.mildo.code.CodeVO;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserService;
