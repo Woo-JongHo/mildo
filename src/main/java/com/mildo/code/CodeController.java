@@ -126,8 +126,8 @@ public class CodeController {
     }
 
     @ResponseBody
-    @GetMapping(value="/{codeId}/getCommentList", produces="application/json; charset=UTF-8")
-    public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId){
+    @GetMapping(value="/{userId}/{codeId}/getCommentList", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId, @PathVariable String userId){
         List<CommentVO> list = codeService.CommentList(codeId);
         return ResponseEntity.ok(list);
     }
