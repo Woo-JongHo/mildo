@@ -21,15 +21,16 @@ import java.util.List;
 public class UserRepository {
 
     // 구글 로그인 회원 조회
-    public UserVO findUser(String number) {
-//        UserVO result = UserDBManger.findUser(number);
-//        return result;
-        return UserDBManger.findUser(number);
+    public UserVO findUser(String number) {return UserDBManger.findUser(number);}
+
+    // 회원 아이디 가져오기
+    public String findNullUserId(){
+        return UserDBManger.findNullUserId();
     }
 
-    // 구글 회원 가입
-    public void save(UserVO users) {
-        UserDBManger.save(users);
+    // 구글 회원 가입 업데이트
+    public void saveUpdateUser(UserVO users) {
+        UserDBManger.saveUpdateUser(users);
     }
 
     // userId로 회원 조회

@@ -23,18 +23,27 @@ public class UserDBManger extends DBManger {
     public static UserVO findUser(String number) {
         SqlSession session = sqlSessionFactory.openSession();
         UserVO re = session.selectOne("User.findUser", number);
-        log.info("re = {}", re);
         session.commit();
         session.close();
 
         return re;
     }
 
-    // 구글 회원 가입
-    public static void save(UserVO users) {
+    // 회원 아이디 가져오기
+    public static String findNullUserId() {
+        SqlSession session = sqlSessionFactory.openSession();
+        String userId = session.selectOne("User.findNullUserId");
+        session.commit();
+        session.close();
+
+        return userId;
+    }
+
+    // 구글 회원 가입 업데이트
+    public static void saveUpdateUser(UserVO users) {
         SqlSession session = sqlSessionFactory.openSession();
         try{
-            session.insert("User.save", users);
+            session.update("User.saveUpdateUser", users);
             session.commit();
         } catch (Exception e){
             e.printStackTrace();

@@ -32,23 +32,23 @@ public class UserService {
         String email = principal.getAttribute("email");
         String name = principal.getAttribute("name");
         String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
-
         UserVO users = new UserVO();
 
         // 유저 아이디가 무결성을 유지하는지 검증 필요
-        String userId = CodeGenerator.generateUserId();
-        while (finduserId(userId) != null)
-            userId = CodeGenerator.generateUserId();
-        users.setUserId(userId); // #G909
+//        String userId = CodeGenerator.generateUserId();
+//        log.info("userId = {}", userId);
+//        while (finduserId(userId) != null)
+//            userId = CodeGenerator.generateUserId();
 
-        users.setUserEmail(email);
-        users.setUserName(name);
-        users.setUserGoogleId(number);
-        users.setUserTheme("#FFFFFF");
-        UserVO user = userRepository.findUser(number);
+        UserVO user = userRepository.findUser(number); // 회원 인지 조회
 
-        if (user == null) {
-            userRepository.save(users);
+        if (user == null) { // 회원이 아니면 ID찾아서 회원 정보 업데이트 시켜줌
+            String userId = userRepository.findNullUserId();
+            users.setUserId(userId);
+            users.setUserEmail(email);
+            users.setUserName(name);
+            users.setUserGoogleId(number);
+            userRepository.saveUpdateUser(users);
             user = userRepository.findUser(number);
         }
 

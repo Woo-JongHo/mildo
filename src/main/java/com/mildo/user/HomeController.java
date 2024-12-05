@@ -41,17 +41,13 @@ public class HomeController {
     public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);
 
-        HttpSession session = request.getSession();
-        log.info("session = {}", session.getId());
-
         UserVO user = userService.login(principal);
-//        log.info("user = {}", user);
+        log.info("user = {}", user);
 
         String userId = user.getUserId();
         String social = "google"; // 이러면 social-login/:mildo.com
 
         String redirectUrl = "http://podofarm.xyz/social-login/" + social + "?userId=" + userId;
-//        String redirectUrl = "https://d32cyw4f4wdlpd.cloudfront.net/social-login/" + social + "?userId=" + userId;
         log.info("redirectUrl = {}", redirectUrl);
 
         return new RedirectView(redirectUrl);
