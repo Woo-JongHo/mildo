@@ -223,4 +223,12 @@ public class StudyDBManger extends DBManger {
     }
 
 
+    public static String getStudyName(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        String studyName = session.selectOne("Study.getStudyName", studyId);
+        session.commit();
+        session.close();
+
+        return studyName;
+    }
 }

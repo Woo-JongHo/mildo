@@ -276,4 +276,8 @@ public class StudyService {
     public boolean deleteStudy(String studyId) {
         return studyRepository.deleteStudy(studyId);
     }
+
+    public String getStudyName(String studyId) {
+        return studyRepository.getStudyName(studyId);
+    }
 }

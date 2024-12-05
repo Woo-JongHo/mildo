@@ -80,6 +80,11 @@ public class StudyController {
 
         return studyService.studyDays(studyId);
     }
+    @GetMapping("/{studyId}/studyName")
+    public String getStudyName(@PathVariable String studyId) {
+
+        return studyService.getStudyName(studyId);
+    }
 
     // studyId로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
     @GetMapping("/{studyId}/rank")

@@ -102,4 +102,7 @@ public class StudyRepository {
 
     public void saveStudy(StudyVO studyVo) {StudyDBManger.saveStudy(studyVo);}
 
+    public String getStudyName(String studyId) {
+        return StudyDBManger.getStudyName(studyId);
+    }
 }
