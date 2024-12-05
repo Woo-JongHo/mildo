@@ -1,7 +1,10 @@
 package com.mildo.code;
 
+import com.mildo.code.Vo.CodeVO;
+import com.mildo.code.Vo.CommentVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.db.DBManger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
@@ -10,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class CodeDBManger extends DBManger {
 
     public static int dummyCode(String userId) {
@@ -82,6 +86,28 @@ public class CodeDBManger extends DBManger {
     public static CodeVO detailCode(int codeId) {
         SqlSession session = sqlSessionFactory.openSession();
         CodeVO code = session.selectOne("code.detailCode", codeId);
+        session.commit();
+        session.close();
+        return code;
+    }
+
+    public static int commentCount(int codeId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.selectOne("code.commentCount", codeId);
+        log.info("res = {}", res);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static List<CommentVO> CommentList(int codeId, PageInfo pi) {
+        SqlSession session = sqlSessionFactory.openSession();
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+
+        List<CommentVO> code = session.selectList("code.CommentList", codeId, rowBounds);
         session.commit();
         session.close();
         return code;

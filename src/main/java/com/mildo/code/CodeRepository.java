@@ -1,7 +1,8 @@
 package com.mildo.code;
 
+import com.mildo.code.Vo.CodeVO;
+import com.mildo.code.Vo.CommentVO;
 import com.mildo.common.Page.PageInfo;
-import com.mildo.user.UserDBManger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +39,15 @@ public class CodeRepository {
     // codeId로 코드 조회
     public CodeVO detailCode(int codeId){
         return CodeDBManger.detailCode(codeId);
+    }
+
+    // 댓글 총 갯수
+    public int commentCount(int codeId){
+        return CodeDBManger.commentCount(codeId);
+    }
+
+    // 탯글 리스트
+    public List<CommentVO> CommentList(int codeId, PageInfo pi){
+        return CodeDBManger.CommentList(codeId, pi);
     }
 }
