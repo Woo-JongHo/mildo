@@ -154,7 +154,8 @@
         UPDATE users
         SET user_leader = null,
             user_isparticipant = null,
-            user_solvedproblem = 0
+            user_solvedproblem = 0,
+            study_id = null
         WHERE user_id = #{userId}
     </update>
 
