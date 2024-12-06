@@ -69,6 +69,11 @@ public class HomeController {
     public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);
 
+        OAuth2AuthorizedClient client = authorizedClientService
+                .loadAuthorizedClient("google", principal.getName());
+        String accessToken = client.getAccessToken().getTokenValue();
+        log.info("accessToken = {}", accessToken);
+
         UserVO user = userService.login(principal);
         log.info("user = {}", user);
 
