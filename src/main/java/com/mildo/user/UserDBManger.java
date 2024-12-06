@@ -197,4 +197,12 @@ public class UserDBManger extends DBManger {
         session.close();
         return res;
     }
+
+    public static int userServiceOut(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.delete("User.userServiceOut", userId);
+        session.commit();
+        session.close();
+        return res;
+    }
 }

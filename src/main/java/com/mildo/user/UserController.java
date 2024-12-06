@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
@@ -48,6 +46,12 @@ public class UserController {
 //                "userId", user.getUserId()
 //        ));
 //    }
+
+    @GetMapping("/logoutSucc") // 로그인 성공시 리다이렉트
+    public String logout( ) {
+        // 토큰 만료는 서버 쪽에서 처리
+        return "OKAY22222222";
+    }
 
     // userId로 회원 조회 | 요청 방법:/api/%23G909/info
     @ResponseBody
@@ -107,6 +111,15 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("user_solvedproblem", res);
         return response;
+    }
+
+    @ResponseBody // userId로 스터디 탈퇴
+    @GetMapping(value="/{userId}/service-out", produces="application/json; charset=UTF-8")
+    public ResponseEntity<String> serviceOut(@PathVariable String userId){
+        log.info("userId = {}", userId);
+        int res = userService.serviceOut(userId);
+        log.info("res = {}", res);
+        return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
     }
 
 //    @GetMapping("/{userId}/google-logout")
