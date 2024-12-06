@@ -102,7 +102,8 @@ public class StudyController {
 
         UserVO userVO = userService.finduserId(enteStudy.getUserId());
         if(userVO.getStudyId() != null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 스터디가 있습니다.");
+            log.info("userVO.getStudyId() = {}", userVO.getStudyId());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 스터디가 있습니다. Study ID: "+ userVO.getStudyId());
         }
 
         boolean isValid = studyService.checkstudyIdPassword(enteStudy); // 비번 체크
