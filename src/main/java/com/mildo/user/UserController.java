@@ -103,7 +103,7 @@ public class UserController {
         return "FAILL";
     }
 
-    @ResponseBody // userId로 스터디 탈퇴
+    @ResponseBody
     @GetMapping(value="/{userId}/userTotalSolved", produces="application/json; charset=UTF-8")
     public Map<String, Object> userTotalSolved(@PathVariable String userId){
         int res = userService.userTotalSolved(userId);

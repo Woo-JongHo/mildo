@@ -120,7 +120,7 @@
                comment_date
         FROM COMMENT
         where code_id = #{codeId}
-        ORDER BY comment_id DESC
+        ORDER BY comment_date DESC
     </select>
 
     <select id="getRecent" resultMap="recentResult">
@@ -139,5 +139,17 @@
             c.code_solvedate DESC
             LIMIT 5;
     </select>
+
+    <update id="updateComment">
+        UPDATE COMMENT
+        SET comment_content = #{commentContent},
+            comment_date = CURRENT_TIMESTAMP
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <delete id="deleteComment">
+        DELETE FROM comment
+        WHERE comment_id = #{commentId}
+    </delete>
 
 </mapper>

@@ -101,15 +101,6 @@ public class CodeController {
         return ResponseEntity.ok("Upload successful");
     }
 
-    @ResponseBody
-    @PostMapping(value="/{codeId}/comment", produces="application/json; charset=UTF-8")
-    public void comment(@PathVariable int codeId, @RequestBody CommentVO comment){
-        log.info("codeId = {}", codeId);
-        log.info("comment = {}", comment);
-        int res = codeService.saveComment(comment);
-        // 어떻게 댓글 작성하면 다시 댓글 리스트 줘야 함 프론트랑 상의해서 가져옴
-    }
-
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @ResponseBody
     @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
@@ -127,18 +118,41 @@ public class CodeController {
     }
 
     @ResponseBody
-    @GetMapping(value="/{userId}/{codeId}/getCommentList", produces="application/json; charset=UTF-8")
-    public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId, @PathVariable String userId){
-        List<CommentVO> list = codeService.CommentList(codeId);
-        return ResponseEntity.ok(list);
-    }
-
-
-    @ResponseBody
     @GetMapping(value="/{studyId}/getRecent", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<RecentVO>> recent(@PathVariable String studyId){
         List<RecentVO> list = codeService.getRecent(studyId);
         return ResponseEntity.ok(list);
     }
 
+    @ResponseBody // 댓글 리스트
+    @GetMapping(value="/{userId}/{codeId}/getCommentList", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId, @PathVariable String userId,
+                                                          @RequestParam(value="cpage", defaultValue="1") int currentPage){
+        List<CommentVO> list = codeService.CommentList(codeId, currentPage);
+        log.info("currentPage = {}", currentPage);
+        return ResponseEntity.ok(list);
+    }
+
+    @ResponseBody // 댓글 작성
+    @PostMapping(value="/{codeId}/comment", produces="application/json; charset=UTF-8")
+    public void comment(@PathVariable int codeId, @RequestBody CommentVO comment){
+        log.info("codeId = {}", codeId);
+        log.info("comment = {}", comment);
+        int res = codeService.saveComment(comment);
+        // 어떻게 댓글 작성하면 다시 댓글 리스트 줘야 함 프론트랑 상의해서 가져옴
+    }
+
+    @ResponseBody // 댓글 수정
+    @PutMapping(value="/{commentId}/commentUpdate", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> commentUpdate(@PathVariable int commentId, @RequestBody CommentVO comment){
+        List<CommentVO> res = codeService.updateComment(comment);
+        return ResponseEntity.ok(res);
+    }
+
+    @ResponseBody // 댓글 삭제
+    @DeleteMapping(value="/{commentId}/commentDelete", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> commentDelete(@PathVariable int commentId, @RequestBody CommentVO comment){
+        List<CommentVO> res = codeService.deleteComment(commentId, comment);
+        return ResponseEntity.ok(res);
+    }
 }

@@ -89,15 +89,29 @@ public class CodeService {
     }
 
     // 댓글 리스트
-    public List<CommentVO> CommentList(int codeId){
-        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(codeId), 1, 5, 5);
+    public List<CommentVO> CommentList(int codeId, int currentPage){
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(codeId), currentPage, 5, 5);
 
         return codeRepository.CommentList(codeId, pi);
     }
 
+    // 최근 활동 가져오기
     public List<RecentVO> getRecent(String studyId){
         return codeRepository.getRecent(studyId);
     }
 
+    // 댓글 수정
+    public List<CommentVO> updateComment(CommentVO comment){
+        codeRepository.updateComment(comment);
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(comment.getCodeId()), 1, 5, 5);
+        return codeRepository.CommentList(comment.getCodeId(), pi);
+    }
+
+    // 댓글 삭제
+    public List<CommentVO> deleteComment(int commentId, CommentVO comment){
+        codeRepository.deleteComment(commentId);
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(comment.getCodeId()), 1, 5, 5);
+        return codeRepository.CommentList(comment.getCodeId(), pi);
+    }
 
 }
