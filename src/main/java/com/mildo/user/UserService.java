@@ -106,4 +106,8 @@ public class UserService {
     public int userTotalSolved(String userId) {
         return codeRepository.totalSolved(userId);
     }
+
+    public int serviceOut(String userId) {
+        return userRepository.serviceOut(userId);
+    }
 }

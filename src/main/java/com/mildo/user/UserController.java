@@ -113,4 +113,13 @@ public class UserController {
         return response;
     }
 
+    @ResponseBody // userId로 스터디 탈퇴
+    @GetMapping(value="/{userId}/service-out", produces="application/json; charset=UTF-8")
+    public ResponseEntity<String> serviceOut(@PathVariable String userId){
+        log.info("userId = {}", userId);
+        int res = userService.serviceOut(userId);
+        log.info("res = {}", res);
+        return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
+    }
+
 }
