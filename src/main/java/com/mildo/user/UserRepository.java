@@ -84,4 +84,8 @@ public class UserRepository {
     public void createStudy(String userId, String studyId, Date date) {
         UserDBManger.createStudy(userId, studyId, date);
     }
+
+    public int serviceOut(String userId) {
+        return UserDBManger.userServiceOut(userId);
+    }
 }

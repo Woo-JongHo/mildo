@@ -164,4 +164,9 @@
             user_leader = 'Y'
         WHERE user_id = #{userId}
     </update>
+
+    <delete id="userServiceOut">
+        DELETE FROM USERS
+        WHERE user_id = #{userId}
+    </delete>
 </mapper>
