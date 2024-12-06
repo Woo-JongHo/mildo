@@ -97,13 +97,13 @@ public class StudyController {
     public ResponseEntity<String> enterStudy(@RequestBody EnteStudy enteStudy) {
         int res = studyService.totalMembers(enteStudy.getStudyId());
         if(res >= 6){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인원 초과");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인원 초과");
         }
 
         UserVO userVO = userService.finduserId(enteStudy.getUserId());
         if(userVO.getStudyId() != null){
             log.info("userVO.getStudyId() = {}", userVO.getStudyId());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 스터디가 있습니다. Study ID: "+ userVO.getStudyId());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 스터디가 있습니다. Study ID: "+ userVO.getStudyId());
         }
 
         boolean isValid = studyService.checkstudyIdPassword(enteStudy); // 비번 체크
@@ -111,7 +111,7 @@ public class StudyController {
             userService.updateStudyId(enteStudy);
             return ResponseEntity.ok("스터디 접속 완료");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid study code or password!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid study code or password!");
         }
     }
 

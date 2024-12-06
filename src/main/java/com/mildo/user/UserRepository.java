@@ -71,16 +71,16 @@ public class UserRepository {
 
     @Transactional
     public int studyGetOut(String userId) {
-        // 스터디 참가 여부 null로 바꿈
-        int result1 = UserDBManger.userIdChangNull(userId);
         // 댓글 삭제
         int result2 = UserDBManger.userIdDeleteComment(userId);
         // 코드 삭제
         int result3 = UserDBManger.userIdDeleteCode(userId);
         // 스터디 탈되로 업데이트
-        int result = UserDBManger.studyGetOut(userId);
+//        int result = UserDBManger.studyGetOut(userId);
+        // 스터디 참가 여부 null로 바꿈
+        int result1 = UserDBManger.userIdChangNull(userId);
 
-        return result;
+        return result1;
     }
 
     public void createStudy(String userId, String studyId, Date date) {

@@ -90,9 +90,15 @@ public class UserController {
     @GetMapping(value="/{userId}/studyOut", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
         log.info("userId = {}", userId);
-        int res = userService.studyGetOut(userId);
-        log.info("res = {}", res);
-        return res > 0 ? ResponseEntity.ok("삭제 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("삭제 실패");
+        UserVO user = userService.finduserId(userId);
+
+        if("Y".equals(user.getUserLeader())){ // 리더인지 확인
+            return ResponseEntity.ok("리더는 탈퇴 위임하고 해");
+        } else {
+            int res = userService.studyGetOut(userId);
+            log.info("res = {}", res);
+            return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
+        }
     }
 
     @GetMapping("/login-failed")
@@ -122,17 +128,12 @@ public class UserController {
         return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
     }
 
-//    @GetMapping("/{userId}/google-logout")
-//    public String googleLogout(@AuthenticationPrincipal OAuth2User principal, HttpSession session, @PathVariable String userId) {
-//        log.info("userId = {}", userId);
-//
-//        String googleId = principal.getAttribute("sub"); // Google의 고유 사용자 ID
-//        log.info("googleId = {}", googleId);
-//
-//        // Google 로그아웃 URL로 리다이렉트
-//        session.invalidate(); // 서버 세션 종료
-//        return "OK";
-//    }
+    @GetMapping("/{userId}/google-logout")
+    public String googleLogout(@PathVariable String userId) {
+        log.info("userId = {}", userId);
+        // Google 로그아웃 URL로 리다이렉트
+        return "OK";
+    }
 
 
 

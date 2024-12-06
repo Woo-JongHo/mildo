@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String SECRET_KEY = JwtTokenProvider.SECRET_KEY;
 
 //    private final UserRepository userRepository;
-
+//
 //    @Autowired
 //    public JwtAuthenticationFilter(UserRepository userRepository) {
 //        this.userRepository = userRepository;

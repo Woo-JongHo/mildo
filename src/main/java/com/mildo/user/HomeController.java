@@ -38,8 +38,8 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/google-logout")
-    public String googleLogout(@AuthenticationPrincipal OAuth2User principal, @PathVariable String userId) {
+//    @GetMapping("/{userId}/google-logout")
+    public String googleLogout(@PathVariable String userId) {
         log.info("userId = {}", userId);
         // Google 로그아웃 URL로 리다이렉트
         return "redirect:https://accounts.google.com/logout";
