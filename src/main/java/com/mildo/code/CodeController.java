@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mildo.code.Vo.CodeVO;
 import com.mildo.code.Vo.CommentVO;
+import com.mildo.code.Vo.RecentVO;
 import com.mildo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -132,5 +133,12 @@ public class CodeController {
         return ResponseEntity.ok(list);
     }
 
+
+    @ResponseBody
+    @GetMapping(value="/{studyId}/getRecent", produces="application/json; charset=UTF-8")
+    public ResponseEntity<List<RecentVO>> recent(@PathVariable String studyId){
+        List<RecentVO> list = codeService.getRecent(studyId);
+        return ResponseEntity.ok(list);
+    }
 
 }

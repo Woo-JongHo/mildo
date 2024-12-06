@@ -2,6 +2,7 @@ package com.mildo.code;
 
 import com.mildo.code.Vo.CodeVO;
 import com.mildo.code.Vo.CommentVO;
+import com.mildo.code.Vo.RecentVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.db.DBManger;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +98,6 @@ public class CodeDBManger extends DBManger {
     public static int commentCount(int codeId) {
         SqlSession session = sqlSessionFactory.openSession();
         int res = session.selectOne("code.commentCount", codeId);
-        log.info("res = {}", res);
         session.commit();
         session.close();
         return res;
@@ -114,5 +114,14 @@ public class CodeDBManger extends DBManger {
         session.commit();
         session.close();
         return code;
+    }
+
+    public static List<RecentVO> getRecent(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        List<RecentVO> list = session.selectList("code.getRecent", studyId);
+        log.info("list = {}", list);
+        session.commit();
+        session.close();
+        return list;
     }
 }

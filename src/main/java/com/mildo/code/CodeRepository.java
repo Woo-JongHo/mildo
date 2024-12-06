@@ -2,6 +2,7 @@ package com.mildo.code;
 
 import com.mildo.code.Vo.CodeVO;
 import com.mildo.code.Vo.CommentVO;
+import com.mildo.code.Vo.RecentVO;
 import com.mildo.common.Page.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -49,5 +50,9 @@ public class CodeRepository {
     // 탯글 리스트
     public List<CommentVO> CommentList(int codeId, PageInfo pi){
         return CodeDBManger.CommentList(codeId, pi);
+    }
+
+    public List<RecentVO> getRecent(String studyId){
+        return CodeDBManger.getRecent(studyId);
     }
 }

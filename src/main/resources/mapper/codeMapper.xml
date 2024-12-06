@@ -26,6 +26,14 @@
         <result property="commentDate" column="comment_date" />
     </resultMap>
 
+    <resultMap id="recentResult" type="recentVO">
+        <result property="userName" column="user_name" />
+        <result property="userId" column="user_id" />
+        <result property="codeTitle" column="code_title" />
+        <result property="codeProblemid" column="code_problemid" />
+        <result property="codeSolvedDate" column="code_solvedate" />
+    </resultMap>
+
     <insert id="dummyCode" parameterType="CodeVo">
         INSERT INTO CODE (
         user_id,
@@ -113,6 +121,23 @@
         FROM COMMENT
         where code_id = #{codeId}
         ORDER BY comment_id DESC
+    </select>
+
+    <select id="getRecent" resultMap="recentResult">
+        SELECT
+            U.user_name,
+            U.user_id,
+            c.code_title,
+            C.code_problemid,
+            C.code_solvedate
+        FROM
+            code C
+                JOIN
+            users U ON C.user_id = U.user_id
+        WHERE U.study_id = #{studyId}
+        ORDER BY
+            c.code_solvedate DESC
+            LIMIT 5;
     </select>
 
 </mapper>

@@ -2,14 +2,19 @@ package com.mildo.code;
 
 import com.mildo.code.Vo.CodeVO;
 import com.mildo.code.Vo.CommentVO;
+import com.mildo.code.Vo.RecentVO;
 import com.mildo.common.Page.PageInfo;
 import com.mildo.common.Page.Pagenation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,4 +94,10 @@ public class CodeService {
 
         return codeRepository.CommentList(codeId, pi);
     }
+
+    public List<RecentVO> getRecent(String studyId){
+        return codeRepository.getRecent(studyId);
+    }
+
+
 }

@@ -11,6 +11,7 @@
         <typeAlias type="com.mildo.user.Vo.TokenVO" alias="tokenVO"/>
         <typeAlias type="com.mildo.user.Vo.LevelCountDTO" alias="LevelCountDTO"/>
         <typeAlias type="com.mildo.code.Vo.CodeVO" alias="codeVO"/>
+        <typeAlias type="com.mildo.code.Vo.RecentVO" alias="recentVO"/>
         <typeAlias type="com.mildo.code.Vo.CommentVO" alias="commentVO"/>
         <typeAlias type="com.mildo.study.Vo.StudyVO" alias="studyVO"/>
         <typeAlias type="com.mildo.study.Vo.RemainingDaysDTO" alias="remainingDaysDTO"/>
