@@ -46,8 +46,8 @@ public class CodeService {
         String readmeText = request.getReadmeText();
         String dateInfo = request.getDateInfo();
         int problemId = Integer.parseInt(request.getProblemId());
-        String level = request.getLevel();
-
+        // "lv2" -> "2"로 변경 (자료형 유지를 위해 charAt 등과 같은 것을 사용하지 않음)
+        String level = request.getLevel().substring(2);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format.parse(dateInfo);
 
@@ -61,6 +61,8 @@ public class CodeService {
         log.info("Parsed Date: {}", date);
         log.info("ProblemID: {}", problemId);
         log.info("Level: {}", level);
+
+        // TODO: 추가 로직 작성 필요
     }
 
     public int saveComment(CommentVO comment){
