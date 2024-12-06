@@ -213,54 +213,52 @@ public class StudyService {
 
 
     //밀도심기 로직
-    public Map<String, Map<String,List<String>>> Mildo(String studyId){
+    public Map<String, Map<String, ArrayList<Map<String, String>>>> Mildo(String studyId) {
 
-        Map<String, Map<String,List<String>>> mildoList = new LinkedHashMap<>();
+        Map<String, Map<String, ArrayList<Map<String, String>>>> mildoList = new LinkedHashMap<>();
         List<String> monthData = studyMonthList(studyId);
         Map<String, Integer> dayData = new LinkedHashMap<>();
 
-        for( String month : monthData){
+        for (String month : monthData) {
 
-            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId,month);
-            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId,month);
-
+            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month);
+            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId, month);
 
             int countMember = memberName.size();
 
-            Map<String, List<String>> memberData = new LinkedHashMap<>();
-            mildoList.put(month,memberData);
+            Map<String, ArrayList<Map<String, String>>> memberData = new LinkedHashMap<>();
+            mildoList.put(month, memberData);
 
             dayData.put(month, DayCheck(month));
+
             for (int i = 0; i < countMember; i++) {
 
                 ArrayList<Map<String, String>> solvedList;
-                List<String> solvedDataTypeList = new ArrayList<>();
+                ArrayList<Map<String, String>> solvedDataTypeList = new ArrayList<>();
                 solvedList = codeService.getSolvedByDaySelectedMonth(memberID.get(i), month);
 
                 int[] MonthDay = new int[DayCheck(month)];
 
-                //리스트를 일단 가져옵니다 아예없을수도있음.
+                // 리스트를 가져옵니다 (아예 없을 수도 있음)
                 for (Map<String, String> map : solvedList) {
-                    System.out.println("Map contents: " + map);
-
                     String dataDay = map.get("code_solvedate");
-                    System.out.println(dataDay + "dateDay");
-
                     int day = Integer.parseInt(dataDay.substring(8, 10)); // 일(day)을 가져와야 하므로 8, 10 인덱스 사용
-                    System.out.println(day + "day----------");
-
                     String solved = String.valueOf(map.get("solved"));
-                    System.out.println(solved + "solved------------");
                     MonthDay[day - 1] += Integer.parseInt(solved); // 합산하기 위해 += 사용
                 }
 
-                //데이터를 내 방식대로 바꾸기위한 배열을 선언하고
-                for (int j = 0; j < DayCheck(month); j++)
-                    solvedDataTypeList.add(String.valueOf(MonthDay[j]));
-                memberData.put(memberName.get(i),solvedDataTypeList);
+                // 데이터를 "dayX", "solved" 형식으로 저장
+                for (int j = 0; j < DayCheck(month); j++) {
+                    Map<String, String> daySolvedData = new LinkedHashMap<>();
+                    daySolvedData.put("day", "day" + (j + 1)); // day1, day2, ...
+                    daySolvedData.put("solved", String.valueOf(MonthDay[j])); // 해당 일의 solved 값
+                    solvedDataTypeList.add(daySolvedData);
+                }
+
+                memberData.put(memberName.get(i), solvedDataTypeList);
             }
-            mildoList.put(month,memberData);
-        }// month
+            mildoList.put(month, memberData);
+        }
         return mildoList;
     }
 

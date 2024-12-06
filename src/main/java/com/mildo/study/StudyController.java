@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class StudyController {
     }
 
     @GetMapping("{studyId}/monthData")
-    public Map<String, Map<String,List<String>>> monthData(@PathVariable String studyId){
+    public Map<String, Map<String, ArrayList<Map<String, String>>>> monthData(@PathVariable String studyId){
 
         log.info("studyId 받아오는가" + studyId);
 
