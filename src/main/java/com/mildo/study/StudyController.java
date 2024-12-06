@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserService;
@@ -91,14 +92,22 @@ public class StudyController {
     }
 
     //스터디 참가하기
-        @RequestMapping(value = "/enterStudy", method = {RequestMethod.PUT, RequestMethod.GET})
-    public ResponseEntity<String> enterStudy(@RequestParam String studyId,
-                                             @RequestParam String password ,
-                                             @RequestParam String userId) {
-        boolean isValid = studyService.checkstudyIdPassword(studyId, password);
+    @ResponseBody
+    @PutMapping(value="/enterStudy", produces="application/json; charset=UTF-8")
+    public ResponseEntity<String> enterStudy(@RequestBody EnteStudy enteStudy) {
+        int res = studyService.totalMembers(enteStudy.getStudyId());
+        if(res >= 6){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인원 초과");
+        }
 
+        UserVO userVO = userService.finduserId(enteStudy.getUserId());
+        if(userVO.getStudyId() != null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 스터디가 있습니다.");
+        }
+
+        boolean isValid = studyService.checkstudyIdPassword(enteStudy); // 비번 체크
         if (isValid) {
-            userService.updateStudyId(userId, studyId);
+            userService.updateStudyId(enteStudy);
             return ResponseEntity.ok("스터디 접속 완료");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid study code or password!");

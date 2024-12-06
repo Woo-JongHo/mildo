@@ -149,8 +149,8 @@
     <select id="checkstudyIdPassword" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM study
-        WHERE study_Id = #{study_Id}
-          AND study_password = #{study_password}
+        WHERE study_Id = #{studyId}
+          AND study_password = #{studyPassword}
     </select>
 
     <update id="updateStudyName" parameterType="map">

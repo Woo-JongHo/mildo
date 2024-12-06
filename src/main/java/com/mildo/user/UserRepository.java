@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
@@ -60,8 +61,8 @@ public class UserRepository {
          return UserDBManger.solvedLevelsList(userId);
     }
 
-    public void updateStudyId(String userId, String studyId) {
-        UserDBManger.updateStudyId(userId, studyId);
+    public void updateStudyId(EnteStudy enteStudy) {
+        UserDBManger.updateStudyId(enteStudy);
     }
 
     public boolean checkExtensionSync(String userId, String studyId) {

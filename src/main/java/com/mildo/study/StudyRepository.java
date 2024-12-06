@@ -1,6 +1,7 @@
 package com.mildo.study;
 
 
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserDBManger;
@@ -52,8 +53,8 @@ public class StudyRepository {
         return StudyDBManger.getStudyMemberIdByMonth(studyId, month);
     }
 
-    public boolean checkstudyIdPassword(String studyId, String password) {
-        return StudyDBManger.checkstudyIdPassword(studyId, password);
+    public boolean checkstudyIdPassword(EnteStudy enteStudy) {
+        return StudyDBManger.checkstudyIdPassword(enteStudy);
     }
 
     public void enterStudy(String studyId, String password, String userId) {
