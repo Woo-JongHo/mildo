@@ -279,6 +279,12 @@ public class StudyService {
         return studyRepository.deleteStudy(studyId);
     }
 
+    public int deleteStudyUser(String studyId) {
+        int res = studyRepository.deleteStudyCode(studyId); // 스터디 코드 다 삭제
+        int res2 = studyRepository.deleteStudyComment(studyId); // 댓글 삭제
+        return studyRepository.deleteStudyUser(studyId);
+    }
+
     public String getStudyName(String studyId) {
         return studyRepository.getStudyName(studyId);
     }

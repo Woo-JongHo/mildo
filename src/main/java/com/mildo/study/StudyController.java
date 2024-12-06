@@ -152,10 +152,12 @@ public class StudyController {
     @DeleteMapping("/{studyId}/delete-study")
     public ResponseEntity<Boolean> deleteStudy(@PathVariable String studyId){
         // 유저 아이디를 받아 해당 유저가 리더가 맞는지 판단하는 것도 좋을 것같음
-
-        boolean isValid =  studyService.deleteStudy(studyId);
-        if (isValid)
+        int res = studyService.deleteStudyUser(studyId); // 회원 정보 수정, 코드, 댓글 다 삭제
+        
+        boolean isValid =  studyService.deleteStudy(studyId); // 스터디 삭제인 듯
+        if (isValid) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+        }
 
         return ResponseEntity.ok(true);
     }

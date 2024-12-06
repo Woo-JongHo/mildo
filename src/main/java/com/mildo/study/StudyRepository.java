@@ -87,6 +87,18 @@ public class StudyRepository {
         return success != 0;
     }
 
+    public int deleteStudyUser(String studyId) {
+        return StudyDBManger.deleteStudyUser(studyId);
+    }
+
+    public int deleteStudyCode(String studyId) {
+        return StudyDBManger.deleteStudyCode(studyId);
+    }
+
+    public int deleteStudyComment(String studyId) {
+        return StudyDBManger.deleteStudyComment(studyId);
+    }
+
     public StudyVO findStudyNo(int studyNo) {
         return StudyDBManger.findStudyNo(studyNo);
     }
