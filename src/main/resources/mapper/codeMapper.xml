@@ -70,7 +70,7 @@
         comment_content,
         comment_date
         )
-        VALUES (#{codeId}, #{userId}, #{commentContent}, NOW())
+        VALUES (#{codeId}, #{userId}, #{commentContent}, CURRENT_TIMESTAMP)
     </insert>
 
     <select id="totalSolved" resultType="_int">
@@ -107,6 +107,7 @@
     <select id="CommentList" resultMap="commentResult">
         SELECT comment_id,
                code_id,
+               user_id,
                comment_content,
                comment_date
         FROM COMMENT

@@ -83,16 +83,9 @@ public class StudyController {
 
     // studyId로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
     @GetMapping("/{studyId}/rank")
-    public Map<String, Object> ranks(@PathVariable String studyId) {
-        studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
-        log.info("studyId = {}", studyId);
-
+    public ResponseEntity<List<StudyVO>> ranks(@PathVariable String studyId) {
         List<StudyVO> totalrank = studyService.totalrank(studyId);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("totalrank", totalrank);
-
-        return response;
+        return ResponseEntity.ok(totalrank);
     }
 
     //스터디 참가하기
