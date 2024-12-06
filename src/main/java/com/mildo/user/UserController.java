@@ -119,7 +119,7 @@ public class UserController {
         return response;
     }
 
-    @ResponseBody // userId로 스터디 탈퇴
+    @ResponseBody // userId로 회원 탈퇴
     @GetMapping(value="/{userId}/service-out", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> serviceOut(@PathVariable String userId){
         log.info("userId = {}", userId);
