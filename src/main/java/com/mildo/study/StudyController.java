@@ -31,18 +31,20 @@ public class StudyController {
         return "Study Home";
     }
 
-    @PostMapping("/create")
-    public Map<String, Object> create(String userId, String name, String password) {
+    @ResponseBody
+    @PostMapping(value="/{userId}/create", produces="application/json; charset=UTF-8")
+    public Map<String, Object> create(@PathVariable String userId, @RequestBody StudyVO studyVO) {
         // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
         Map<String, Object> response = new HashMap<>();
         UserVO userVO = userService.finduserId(userId);
 
         if(userVO.getStudyId() != null) { // 유저 studyId가 있으면 null 반납
-            response.put("studyId", null);
+            response.put("studyId", userVO.getStudyId());
+            response.put("is_participainted", true);
             return response;
         }
 
-        String studyId = studyService.create(userId, name, password);
+        String studyId = studyService.create(userId, studyVO);
         response.put("studyId", studyId);
         return response;
     }
@@ -84,16 +86,9 @@ public class StudyController {
 
     // studyId로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
     @GetMapping("/{studyId}/rank")
-    public Map<String, Object> ranks(@PathVariable String studyId) {
-        studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
-        log.info("studyId = {}", studyId);
-
+    public ResponseEntity<List<StudyVO>> ranks(@PathVariable String studyId) {
         List<StudyVO> totalrank = studyService.totalrank(studyId);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("totalrank", totalrank);
-
-        return response;
+        return ResponseEntity.ok(totalrank);
     }
 
     //스터디 참가하기

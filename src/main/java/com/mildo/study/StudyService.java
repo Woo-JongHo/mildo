@@ -29,7 +29,7 @@ public class StudyService {
 
     LocalDate currentDate = LocalDate.now();
 
-    public String create(String userId, String name, String password) {
+    public String create(String userId, StudyVO studyVO) {
 
 //        StudyVO studyVo = findStudyNo(studyNextNo);
 //
@@ -66,8 +66,8 @@ public class StudyService {
 
         StudyVO studyVo = new StudyVO();
         studyVo.setStudyId(studyId);
-        studyVo.setStudyName(name);
-        studyVo.setStudyPassword(password);
+        studyVo.setStudyName(studyVO.getStudyName());
+        studyVo.setStudyPassword(studyVO.getStudyPassword());
         studyVo.setStudyStart(date);
         studyVo.setStudyEnd(newDate);
         log.info("studyVo = {}", studyVo);
