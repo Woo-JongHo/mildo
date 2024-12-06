@@ -124,4 +124,22 @@ public class CodeDBManger extends DBManger {
         session.close();
         return list;
     }
+
+    public static int updateComment(CommentVO comment) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("code.updateComment", comment);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int deleteComment(int commentId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.delete("code.deleteComment", commentId);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+
 }

@@ -52,7 +52,18 @@ public class CodeRepository {
         return CodeDBManger.CommentList(codeId, pi);
     }
 
+    // 최근 활동 가져오기
     public List<RecentVO> getRecent(String studyId){
         return CodeDBManger.getRecent(studyId);
+    }
+
+    // 댓글 수정
+    public int updateComment(CommentVO comment){
+        return CodeDBManger.updateComment(comment);
+    }
+
+    // 댓글 삭제
+    public int deleteComment(int commentId){
+        return CodeDBManger.deleteComment(commentId);
     }
 }
