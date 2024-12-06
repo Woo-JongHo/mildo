@@ -149,8 +149,8 @@
     <select id="checkstudyIdPassword" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM study
-        WHERE study_Id = #{study_Id}
-          AND study_password = #{study_password}
+        WHERE study_Id = #{studyId}
+          AND study_password = #{studyPassword}
     </select>
 
     <update id="updateStudyName" parameterType="map">
@@ -173,15 +173,37 @@
 
     <update id="resetUserStudyInfo">
         UPDATE USERS
-        SET user_leader      = 'N',
+        SET user_leader = null,
             user_isparticipant = null
-        WHERE study_id = #{study_id};
+        WHERE study_id = #{studyId}
     </update>
 
     <delete id="deleteStudy">
         DELETE
         FROM STUDY
-        WHERE study_id = #{studyId};
+        WHERE study_id = #{studyId}
+    </delete>
+
+    <update id="deleteStudyUser">
+        UPDATE users
+        SET user_leader = null,
+            user_isparticipant = null,
+            user_solvedproblem = 0
+        WHERE study_id = #{studyId}
+    </update>
+
+    <delete id="deleteStudyCode">
+        DELETE FROM code C
+            USING users U
+        WHERE C.user_id = U.user_id
+          AND U.study_id = #{studyId}
+    </delete>
+
+    <delete id="deleteStudyComment">
+        DELETE FROM comment C
+            USING users U
+        WHERE C.user_id = U.user_id
+          AND U.study_id = #{studyId}
     </delete>
 
     <insert id="createStudyId">

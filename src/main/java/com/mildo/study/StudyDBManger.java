@@ -1,5 +1,6 @@
 package com.mildo.study;
 
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
@@ -117,17 +118,17 @@ public class StudyDBManger extends DBManger {
         return names;
     }
 
-    public static boolean checkstudyIdPassword(String studyId, String password) {
+    public static boolean checkstudyIdPassword(EnteStudy enteStudy) {
         boolean isValid = false;
         SqlSession session = sqlSessionFactory.openSession();
 
         try {
             // 파라미터 맵 생성
-            Map<String, Object> params = new HashMap<>();
-            params.put("study_Id", studyId);
-            params.put("study_password", password);
+//            Map<String, Object> params = new HashMap<>();
+//            params.put("study_Id", studyId);
+//            params.put("study_password", password);
 
-            Integer count = session.selectOne("Study.checkstudyIdPassword", params);
+            Integer count = session.selectOne("Study.checkstudyIdPassword", enteStudy);
 
             if (count != null && count > 0) {
                 isValid = true;
@@ -173,8 +174,32 @@ public class StudyDBManger extends DBManger {
         if(rowsAffected == 0)   // 해당 스터디가 존재하지 않을 경우 삭제되지 않음
             return rowsAffected;
 
-        rowsAffected = session.update("Study.resetUserStudyInfo", studyId);
+//        rowsAffected = session.update("Study.resetUserStudyInfo", studyId);
 
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
+
+    public static int deleteStudyUser(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int rowsAffected = session.update("Study.deleteStudyUser", studyId);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
+
+    public static int deleteStudyCode(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int rowsAffected = session.delete("Study.deleteStudyCode", studyId);
+        session.commit();
+        session.close();
+        return rowsAffected;
+    }
+
+    public static int deleteStudyComment(String studyId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int rowsAffected = session.delete("Study.deleteStudyComment", studyId);
         session.commit();
         session.close();
         return rowsAffected;

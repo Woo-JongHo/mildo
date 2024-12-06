@@ -122,4 +122,18 @@ public class UserController {
         return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
     }
 
+//    @GetMapping("/{userId}/google-logout")
+//    public String googleLogout(@AuthenticationPrincipal OAuth2User principal, HttpSession session, @PathVariable String userId) {
+//        log.info("userId = {}", userId);
+//
+//        String googleId = principal.getAttribute("sub"); // Google의 고유 사용자 ID
+//        log.info("googleId = {}", googleId);
+//
+//        // Google 로그아웃 URL로 리다이렉트
+//        session.invalidate(); // 서버 세션 종료
+//        return "OK";
+//    }
+
+
+
 }

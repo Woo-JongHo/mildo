@@ -1,6 +1,7 @@
 package com.mildo.study;
 
 import com.mildo.code.CodeService;
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserRepository;
@@ -261,8 +262,8 @@ public class StudyService {
         return mildoList;
     }
 
-    public boolean checkstudyIdPassword(String studyId, String password) {
-        return studyRepository.checkstudyIdPassword(studyId,password);
+    public boolean checkstudyIdPassword(EnteStudy enteStudy) {
+        return studyRepository.checkstudyIdPassword(enteStudy);
     }
 
     public List<StudyVO> updateStudyName(String studyId, String studyName){
@@ -276,6 +277,12 @@ public class StudyService {
 
     public boolean deleteStudy(String studyId) {
         return studyRepository.deleteStudy(studyId);
+    }
+
+    public int deleteStudyUser(String studyId) {
+        int res = studyRepository.deleteStudyCode(studyId); // 스터디 코드 다 삭제
+        int res2 = studyRepository.deleteStudyComment(studyId); // 댓글 삭제
+        return studyRepository.deleteStudyUser(studyId);
     }
 
     public String getStudyName(String studyId) {

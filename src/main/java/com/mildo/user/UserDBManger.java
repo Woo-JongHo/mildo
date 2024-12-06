@@ -1,6 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.db.DBManger;
+import com.mildo.study.Vo.EnteStudy;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
@@ -114,15 +115,14 @@ public class UserDBManger extends DBManger {
         return solvedLevels;
     }
 
-    public static void updateStudyId(String userId, String studyId) {
+    public static void updateStudyId(EnteStudy enteStudy) {
         SqlSession session = sqlSessionFactory.openSession();
-        log.info(userId + "userId-----" + studyId + "--------studyId");
         try {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", userId);
-            params.put("studyId", studyId);
+//            Map<String, String> params = new HashMap<>();
+//            params.put("userId", userId);
+//            params.put("studyId", studyId);
 
-            session.update("User.updateStudyId", params);
+            session.update("User.updateStudyId", enteStudy);
             session.commit(); // 변경 사항 적용
         } catch (Exception e) {
             e.printStackTrace();
