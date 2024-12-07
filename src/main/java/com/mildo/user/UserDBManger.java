@@ -2,6 +2,7 @@ package com.mildo.user;
 
 import com.mildo.db.DBManger;
 import com.mildo.study.Vo.EnteStudy;
+import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,14 +155,6 @@ public class UserDBManger extends DBManger {
         return isValid; // 유효 여부 반환
     }
 
-    public static int studyGetOut(String userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-        int res = session.update("User.studyGetOut", userId);
-        session.commit();
-        session.close();
-        return res;
-    }
-
     public static int userIdDeleteCode(String userId) {
         SqlSession session = sqlSessionFactory.openSession();
         int res = session.update("User.userIdDeleteCode", userId);
@@ -205,4 +199,36 @@ public class UserDBManger extends DBManger {
         session.close();
         return res;
     }
+
+    public static void saveBlackToken(BlackTokenVO black) {
+        SqlSession session = sqlSessionFactory.openSession();
+        session.insert("User.saveBlackToken", black);
+        session.commit();
+        session.close();
+    }
+
+    public static void tokenNull(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.tokenNull", userId);
+        session.commit();
+        session.close();
+    }
+
+    public static void blackrest(Timestamp timestamp) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.delete("User.blackrest", timestamp);
+        log.info("res = {}", res);
+        session.commit();
+        session.close();
+    }
+
+    public static BlackTokenVO checkBlackList(String token) {
+        SqlSession session = sqlSessionFactory.openSession();
+        BlackTokenVO res = session.selectOne("User.checkBlackList", token);
+        log.info("res = {}", res);
+        session.commit();
+        session.close();
+        return res;
+    }
+
 }

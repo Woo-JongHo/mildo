@@ -38,6 +38,11 @@
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
+    <resultMap id="blackResultMap" type="blackTokenVO">
+        <result property="blackToken" column="black_token" />
+        <result property="expirationTime" column="expiration_time" />
+    </resultMap>
+
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
                study_id,
@@ -134,12 +139,6 @@
           AND study_id = #{studyId}
     </select>
 
-    <update id="studyGetOut">
-        UPDATE users
-        SET study_id = 'N'
-        WHERE user_id = #{userId}
-    </update>
-
     <delete id="userIdDeleteCode">
         DELETE FROM CODE
         WHERE user_id = #{userId}
@@ -170,4 +169,31 @@
         DELETE FROM USERS
         WHERE user_id = #{userId}
     </delete>
+
+    <insert id="saveBlackToken">
+        INSERT INTO
+            BLACKLIST(black_token,
+                      black_expiration)
+        VALUES (#{blackToken}, #{expirationTime})
+    </insert>
+
+    <update id="tokenNull">
+        UPDATE token
+        SET access_token = null,
+            refresh_token = null,
+            expiration_time = null
+        WHERE user_id = #{userId}
+    </update>
+
+    <delete id="blackrest">
+        DELETE FROM BLACKLIST
+        WHERE CURRENT_TIMESTAMP > black_expiration
+    </delete>
+
+    <select id="checkBlackList" resultMap="blackResultMap">
+        SELECT *
+        FROM BLACKLIST
+        WHERE black_token = #{token}
+    </select>
+
 </mapper>
