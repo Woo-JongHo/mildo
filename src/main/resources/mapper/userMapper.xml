@@ -38,6 +38,11 @@
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
+    <resultMap id="blackResultMap" type="blackTokenVO">
+        <result property="blackToken" column="black_token" />
+        <result property="expirationTime" column="expiration_time" />
+    </resultMap>
+
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
                study_id,
@@ -184,5 +189,11 @@
         DELETE FROM BLACKLIST
         WHERE CURRENT_TIMESTAMP > black_expiration
     </delete>
+
+    <select id="checkBlackList" resultMap="blackResultMap">
+        SELECT *
+        FROM BLACKLIST
+        WHERE black_token = #{token}
+    </select>
 
 </mapper>

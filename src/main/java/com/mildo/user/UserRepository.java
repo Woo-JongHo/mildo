@@ -102,4 +102,9 @@ public class UserRepository {
     public void blackrest(Timestamp timestamp) {
         UserDBManger.blackrest(timestamp);
     }
+
+    public BlackTokenVO checkBlackList(String token) {
+        return  UserDBManger.checkBlackList(token);
+    }
+
 }

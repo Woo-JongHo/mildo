@@ -221,4 +221,14 @@ public class UserDBManger extends DBManger {
         session.commit();
         session.close();
     }
+
+    public static BlackTokenVO checkBlackList(String token) {
+        SqlSession session = sqlSessionFactory.openSession();
+        BlackTokenVO res = session.selectOne("User.checkBlackList", token);
+        log.info("res = {}", res);
+        session.commit();
+        session.close();
+        return res;
+    }
+
 }
