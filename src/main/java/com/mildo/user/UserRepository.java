@@ -2,6 +2,7 @@ package com.mildo.user;
 
 
 import com.mildo.study.Vo.EnteStudy;
+import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j
@@ -75,12 +77,10 @@ public class UserRepository {
         int result2 = UserDBManger.userIdDeleteComment(userId);
         // 코드 삭제
         int result3 = UserDBManger.userIdDeleteCode(userId);
-        // 스터디 탈되로 업데이트
-//        int result = UserDBManger.studyGetOut(userId);
         // 스터디 참가 여부 null로 바꿈
-        int result1 = UserDBManger.userIdChangNull(userId);
+        int result = UserDBManger.userIdChangNull(userId);
 
-        return result1;
+        return result;
     }
 
     public void createStudy(String userId, String studyId, Date date) {
@@ -89,5 +89,17 @@ public class UserRepository {
 
     public int serviceOut(String userId) {
         return UserDBManger.userServiceOut(userId);
+    }
+
+    public void saveBlackToken(BlackTokenVO black) {
+         UserDBManger.saveBlackToken(black);
+    }
+
+    public void tokenNull(String userId) {
+        UserDBManger.tokenNull(userId);
+    }
+
+    public void blackrest(Timestamp timestamp) {
+        UserDBManger.blackrest(timestamp);
     }
 }

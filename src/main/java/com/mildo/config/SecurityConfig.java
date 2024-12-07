@@ -40,13 +40,13 @@ public class SecurityConfig {
                         )
                 );
 
-        http
-                .logout((auth) -> auth
-                .logoutUrl("/logout")  // 로그아웃 URL
-                .logoutSuccessUrl("/logoutSucc") // 로그아웃 성공 시 이동할 페이지
-                .invalidateHttpSession(true)  // 세션 무효화
-                .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
-        );
+//        http
+//                .logout((auth) -> auth
+//                .logoutUrl("/user/{userId}/google-logout")  // 로그아웃 URL
+//                .logoutSuccessUrl("/logoutSucc") // 로그아웃 성공 시 이동할 페이지
+//                .invalidateHttpSession(true)  // 세션 무효화
+//                .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
+//        );
 
         http
                 .csrf((auth) -> auth.disable() // CSRF 비활성화

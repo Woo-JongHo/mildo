@@ -129,10 +129,16 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/google-logout")
-    public String googleLogout(@PathVariable String userId) {
+    public String googleLogout(@PathVariable String userId, HttpServletRequest request) {
         log.info("userId = {}", userId);
-        // Google 로그아웃 URL로 리다이렉트
-        return "OK";
+
+        log.info("request = {}", request.getSession());
+        // 세션 무효화
+        request.getSession().invalidate();
+
+        String result = userService.blackToken(userId);
+        return "토큰이 없음".equals(result) ? "토큰은 없지만 로그아웃 성공" : "로그아웃 성공";
+
     }
 
 
