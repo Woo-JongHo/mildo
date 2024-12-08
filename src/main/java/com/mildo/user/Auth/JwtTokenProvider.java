@@ -17,6 +17,7 @@ public class JwtTokenProvider {
 
     // public을 사용해서 JwtAuthenticationFilter 에도 참조 할 수 있게 만듬
     public static final String SECRET_KEY = Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded());
+    public static final String REFRESH_TOKEN_SECRET_KEY = Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS512).getEncoded());
 
     // accessToken 생성
     public static String createAccessToken(String userId) {
@@ -40,14 +41,24 @@ public class JwtTokenProvider {
         return claims.getExpiration(); // 만료 시간 반환
     }
 
-    // refreshToken 생성
+    // refresh Token 생성
     public static String createRefreshToken(String userId) {
         return Jwts.builder()
                 .setSubject(userId) // 사용자 userId를 subject로 설정
                 .setIssuedAt(new Date()) // 발급 시간
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7일 후 만료
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // 서명
+                .signWith(SignatureAlgorithm.HS512, REFRESH_TOKEN_SECRET_KEY) // 서명
                 .compact();
+    }
+
+    // refresh Token 만료 시간 반환 메서드
+    public static Date getExpirationFromRefreshToken(String accessToken) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(REFRESH_TOKEN_SECRET_KEY) // 서명 검증을 위한 키
+                .parseClaimsJws(accessToken) // 토큰 파싱
+                .getBody(); // Payload 추출
+
+        return claims.getExpiration(); // 만료 시간 반환
     }
 
 }

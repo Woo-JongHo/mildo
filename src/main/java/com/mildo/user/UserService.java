@@ -68,7 +68,7 @@ public class UserService {
         String accessToken = jwtTokenProvider.createAccessToken(userId);
         String refreshToken = jwtTokenProvider.createRefreshToken(userId);
 
-        Date expiration = jwtTokenProvider.getExpirationFromToken(refreshToken);
+        Date expiration = jwtTokenProvider.getExpirationFromRefreshToken(refreshToken);
         // refreshToken 만료시간 형변환
         java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
 
@@ -77,9 +77,7 @@ public class UserService {
         token.setRefreshToken(refreshToken);
         token.setExpirationTime(sqlExpiration);
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        log.info("date = {}", timestamp);
-        userRepository.blackrest(timestamp);
+
 
         if(vo == null){ // 토큰이 없으면 INSERT
             userRepository.saveToken(token);
@@ -87,6 +85,16 @@ public class UserService {
             userRepository.saveUpdateToken(token);
         }
         return token;
+    }
+
+    // 블랙리스트 초기화
+    public void blackrest(Timestamp timestamp){
+        userRepository.blackrest(timestamp);
+    }
+
+    // 필터에서 토큰 조회
+    public String findRefreshTokenByUserId(String userId){
+        return userRepository.findRefreshTokenByUserId(userId);
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId) {
