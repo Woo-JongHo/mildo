@@ -69,13 +69,13 @@ public class CodeService {
         return codeRepository.saveComment(comment);
     }
 
-    public List<CodeVO> solvedList(String userId) {
+    public List<CodeVO> solvedList(String userId, int currentPage) {
         // 문제 푼 총 수량
         int totalSolved = codeRepository.totalSolved(userId);
         log.info("totalSolved = {}", totalSolved);
 
         // 리스트 페이지 별로 주는 메서드
-        PageInfo pi = Pagenation.getPageInfo(totalSolved, 1, 5, 9);
+        PageInfo pi = Pagenation.getPageInfo(totalSolved, currentPage, 5, 9);
         log.info("pi = {}", pi);
 
         // 문재 리스트

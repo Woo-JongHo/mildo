@@ -217,7 +217,6 @@ public class UserDBManger extends DBManger {
     public static void blackrest(Timestamp timestamp) {
         SqlSession session = sqlSessionFactory.openSession();
         int res = session.delete("User.blackrest", timestamp);
-        log.info("res = {}", res);
         session.commit();
         session.close();
     }
@@ -225,7 +224,18 @@ public class UserDBManger extends DBManger {
     public static BlackTokenVO checkBlackList(String token) {
         SqlSession session = sqlSessionFactory.openSession();
         BlackTokenVO res = session.selectOne("User.checkBlackList", token);
-        log.info("res = {}", res);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int changUserName(String userId, UserVO vo) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("userName", vo.getUserName());
+        params.put("userTheme", vo.getUserTheme());
+        int res = session.update("User.changUserName", params);
         session.commit();
         session.close();
         return res;

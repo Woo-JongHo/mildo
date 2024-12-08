@@ -147,4 +147,8 @@ public class UserService {
         return "로그아웃 성공";
     }
 
+    public int changUserName(String userId, UserVO vo){
+        return userRepository.changUserName(userId, vo);
+    }
+
 }

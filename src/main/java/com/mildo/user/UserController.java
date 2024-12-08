@@ -1,5 +1,6 @@
 package com.mildo.user;
 
+import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
@@ -112,7 +113,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/google-logout")
-    public String googleLogout(@PathVariable String userId, HttpServletRequest request) {
+    public ResponseEntity<String> googleLogout(@PathVariable String userId, HttpServletRequest request) {
         log.info("userId = {}", userId);
 
         log.info("request = {}", request.getSession());
@@ -120,9 +121,14 @@ public class UserController {
         request.getSession().invalidate();
 
         String result = userService.blackToken(userId);
-        return "토큰이 없음".equals(result) ? "토큰은 없지만 로그아웃 성공" : "로그아웃 성공";
+        return "토큰이 없음".equals(result) ? ResponseEntity.ok("토큰은 없지만 로그아웃 성공") : ResponseEntity.ok("로그아웃 성공");
     }
 
-
+    @ResponseBody
+    @PatchMapping(value = "/{userId}/rename", produces="application/json; charset=UTF-8")
+    public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody UserVO vo) {
+        int res = userService.changUserName(userId, vo);
+        return res > 0 ? ResponseEntity.ok("변경 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
+    }
 
 }

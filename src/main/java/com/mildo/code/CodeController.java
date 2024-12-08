@@ -104,8 +104,9 @@ public class CodeController {
     // userId로 푼 문제 리스트 조회 | 요청 방법:/api/%23G909/solvedList
     @ResponseBody
     @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
-    public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId){
-        List<CodeVO> solvedList = codeService.solvedList(userId);
+    public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId,
+                                                    @RequestParam(value="cpage", defaultValue="1") int currentPage){
+        List<CodeVO> solvedList = codeService.solvedList(userId, currentPage);
         return ResponseEntity.ok(solvedList);
     }
 
