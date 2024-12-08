@@ -114,4 +114,7 @@ public class UserRepository {
         return  UserDBManger.checkBlackList(token);
     }
 
+    public int changUserName(String userId, UserVO vo) {
+        return UserDBManger.changUserName(userId, vo);
+    }
 }

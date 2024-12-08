@@ -197,4 +197,11 @@
         WHERE black_token = #{token}
     </select>
 
+    <update id="changUserName" parameterType="map">
+        UPDATE users
+        SET user_name = #{userName},
+            user_theme = #{userTheme}
+        WHERE user_id = #{userId}
+    </update>
+
 </mapper>
