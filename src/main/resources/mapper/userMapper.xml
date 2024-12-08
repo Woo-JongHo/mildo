@@ -70,7 +70,8 @@
         SET user_name = #{userName},
             user_googleid = #{userGoogleId},
             user_email = #{userEmail},
-            user_date = CURRENT_DATE
+            user_date = CURRENT_DATE,
+            user_theme = 'blue'
         WHERE user_id = #{userId}
     </update>
 
@@ -129,7 +130,8 @@
     <update id="updateStudyId" parameterType="map">
         UPDATE users
         SET study_id = #{studyId},
-            user_leader = 'N'
+            user_leader = 'N',
+            user_isparticipant = CURRENT_DATE
         WHERE user_id = #{userId}
     </update>
 
