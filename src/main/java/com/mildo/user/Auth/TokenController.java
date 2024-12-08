@@ -34,10 +34,12 @@ public class TokenController {
         userService.blackrest(timestamp); // 블랙 리스트 초기화
 
         try {
-            if (!refreshToken.startsWith("Bearer ")) {
+
+            if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body("Invalid Refresh Token format.");
             }
+
             refreshToken = refreshToken.substring(7);
             log.info("refreshToken = {}", refreshToken);
 
