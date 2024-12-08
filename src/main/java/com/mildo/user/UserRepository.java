@@ -71,14 +71,21 @@ public class UserRepository {
         return UserDBManger.checkExtensionSync(userId,studyId);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int studyGetOut(String userId) {
-        // 댓글 삭제
-        int result2 = UserDBManger.userIdDeleteComment(userId);
-        // 코드 삭제
-        int result3 = UserDBManger.userIdDeleteCode(userId);
-        // 스터디 참가 여부 null로 바꿈
-        int result = UserDBManger.userIdChangNull(userId);
+        int result = 0;
+        try {
+            // 댓글 삭제
+            int result2 = UserDBManger.userIdDeleteComment(userId);
+            // 코드 삭제
+            int result3 = UserDBManger.userIdDeleteCode(userId);
+
+            // 스터디 참가 여부 null로 바꿈
+            result = UserDBManger.userIdChangNull(userId);
+
+        } catch (Exception e) {
+            return 0;
+        }
 
         return result;
     }

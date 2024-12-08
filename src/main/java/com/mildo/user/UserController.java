@@ -30,25 +30,6 @@ public class UserController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
 
-//    @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
-//    public ResponseEntity<Map<String, Serializable>> home(@AuthenticationPrincipal OidcUser principal) {
-//
-//        log.info("principal = {}", principal);
-//
-//        UserVO user = userService.login(principal);
-////        String accessToken = jwtTokenProvider.createAccessToken(user);
-////        log.info("accessToken = {}", accessToken);
-//
-////        Date expiration = getExpirationFromToken(accessToken);
-////        log.info("Access Token 만료 시간: {}", expiration);
-//
-//        return ResponseEntity.ok(Map.of(
-////                "expiration", expiration,
-////                "accessToken", accessToken,
-//                "userId", user.getUserId()
-//        ));
-//    }
-
     @GetMapping("/logoutSucc") // 로그인 성공시 리다이렉트
     public String logout( ) {
         // 토큰 만료는 서버 쪽에서 처리
@@ -140,7 +121,6 @@ public class UserController {
 
         String result = userService.blackToken(userId);
         return "토큰이 없음".equals(result) ? "토큰은 없지만 로그아웃 성공" : "로그아웃 성공";
-
     }
 
 

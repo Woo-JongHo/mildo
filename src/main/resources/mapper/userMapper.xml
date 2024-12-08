@@ -128,7 +128,8 @@
 
     <update id="updateStudyId" parameterType="map">
         UPDATE users
-        SET study_id = #{studyId}
+        SET study_id = #{studyId},
+            user_leader = 'N'
         WHERE user_id = #{userId}
     </update>
 
