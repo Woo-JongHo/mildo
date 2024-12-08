@@ -45,7 +45,7 @@ public class CodeController {
 
             // 필요한 정보 추출
             String userId = convertSync.get("id").asText();
-            String studyId = convertSync.get("studyCode").asText();
+            String studyId = convertSync.get("studyId").asText();
 
             // DB에 데이터가 있는지 확인
             boolean isValid = userService.checkExtensionSync(userId, studyId);
