@@ -124,15 +124,10 @@ public class StudyController {
     }
 
     // 스터디 이름 바꾸기 구현
-    @PutMapping("/{studyId}/rename")
-    public ResponseEntity<List<StudyVO>> updateUser(@PathVariable String studyId, String studyName) {
-        List<StudyVO> updatedUser = studyService.updateStudyName(studyId, studyName);
-        log.info("updatedUser = {}", updatedUser);
-
-        if (updatedUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
-        }
-        return ResponseEntity.ok(updatedUser);
+    @ResponseBody
+    @PutMapping(value = "/{studyId}/rename", produces="application/json; charset=UTF-8")
+    public ResponseEntity<String> updateUser(@PathVariable String studyId, @RequestBody StudyVO vo) {
+        return studyService.updateStudyName(studyId, vo.getStudyName()) > 0 ? ResponseEntity.ok("변경 성공") : ResponseEntity.ok("변경 실패");
     }
 
     // 스터디 리더 변경 기능 구현
