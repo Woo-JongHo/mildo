@@ -61,16 +61,8 @@ public class StudyRepository {
         StudyDBManger.enterStudy(studyId, password, userId);
     }
 
-    public List<StudyVO> updateStudyName(String studyId, String studyName) {
-        List<StudyVO> list = new ArrayList<>();
-
-        int success = StudyDBManger.updateStudyName(studyId, studyName);
-        if(success >= 1){
-            list = StudyDBManger.studyList(studyId);
-            log.info("list = {}", list);
-        }
-
-        return list;
+    public int updateStudyName(String studyId, String studyName) {
+        return StudyDBManger.updateStudyName(studyId, studyName);
     }
 
     public String updateLeader(String studyId,  String newLeaderId) {

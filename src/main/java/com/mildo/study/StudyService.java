@@ -266,7 +266,7 @@ public class StudyService {
         return studyRepository.checkstudyIdPassword(enteStudy);
     }
 
-    public List<StudyVO> updateStudyName(String studyId, String studyName){
+    public int updateStudyName(String studyId, String studyName){
 
         return studyRepository.updateStudyName(studyId, studyName);
     }
