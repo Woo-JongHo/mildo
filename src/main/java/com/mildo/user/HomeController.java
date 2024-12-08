@@ -38,33 +38,6 @@ public class HomeController {
         return "index";
     }
 
-//    @GetMapping("/{userId}/google-logout")
-    public String googleLogout(@PathVariable String userId) {
-        log.info("userId = {}", userId);
-        // Google 로그아웃 URL로 리다이렉트
-        return "redirect:https://accounts.google.com/logout";
-    }
-
-//    @PostMapping("/google-logout2")
-//    public String googleLogout(@AuthenticationPrincipal OAuth2User principal) {
-//        // OAuth2AuthorizedClientService로 액세스 토큰 가져오기
-//        OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient("google", principal.getName());
-//        String accessToken = client.getAccessToken().getTokenValue();
-//        log.info(accessToken);
-//
-//
-////         Google API 호출하여 토큰 무효화
-//        RestTemplate restTemplate = new RestTemplate();
-//        String revokeUrl = "https://oauth2.googleapis.com/revoke?token=" + accessToken;
-//        restTemplate.postForObject(revokeUrl, null, String.class);
-//
-//        // 서버 세션 종료
-//        SecurityContextHolder.clearContext();
-//
-//        return "redirect:/login";
-//    }
-
-
     @GetMapping("/home") // 구글 로그인 성공시 리다이렉트 받는 메서드
     public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);
