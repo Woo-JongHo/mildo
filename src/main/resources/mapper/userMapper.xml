@@ -203,5 +203,7 @@
             user_theme = #{userTheme}
         WHERE user_id = #{userId}
     </update>
-
+    <update id="solvedIncrement">
+        UPDATE USERS SET user_solvedproblem = user_solvedproblem + 1 WHERE user_id = #{userId}
+    </update>
 </mapper>

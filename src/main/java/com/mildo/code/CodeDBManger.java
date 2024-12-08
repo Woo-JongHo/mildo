@@ -142,4 +142,10 @@ public class CodeDBManger extends DBManger {
     }
 
 
+    public static void upload(CodeVO vo) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.insert("code.upload", vo);
+        session.commit();
+        session.close();
+    }
 }

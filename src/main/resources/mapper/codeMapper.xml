@@ -34,6 +34,21 @@
         <result property="codeSolvedDate" column="code_solvedate" />
     </resultMap>
 
+    <insert id="upload" parameterType="CodeVo">
+        INSERT INTO CODE (
+                          code_id,
+            user_id,
+            code_title,
+            code_readme,
+            code_source,
+            code_likes,
+            code_level,
+            code_problemid,
+            code_solvedtime
+        )
+        VALUES ( #{codeId},#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime})
+    </insert>
+
     <insert id="dummyCode" parameterType="CodeVo">
         INSERT INTO CODE (
         user_id,
@@ -81,6 +96,7 @@
         VALUES (#{codeId}, #{userId}, #{commentContent}, CURRENT_TIMESTAMP)
     </insert>
 
+<!--  해당 부분은 유저 매퍼에 있어야 하는 것이 아닌가의 대한 의문을 남깁니다. -이성훈-->
     <select id="totalSolved" resultType="_int">
         SELECT user_solvedproblem
         FROM users
