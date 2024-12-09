@@ -92,4 +92,14 @@ public class CodeRepository {
 
     }
 
+    // 문재 리스트
+    public List<CodeVO> solvedSerachList(PageInfo pi, String userId, String codeTitle){
+        return CodeDBManger.solvedSerachList(pi, userId, codeTitle);
+    }
+
+    // 문재 리스트 카테고리 정렬
+    public List<CodeVO> solvedSearchCategory(PageInfo pi, String userId, String codeTitle){
+        return CodeDBManger.solvedSearchCategory(pi, userId, codeTitle);
+    }
+
 }

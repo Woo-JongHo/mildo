@@ -178,4 +178,28 @@
         WHERE comment_id = #{commentId}
     </delete>
 
+    <select id="solvedSerachList" parameterType="map" resultMap="codeResult">
+        SELECT code_id,
+               code_title,
+               code_level,
+               code_solvedtime,
+               code_solvedate
+        FROM code
+        where user_id = #{userId}
+          AND code_title LIKE '%${codeTitle}%'
+        ORDER BY code_solvedate DESC
+    </select>
+
+    <select id="solvedSearchCategory" parameterType="map" resultMap="codeResult">
+        SELECT code_id,
+               code_title,
+               code_level,
+               code_solvedtime,
+               code_solvedate
+        FROM code
+        where user_id = #{userId}
+          AND code_title LIKE '%${codeTitle}%'
+        ORDER BY code_level DESC
+    </select>
+
 </mapper>
