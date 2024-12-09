@@ -41,6 +41,11 @@ public class CodeRepository {
         return CodeDBManger.solvedList(pi, userId);
     }
 
+    // 문재 리스트 카테고리 정렬
+    public List<CodeVO> solvedListCategory(PageInfo pi, String userId){
+        return CodeDBManger.solvedListCategory(pi, userId);
+    }
+
     // codeId로 코드 조회
     public CodeVO detailCode(int codeId, String userId){
         return CodeDBManger.detailCode(codeId, userId);

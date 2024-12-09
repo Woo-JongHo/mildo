@@ -105,16 +105,15 @@ public class CodeController {
     @ResponseBody
     @GetMapping(value="/{userId}/solvedList", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<CodeVO>> solvedListId(@PathVariable String userId,
-                                                    @RequestParam(value="cpage", defaultValue="1") int currentPage){
-        List<CodeVO> solvedList = codeService.solvedList(userId, currentPage);
+                                                     @RequestParam(value="cpage", defaultValue="1") int currentPage,
+                                                     @RequestParam(value="category", defaultValue="recent") String category){
+        List<CodeVO> solvedList = codeService.solvedList(userId, currentPage, category);
         return ResponseEntity.ok(solvedList);
     }
 
     @ResponseBody // 상세 코드 페이지
     @GetMapping(value="/{userId}/{codeId}/getCodeByProblemId", produces="application/json; charset=UTF-8")
     public ResponseEntity<CodeVO> getCodeByProblemId(@PathVariable int codeId, @PathVariable String userId){
-        log.info("userId = {}", userId);
-        log.info("codeId = {}", codeId);
         return ResponseEntity.ok(codeService.detailCode(codeId, userId));
     }
 
