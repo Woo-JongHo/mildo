@@ -114,9 +114,6 @@ public class UserController {
 
     @GetMapping("/{userId}/google-logout")
     public ResponseEntity<String> googleLogout(@PathVariable String userId, HttpServletRequest request) {
-        log.info("userId = {}", userId);
-
-        log.info("request = {}", request.getSession());
         // 세션 무효화
         request.getSession().invalidate();
 
