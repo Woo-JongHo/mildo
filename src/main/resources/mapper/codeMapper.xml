@@ -104,7 +104,6 @@
     </select>
 
     <select id="solvedList" resultMap="codeResult">
---         SELECT code_solvedate, code_title, code_level,code_solvedtime
         SELECT code_id,
                code_title,
                code_level,
@@ -113,6 +112,17 @@
         FROM code
         where user_id = #{userId}
         ORDER BY code_solvedate DESC
+    </select>
+
+    <select id="solvedListCategory" resultMap="codeResult">
+        SELECT code_id,
+               code_title,
+               code_level,
+               code_solvedtime,
+               code_solvedate
+        FROM code
+        where user_id = #{userId}
+        ORDER BY code_level DESC
     </select>
 
     <select id="detailCode" resultMap="codeResult">

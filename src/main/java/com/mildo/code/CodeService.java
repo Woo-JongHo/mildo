@@ -74,19 +74,18 @@ public class CodeService {
         return codeRepository.saveComment(comment);
     }
 
-    public List<CodeVO> solvedList(String userId, int currentPage) {
+    public List<CodeVO> solvedList(String userId, int currentPage, String category) {
         // 문제 푼 총 수량
         int totalSolved = codeRepository.totalSolved(userId);
-        log.info("totalSolved = {}", totalSolved);
-
         // 리스트 페이지 별로 주는 메서드
         PageInfo pi = Pagenation.getPageInfo(totalSolved, currentPage, 5, 9);
-        log.info("pi = {}", pi);
 
+        if("level".equals(category)){
+            List<CodeVO> solvedListCategory = codeRepository.solvedListCategory(pi, userId);
+            return solvedListCategory;
+        }
         // 문재 리스트
         List<CodeVO> solvedList = codeRepository.solvedList(pi, userId);
-        log.info("solvedList = {}", solvedList);
-
         return solvedList;
     }
 

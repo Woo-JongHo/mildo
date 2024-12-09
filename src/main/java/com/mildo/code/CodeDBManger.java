@@ -83,6 +83,19 @@ public class CodeDBManger extends DBManger {
         return solvedList;
     }
 
+    // 문재 리스트
+    public static List<CodeVO> solvedListCategory(PageInfo pi, String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+        List<CodeVO> solvedList = session.selectList("code.solvedListCategory", userId, rowBounds);
+
+        session.commit();
+        session.close();
+        return solvedList;
+    }
+
     // codeId로 코드 조회
     public static CodeVO detailCode(int codeId, String userId) {
         SqlSession session = sqlSessionFactory.openSession();
