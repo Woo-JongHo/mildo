@@ -125,10 +125,12 @@ public class UserController {
     }
 
     @ResponseBody
-    @PatchMapping(value = "/{userId}/rename", produces="application/json; charset=UTF-8")
+    @PatchMapping(value = "/{userId}", produces="application/json; charset=UTF-8")
     public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody UserVO vo) {
-        int res = userService.changUserName(userId, vo);
-        return res > 0 ? ResponseEntity.ok("변경 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
+        log.info("vo = {}", vo);
+        log.info("userId = {}", userId);
+        int res = userService.changUserInfo(userId, vo);
+        return res > 0 ? ResponseEntity.ok("변경 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("변경 실패");
     }
 
 }

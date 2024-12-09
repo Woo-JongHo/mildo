@@ -199,10 +199,22 @@
         WHERE black_token = #{token}
     </select>
 
-    <update id="changUserName" parameterType="map">
+    <update id="changUserInfo" parameterType="map">
         UPDATE users
         SET user_name = #{userName},
             user_theme = #{userTheme}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="changUserTheme" parameterType="map">
+        UPDATE users
+        SET user_theme = #{userTheme}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="changUserName" parameterType="map">
+        UPDATE users
+        SET user_name = #{userName}
         WHERE user_id = #{userId}
     </update>
 

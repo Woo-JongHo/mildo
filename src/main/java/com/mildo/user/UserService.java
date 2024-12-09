@@ -147,8 +147,17 @@ public class UserService {
         return "로그아웃 성공";
     }
 
-    public int changUserName(String userId, UserVO vo){
-        return userRepository.changUserName(userId, vo);
+    public int changUserInfo(String userId, UserVO vo){
+        log.info("vo = {}", vo);
+
+        if(vo.getUserName() != null && vo.getUserTheme() != null){ // 이름 테마 둘다 변경
+            return userRepository.changUserInfo(userId, vo);
+        } else if(vo.getUserName() == null){ // 테마만 변경
+            return userRepository.changUserTheme(userId, vo.getUserTheme());
+        } else if(vo.getUserTheme() == null){ // 이름만 변경
+            return userRepository.changUserName(userId, vo.getUserName());
+        }
+        return 0;
     }
 
 }
