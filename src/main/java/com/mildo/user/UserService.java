@@ -32,13 +32,6 @@ public class UserService {
         String name = principal.getAttribute("name");
         String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
         UserVO users = new UserVO();
-
-        // 유저 아이디가 무결성을 유지하는지 검증 필요
-//        String userId = CodeGenerator.generateUserId();
-//        log.info("userId = {}", userId);
-//        while (finduserId(userId) != null)
-//            userId = CodeGenerator.generateUserId();
-
         UserVO user = userRepository.findUser(number); // 회원 인지 조회
 
         if (user == null) { // 회원이 아니면 ID찾아서 회원 정보 업데이트 시켜줌
@@ -76,8 +69,6 @@ public class UserService {
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
         token.setExpirationTime(sqlExpiration);
-
-
 
         if(vo == null){ // 토큰이 없으면 INSERT
             userRepository.saveToken(token);
@@ -147,8 +138,15 @@ public class UserService {
         return "로그아웃 성공";
     }
 
-    public int changUserName(String userId, UserVO vo){
-        return userRepository.changUserName(userId, vo);
+    public int changUserInfo(String userId, UserVO vo){
+        if(vo.getUserName() != null && vo.getUserTheme() != null){ // 이름 테마 둘다 변경
+            return userRepository.changUserInfo(userId, vo);
+        } else if(vo.getUserName() == null){ // 테마만 변경
+            return userRepository.changUserTheme(userId, vo.getUserTheme());
+        } else if(vo.getUserTheme() == null){ // 이름만 변경
+            return userRepository.changUserName(userId, vo.getUserName());
+        }
+        return 0;
     }
 
 }
