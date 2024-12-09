@@ -15,7 +15,7 @@ spring:
           google:
 
   config:
-    import: application-secret.yml
+    import: application-secretId.yml
 
 application:
   version: 1.0.0
@@ -23,9 +23,6 @@ application:
 server:
   port: 8080
 
-#logging:
-#  level:
-#    org.springframework.security: DEBUG
 
 
 
