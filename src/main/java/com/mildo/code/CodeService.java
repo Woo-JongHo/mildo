@@ -74,17 +74,40 @@ public class CodeService {
         return codeRepository.saveComment(comment);
     }
 
-    public List<CodeVO> solvedList(String userId, int currentPage, String category) {
-        // 문제 푼 총 수량
-        int totalSolved = codeRepository.totalSolved(userId);
+    public List<CodeVO> solvedListSearchTrue(String userId, CodeVO vo, int currentPage, String category) {
         // 리스트 페이지 별로 주는 메서드
-        PageInfo pi = Pagenation.getPageInfo(totalSolved, currentPage, 5, 9);
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
+
+        // 검색조건이 없고 레벨 순으로 주는 메서드
+        if(vo.getCodeTitle() == null && "level".equals(category)){
+            List<CodeVO> solvedListCategory = codeRepository.solvedListCategory(pi, userId);
+            return solvedListCategory;
+        }
+
+        // 검색조건이 있고 레벨 순으로 주는 메서드
+        if(vo.getCodeTitle() != null && "level".equals(category)){
+            List<CodeVO> solvedSearchCategory = codeRepository.solvedSearchCategory(pi, userId, vo.getCodeTitle());
+            return solvedSearchCategory;
+        }
+
+        // 검색조건이 있고 최신 순으로 주는 메서드
+        if(vo.getCodeTitle() != null){
+            List<CodeVO> solvedSerachList = codeRepository.solvedSerachList(pi, userId, vo.getCodeTitle());
+            return solvedSerachList;
+        }
+        List<CodeVO> list = null;
+        return list;
+    }
+
+    public List<CodeVO> solvedListSearchFail(String userId, int currentPage, String category) {
+        // 리스트 페이지 별로 주는 메서드
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
 
         if("level".equals(category)){
             List<CodeVO> solvedListCategory = codeRepository.solvedListCategory(pi, userId);
             return solvedListCategory;
         }
-        // 문재 리스트
+
         List<CodeVO> solvedList = codeRepository.solvedList(pi, userId);
         return solvedList;
     }
@@ -118,6 +141,17 @@ public class CodeService {
         codeRepository.deleteComment(commentId);
         PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(comment.getCodeId()), 1, 5, 5);
         return codeRepository.CommentList(comment.getCodeId(), pi);
+    }
+
+    public List<CodeVO> searchCode(String userId, CodeVO vo, int currentPage, String category) {
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
+
+        if("level".equals(category)){
+            List<CodeVO> solvedSearchCategory = codeRepository.solvedSearchCategory(pi, userId, vo.getCodeTitle());
+            return solvedSearchCategory;
+        }
+        List<CodeVO> solvedSerachList = codeRepository.solvedSerachList(pi, userId, vo.getCodeTitle());
+        return solvedSerachList;
     }
 
 }
