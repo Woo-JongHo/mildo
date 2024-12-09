@@ -47,6 +47,9 @@ public class CodeController {
             String userId = convertSync.get("id").asText();
             String studyId = convertSync.get("studyId").asText();
 
+            System.out.println("익스텐션 동기화 확인 userId" + userId);
+            System.out.println("익스텐션 동기화 확인 studyId" + studyId);
+
             // DB에 데이터가 있는지 확인
             boolean isValid = userService.checkExtensionSync(userId, studyId);
 
