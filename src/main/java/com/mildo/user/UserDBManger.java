@@ -263,4 +263,10 @@ public class UserDBManger extends DBManger {
         return res;
     }
 
+    public static void solvedIncrement(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int res = session.update("User.solvedIncrement", userId);
+        session.commit();
+        session.close();
+    }
 }

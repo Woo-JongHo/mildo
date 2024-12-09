@@ -34,7 +34,7 @@ public class CodeController {
 
     //연동하기 버튼으로 스터디와 아이디 확인
     // ResponseEntity로 서로 응답 상호작용
-    @CrossOrigin(origins = "chrome-extension://ghbibjdmcondjdiebninoidgihdklndj")
+    @CrossOrigin(origins = "chrome-extension://kmleenknngfkjncchnbfenfamoighddf")
     @PostMapping("/receive-sync")
     public ResponseEntity<String> receiveSync(@RequestBody String data) {
         try {
@@ -45,7 +45,7 @@ public class CodeController {
 
             // 필요한 정보 추출
             String userId = convertSync.get("id").asText();
-            String studyId = convertSync.get("studyCode").asText();
+            String studyId = convertSync.get("studyId").asText();
 
             // DB에 데이터가 있는지 확인
             boolean isValid = userService.checkExtensionSync(userId, studyId);
@@ -61,7 +61,7 @@ public class CodeController {
         }
     }
 
-    @CrossOrigin(origins = {"chrome-extension://ghbibjdmcondjdiebninoidgihdklndj", "https://school.programmers.co.kr"})
+    @CrossOrigin(origins = {"chrome-extension://kmleenknngfkjncchnbfenfamoighddf", "https://school.programmers.co.kr"})
     @PostMapping("/receive-data")
     public ResponseEntity<String> receiveData(@RequestBody String data) {
         try {

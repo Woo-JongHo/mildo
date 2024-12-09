@@ -62,7 +62,12 @@ public class CodeService {
         log.info("ProblemID: {}", problemId);
         log.info("Level: {}", level);
 
-        // TODO: 추가 로직 작성 필요
+        // TODO: 추가 로직 작성 필요(코드 아이디에 대한 의견 필요)
+        // codeLikes의 값이 Y / N 임.
+        CodeVO vo = new CodeVO(999, id, filename, readmeText, sourceText, "N", level, problemId, 0, dateInfo);
+
+        codeRepository.upload(vo);
+
     }
 
     public int saveComment(CommentVO comment){
