@@ -30,4 +30,16 @@ public class CodeVO {
         this.codeSolvedTime = codeSolvedTime;
         this.codeSolvedDate = codeSolvedDate;
     }
+
+    public CodeVO(String userId, String codeTitle, String codeReadme, String codeSource, String codeLikes, String codeLevel, int codeProblemId, int codeSolvedTime, String codeSolvedDate) {
+        this.userId = userId;
+        this.codeTitle = codeTitle;
+        this.codeReadme = codeReadme;
+        this.codeSource = codeSource;
+        this.codeLikes = codeLikes;
+        this.codeLevel = codeLevel;
+        this.codeProblemId = codeProblemId;
+        this.codeSolvedTime = codeSolvedTime;
+        this.codeSolvedDate = codeSolvedDate;
+    }
 }
