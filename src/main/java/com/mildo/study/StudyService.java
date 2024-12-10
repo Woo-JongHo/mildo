@@ -218,6 +218,8 @@ public class StudyService {
         List<Map<String, Object>> mildoList = new ArrayList<>();
 
         List<String> monthData = studyMonthList(studyId); //해당 스터디 생성일을 기준으로 현재까지 월을 셉니다.
+        log.info("monthData = {}", monthData);
+
         for (String month : monthData) {
 
             List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month);
