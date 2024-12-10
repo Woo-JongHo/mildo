@@ -88,12 +88,9 @@ public class UserService {
         return userRepository.findRefreshTokenByUserId(userId);
     }
 
+    // 코드별 푼 문제 갯수
     public List<LevelCountDTO> solvedLevelsList(String userId) {
-        // 코드 레벨별로 갯수 가져오기
-        List<LevelCountDTO> solvedLevels = userRepository.solvedLevelsList(userId);
-        log.info("solvedLevels = {}", solvedLevels);
-
-        return solvedLevels;
+        return userRepository.solvedLevelsList(userId);
     }
 
     public void updateStudyId(EnteStudy enteStudy) {

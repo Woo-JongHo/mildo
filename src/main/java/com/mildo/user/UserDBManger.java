@@ -120,10 +120,6 @@ public class UserDBManger extends DBManger {
     public static void updateStudyId(EnteStudy enteStudy) {
         SqlSession session = sqlSessionFactory.openSession();
         try {
-//            Map<String, String> params = new HashMap<>();
-//            params.put("userId", userId);
-//            params.put("studyId", studyId);
-
             session.update("User.updateStudyId", enteStudy);
             session.commit(); // 변경 사항 적용
         } catch (Exception e) {

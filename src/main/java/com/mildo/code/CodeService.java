@@ -74,25 +74,25 @@ public class CodeService {
         return codeRepository.saveComment(comment);
     }
 
-    public List<CodeVO> solvedListSearchTrue(String userId, CodeVO vo, int currentPage, String category) {
+    public List<CodeVO> solvedListSearchTrue(String userId, String title, int currentPage, String category) {
         // 리스트 페이지 별로 주는 메서드
         PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
 
         // 검색조건이 없고 레벨 순으로 주는 메서드
-        if(vo.getCodeTitle() == null && "level".equals(category)){
+        if(title == null && "level".equals(category)){
             List<CodeVO> solvedListCategory = codeRepository.solvedListCategory(pi, userId);
             return solvedListCategory;
         }
 
         // 검색조건이 있고 레벨 순으로 주는 메서드
-        if(vo.getCodeTitle() != null && "level".equals(category)){
-            List<CodeVO> solvedSearchCategory = codeRepository.solvedSearchCategory(pi, userId, vo.getCodeTitle());
+        if(title != null && "level".equals(category)){
+            List<CodeVO> solvedSearchCategory = codeRepository.solvedSearchCategory(pi, userId, title);
             return solvedSearchCategory;
         }
 
         // 검색조건이 있고 최신 순으로 주는 메서드
-        if(vo.getCodeTitle() != null){
-            List<CodeVO> solvedSerachList = codeRepository.solvedSerachList(pi, userId, vo.getCodeTitle());
+        if(title != null){
+            List<CodeVO> solvedSerachList = codeRepository.solvedSerachList(pi, userId, title);
             return solvedSerachList;
         }
         List<CodeVO> list = null;

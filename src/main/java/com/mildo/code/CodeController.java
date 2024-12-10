@@ -108,12 +108,12 @@ public class CodeController {
     @ResponseBody
     @GetMapping(value = "/{userId}/solvedList", produces = "application/json; charset=UTF-8")
     public ResponseEntity<?> solvedListId(@PathVariable String userId,
-                                                     @RequestBody(required = false) CodeVO vo,
+                                                     @RequestParam(value = "title", required = false) String title,
                                                      @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
                                                      @RequestParam(value = "category", defaultValue = "recent") String category) {
 
-        if (vo != null && vo.getCodeTitle() != null) { // 검색 조건이 있을 때
-            List<CodeVO> res = codeService.solvedListSearchTrue(userId, vo, currentPage, category);
+        if (title != null) { // 검색 조건이 있을 때
+            List<CodeVO> res = codeService.solvedListSearchTrue(userId, title, currentPage, category);
             return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 실패");
         } else {
             List<CodeVO> res = codeService.solvedListSearchFail(userId, currentPage, category);
