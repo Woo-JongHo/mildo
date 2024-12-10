@@ -122,7 +122,7 @@
                 u.study_id = s.study_id
         WHERE
             u.study_id = #{study_Id}
-          AND u.user_isparticipant BETWEEN TO_DATE(s.study_start || '-01', 'YYYY-MM-DD')
+          AND u.user_isparticipant BETWEEN TO_DATE(#{subDate} || '-01', 'YYYY-MM-DD')
           AND TO_DATE(#{month} || '-01', 'YYYY-MM-DD') + INTERVAL '1 month' - INTERVAL '1 day';
     </select>
 
@@ -137,7 +137,7 @@
                 u.study_id = s.study_id
         WHERE
             u.study_id = #{study_Id}
-          AND u.user_isparticipant BETWEEN TO_DATE(s.study_start || '-01', 'YYYY-MM-DD')
+          AND u.user_isparticipant BETWEEN TO_DATE(#{subDate} || '-01', 'YYYY-MM-DD')
             AND TO_DATE(#{month} || '-01', 'YYYY-MM-DD') + INTERVAL '1 month' - INTERVAL '1 day';
     </select>
     <select id="getStudyName" resultType="java.lang.String" parameterType="java.lang.String">
@@ -225,5 +225,12 @@
             study_end = #{studyEnd}
         WHERE study_id = #{studyId}
     </update>
+
+    <select id="subDate" resultType="java.lang.String">
+        SELECT
+            SUBSTRING(TO_CHAR(s.study_start, 'YYYY-MM-DD'), 1, 7) AS start_date
+        FROM study s
+        WHERE study_id = '77TQ3'
+    </select>
 
 </mapper>

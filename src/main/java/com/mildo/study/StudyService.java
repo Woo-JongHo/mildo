@@ -141,23 +141,23 @@ public class StudyService {
     public List<String> studyMonthList(String studyId) {
 
         String study_start = studyRepository.getStartMonth(studyId);
-        log.info(study_start + "start_month 찍히는것확인");
+//        log.info(study_start + "start_month 찍히는것확인");
 
         int start_years = Integer.parseInt(study_start.substring(0,4));
         int start_month = Integer.parseInt(study_start.substring(5,7));
-        log.info("start_years " + start_years);
-        log.info("start_month " + start_month);
+//        log.info("start_years " + start_years);
+//        log.info("start_month " + start_month);
 
         int current_years = currentDate.getYear();
         int current_month = currentDate.getMonthValue();
-        log.info("current_years" + current_years);
-        log.info("current_month" + current_month);
+//        log.info("current_years" + current_years);
+//        log.info("current_month" + current_month);
 
 
         int yearDiff = current_years - start_years;
         int monthDiff;
 
-        log.info(yearDiff + "----------yearDiff");
+//        log.info(yearDiff + "----------yearDiff");
 
         if (yearDiff == 0)
             monthDiff = current_month - start_month;
@@ -184,7 +184,7 @@ public class StudyService {
             study_start = yearString + "-" + monthString;
             monthList.add(study_start);
         }
-        System.out.println("STUDY에 맞는 MONTH LIST : " +  monthList);
+//        System.out.println("STUDY에 맞는 MONTH LIST : " +  monthList);
 
         return monthList;
     }
@@ -220,10 +220,15 @@ public class StudyService {
         List<String> monthData = studyMonthList(studyId); //해당 스터디 생성일을 기준으로 현재까지 월을 셉니다.
         log.info("monthData = {}", monthData);
 
+        String subDate = studyRepository.subDate(studyId);
+        log.info("subDate = {}", subDate);
+
         for (String month : monthData) {
 
-            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month);
-            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId, month);
+            List<String> memberID = (List<String>) studyRepository.getStudyMemberIdByMonth(studyId, month, subDate);
+            log.info("memberID = {}", memberID);
+            List<String> memberName = (List<String>) studyRepository.getStudyMemberByMonth(studyId, month, subDate);
+            log.info("memberName = {}", memberName);
 
             Map<String, Object> monthDataMap = new LinkedHashMap<>();
             monthDataMap.put("month", month); // month 값 추가
@@ -234,6 +239,7 @@ public class StudyService {
 
                 ArrayList<Map<String, Object>> daysList = new ArrayList<>();
                 ArrayList<Map<String, String>> solvedList = codeService.getSolvedByDaySelectedMonth(memberID.get(i), month);
+                log.info("solvedList = {}", solvedList);
 
                 int[] MonthDay = new int[DayCheck(month)];
 

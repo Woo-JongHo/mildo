@@ -45,12 +45,13 @@ public class StudyRepository {
         return StudyDBManger.getStartMonth(studyId);
     }
 
-    public Object getStudyMemberByMonth(String studyId, String month) {
-        return StudyDBManger.getStudyMemberByMonth(studyId, month);
+    public Object getStudyMemberByMonth(String studyId, String month, String subDate) {
+        return StudyDBManger.getStudyMemberByMonth(studyId, month, subDate);
     }
 
-    public Object getStudyMemberIdByMonth(String studyId, String month) {
-        return StudyDBManger.getStudyMemberIdByMonth(studyId, month);
+    public Object getStudyMemberIdByMonth(String studyId, String month, String subDate) {
+        log.info("month = {}", month);
+        return StudyDBManger.getStudyMemberIdByMonth(studyId, month, subDate);
     }
 
     public boolean checkstudyIdPassword(EnteStudy enteStudy) {
@@ -109,5 +110,9 @@ public class StudyRepository {
 
     public String getStudyName(String studyId) {
         return StudyDBManger.getStudyName(studyId);
+    }
+
+    public String subDate(String studyId) {
+        return StudyDBManger.subDate(studyId);
     }
 }
