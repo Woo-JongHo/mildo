@@ -5,6 +5,7 @@ spring:
     password: podofarm8848
     driver-class-name: org.postgresql.Driver
 
+
   thymeleaf:
     prefix: classpath:/templates/
 
@@ -14,15 +15,5 @@ spring:
         registration:
           google:
 
-  config:
-    import: application-secret.yml
-
 application:
   version: 1.0.0
-
-server:
-  port: 8080
-
-
-
-
