@@ -120,10 +120,6 @@ public class UserDBManger extends DBManger {
     public static void updateStudyId(EnteStudy enteStudy) {
         SqlSession session = sqlSessionFactory.openSession();
         try {
-//            Map<String, String> params = new HashMap<>();
-//            params.put("userId", userId);
-//            params.put("studyId", studyId);
-
             session.update("User.updateStudyId", enteStudy);
             session.commit(); // 변경 사항 적용
         } catch (Exception e) {
@@ -229,12 +225,34 @@ public class UserDBManger extends DBManger {
         return res;
     }
 
-    public static int changUserName(String userId, UserVO vo) {
+    public static int changUserInfo(String userId, UserVO vo) {
         SqlSession session = sqlSessionFactory.openSession();
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
         params.put("userName", vo.getUserName());
         params.put("userTheme", vo.getUserTheme());
+        int res = session.update("User.changUserInfo", params);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int changUserTheme(String userId, String userTheme) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("userTheme", userTheme);
+        int res = session.update("User.changUserTheme", params);
+        session.commit();
+        session.close();
+        return res;
+    }
+
+    public static int changUserName(String userId, String userName) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("userName", userName);
         int res = session.update("User.changUserName", params);
         session.commit();
         session.close();

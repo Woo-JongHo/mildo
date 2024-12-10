@@ -70,7 +70,8 @@
         SET user_name = #{userName},
             user_googleid = #{userGoogleId},
             user_email = #{userEmail},
-            user_date = CURRENT_DATE
+            user_date = CURRENT_DATE,
+            user_theme = 'blue'
         WHERE user_id = #{userId}
     </update>
 
@@ -129,7 +130,8 @@
     <update id="updateStudyId" parameterType="map">
         UPDATE users
         SET study_id = #{studyId},
-            user_leader = 'N'
+            user_leader = 'N',
+            user_isparticipant = CURRENT_DATE
         WHERE user_id = #{userId}
     </update>
 
@@ -162,7 +164,8 @@
     <update id="createStudy" parameterType="map">
         UPDATE users
         SET study_id = #{studyId},
-            user_leader = 'Y'
+            user_leader = 'Y',
+            user_isparticipant = CURRENT_DATE
         WHERE user_id = #{userId}
     </update>
 
@@ -197,12 +200,25 @@
         WHERE black_token = #{token}
     </select>
 
-    <update id="changUserName" parameterType="map">
+    <update id="changUserInfo" parameterType="map">
         UPDATE users
         SET user_name = #{userName},
             user_theme = #{userTheme}
         WHERE user_id = #{userId}
     </update>
+
+    <update id="changUserTheme" parameterType="map">
+        UPDATE users
+        SET user_theme = #{userTheme}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="changUserName" parameterType="map">
+        UPDATE users
+        SET user_name = #{userName}
+        WHERE user_id = #{userId}
+    </update>
+
     <update id="solvedIncrement">
         UPDATE USERS SET user_solvedproblem = user_solvedproblem + 1 WHERE user_id = #{userId}
     </update>

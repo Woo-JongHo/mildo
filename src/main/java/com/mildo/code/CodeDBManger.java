@@ -83,6 +83,19 @@ public class CodeDBManger extends DBManger {
         return solvedList;
     }
 
+    // 문재 리스트
+    public static List<CodeVO> solvedListCategory(PageInfo pi, String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+        List<CodeVO> solvedList = session.selectList("code.solvedListCategory", userId, rowBounds);
+
+        session.commit();
+        session.close();
+        return solvedList;
+    }
+
     // codeId로 코드 조회
     public static CodeVO detailCode(int codeId, String userId) {
         SqlSession session = sqlSessionFactory.openSession();
@@ -147,5 +160,41 @@ public class CodeDBManger extends DBManger {
         int res = session.insert("code.upload", vo);
         session.commit();
         session.close();
+    }
+
+    // 문재 리스트
+    public static List<CodeVO> solvedSerachList(PageInfo pi, String userId, String codeTitle) {
+        SqlSession session = sqlSessionFactory.openSession();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("codeTitle", codeTitle);
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+
+        List<CodeVO> solvedList = session.selectList("code.solvedSerachList", params, rowBounds);
+
+        session.commit();
+        session.close();
+        return solvedList;
+    }
+
+    // 문재 리스트
+    public static List<CodeVO> solvedSearchCategory(PageInfo pi, String userId, String codeTitle) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("codeTitle", codeTitle);
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        int limit = pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, limit);
+        List<CodeVO> solvedList = session.selectList("code.solvedSearchCategory", params, rowBounds);
+        log.info("solvedList = {}", solvedList);
+        session.commit();
+        session.close();
+        return solvedList;
     }
 }
