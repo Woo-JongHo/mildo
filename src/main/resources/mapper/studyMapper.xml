@@ -230,7 +230,7 @@
         SELECT
             SUBSTRING(TO_CHAR(s.study_start, 'YYYY-MM-DD'), 1, 7) AS start_date
         FROM study s
-        WHERE study_id = '77TQ3'
+        WHERE study_id = #{studyId}
     </select>
 
 </mapper>
