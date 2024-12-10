@@ -96,7 +96,7 @@ public class CodeController {
         }
     }
 
-    @CrossOrigin(origins = "https://api.podofarm.xyz")
+    @CrossOrigin(origins = "chrome-extension://kmleenknngfkjncchnbfenfamoighddf")
     @RequestMapping(method = RequestMethod.POST, value = "/upload")
     public ResponseEntity<String> upload(@RequestBody UploadDTO request) throws ParseException {
 
