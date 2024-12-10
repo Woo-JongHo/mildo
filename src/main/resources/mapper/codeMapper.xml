@@ -36,7 +36,6 @@
 
     <insert id="upload" parameterType="CodeVo">
         INSERT INTO CODE (
-                          code_id,
             user_id,
             code_title,
             code_readme,
