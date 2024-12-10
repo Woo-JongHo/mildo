@@ -117,9 +117,6 @@ public class StudyController {
 
     @GetMapping("{studyId}/monthData")
     public List<Map<String, Object>> monthData(@PathVariable String studyId){
-
-//        log.info("studyId 받아오는가" + studyId);
-
         return studyService.Mildo(studyId);
     }
 
