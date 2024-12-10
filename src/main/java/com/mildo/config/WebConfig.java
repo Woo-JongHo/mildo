@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("https://school.programmers.co.kr", "https://www.podofarm.xyz", "https://podofarm.xyz",
                         "http://mildo.xyz","https://mildo.xyz",
                         "http://localhost:5173", "http://localhost:5174", "http://localhost:5175") // 허용할 도메인 설정
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
