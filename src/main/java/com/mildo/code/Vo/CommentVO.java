@@ -15,14 +15,16 @@ public class CommentVO {
     private String commentContent;  // 댓글 내용
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp commentDate;     // 댓글 작성 날짜
+    private String userName;
 
     public CommentVO(){}
 
-    public CommentVO(int commentId, int codeId, String userId, String commentContent, Timestamp commentDate) {
+    public CommentVO(int commentId, int codeId, String userId, String commentContent, Timestamp commentDate, String userName) {
         this.commentId = commentId;
         this.codeId = codeId;
         this.userId = userId;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
+        this.userName = userName;
     }
 }

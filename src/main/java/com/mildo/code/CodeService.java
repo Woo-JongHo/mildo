@@ -70,8 +70,10 @@ public class CodeService {
 
     }
 
-    public int saveComment(CommentVO comment){
-        return codeRepository.saveComment(comment);
+    public List<CommentVO> saveComment(CommentVO comment){
+        int res = codeRepository.saveComment(comment);
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(comment.getCodeId()), 1, 5, 5);
+        return codeRepository.CommentList(comment.getCodeId(), pi);
     }
 
     public List<CodeVO> solvedListSearchTrue(String userId, String title, int currentPage, String category) {

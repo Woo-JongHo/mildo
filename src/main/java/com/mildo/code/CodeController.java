@@ -145,10 +145,11 @@ public class CodeController {
 
     @ResponseBody // 댓글 작성
     @PostMapping(value = "/{codeId}/comment", produces = "application/json; charset=UTF-8")
-    public void comment(@PathVariable int codeId, @RequestBody CommentVO comment) {
+    public ResponseEntity<List<CommentVO>> comment(@PathVariable int codeId, @RequestBody CommentVO comment) {
         log.info("codeId = {}", codeId);
         log.info("comment = {}", comment);
-        int res = codeService.saveComment(comment);
+        List<CommentVO> res = codeService.saveComment(comment);
+        return ResponseEntity.ok(res);
         // 어떻게 댓글 작성하면 다시 댓글 리스트 줘야 함 프론트랑 상의해서 가져옴
     }
 
