@@ -47,7 +47,7 @@ public class CodeService {
         String dateInfo = request.getDateInfo();
         int problemId = Integer.parseInt(request.getProblemId());
         // "lv2" -> "2"로 변경 (자료형 유지를 위해 charAt 등과 같은 것을 사용하지 않음)
-        String level = request.getLevel().substring(2);
+        String level = request.getLevel();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format.parse(dateInfo);
 
@@ -64,7 +64,7 @@ public class CodeService {
 
         // TODO: 추가 로직 작성 필요(코드 아이디에 대한 의견 필요)
         // codeLikes의 값이 Y / N 임.
-        CodeVO vo = new CodeVO(999, id, filename, readmeText, sourceText, "N", level, problemId, 0, dateInfo);
+        CodeVO vo = new CodeVO (id, filename, readmeText, sourceText, "N", level, problemId, 0, dateInfo);
 
         codeRepository.upload(vo);
 

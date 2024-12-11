@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class UploadDTO {
     private String id;
-    private String studyCode;
+    private String studyId;  // 클라이언트 데이터와 이름 일치 필요
     private String sourceText;
     private String readmeText;
     private String filename;

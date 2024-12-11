@@ -37,7 +37,6 @@
 
     <insert id="upload" parameterType="CodeVo">
         INSERT INTO CODE (
-                          code_id,
             user_id,
             code_title,
             code_readme,
@@ -47,7 +46,7 @@
             code_problemid,
             code_solvedtime
         )
-        VALUES ( #{codeId},#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime})
+        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime})
     </insert>
 
     <insert id="dummyCode" parameterType="CodeVo">
