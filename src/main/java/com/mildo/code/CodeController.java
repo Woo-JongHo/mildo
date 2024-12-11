@@ -160,9 +160,10 @@ public class CodeController {
     }
 
     @ResponseBody // 댓글 삭제
-    @DeleteMapping(value = "/{commentId}/commentDelete", produces = "application/json; charset=UTF-8")
-    public ResponseEntity<List<CommentVO>> commentDelete(@PathVariable int commentId, @RequestBody CommentVO comment) {
-        List<CommentVO> res = codeService.deleteComment(commentId, comment);
+    @DeleteMapping(value = "/{codeId}/commentDelete", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<List<CommentVO>> commentDelete(@PathVariable int codeId,
+                                                         @RequestParam(value = "comment", required = false) int commentId) {
+        List<CommentVO> res = codeService.deleteComment(commentId, codeId);
         return ResponseEntity.ok(res);
     }
 

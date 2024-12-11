@@ -137,10 +137,10 @@ public class CodeService {
     }
 
     // 댓글 삭제
-    public List<CommentVO> deleteComment(int commentId, CommentVO comment){
+    public List<CommentVO> deleteComment(int commentId, int codeId){
         codeRepository.deleteComment(commentId);
-        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(comment.getCodeId()), 1, 5, 5);
-        return codeRepository.CommentList(comment.getCodeId(), pi);
+        PageInfo pi = Pagenation.getPageInfo(codeRepository.commentCount(codeId), 1, 5, 5);
+        return codeRepository.CommentList(codeId, pi);
     }
 
     public List<CodeVO> searchCode(String userId, CodeVO vo, int currentPage, String category) {
