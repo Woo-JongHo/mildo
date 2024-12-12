@@ -15,7 +15,7 @@
         <result property="codeLevel" column="code_level" />
         <result property="codeProblemId" column="code_problemid" />
         <result property="codeSolvedTime" column="code_solvedtime" />
-        <result property="codeSolvedDate" column="code_solveddate" />
+        <result property="codeSolvedDate" column="code_solvedate" />
     </resultMap>
 
     <resultMap id="commentResult" type="commentVO">
@@ -45,9 +45,9 @@
             code_level,
             code_problemid,
             code_solvedtime,
-            code_solveddate
+            code_solvedate
         )
-        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolvedDate})
+        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolveDate})
     </insert>
 
     <insert id="dummyCode" parameterType="CodeVo">

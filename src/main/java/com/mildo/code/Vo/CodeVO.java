@@ -16,11 +16,11 @@ public class CodeVO {
     private String codeLevel;       // 코드 레벨
     private int codeProblemId;      // 코드 번호
     private int codeSolvedTime;     // 코드 푼 시간
-    private LocalDateTime codeSolvedDate;
+    private LocalDateTime codeSolveDate;
 
     public CodeVO(){}
 
-    public CodeVO(int codeId, String userId, String codeTitle, String codeReadme, String codeSource, String codeLikes, String codeLevel, int codeProblemId, int codeSolvedTime, LocalDateTime codeSolvedDate) {
+    public CodeVO(int codeId, String userId, String codeTitle, String codeReadme, String codeSource, String codeLikes, String codeLevel, int codeProblemId, int codeSolvedTime, LocalDateTime codeSolveDate) {
         this.codeId = codeId;
         this.userId = userId;
         this.codeTitle = codeTitle;
@@ -30,10 +30,10 @@ public class CodeVO {
         this.codeLevel = codeLevel;
         this.codeProblemId = codeProblemId;
         this.codeSolvedTime = codeSolvedTime;
-        this.codeSolvedDate = codeSolvedDate;
+        this.codeSolveDate = codeSolveDate;
     }
 
-    public CodeVO(String userId, String codeTitle, String codeReadme, String codeSource, String codeLikes, String codeLevel, int codeProblemId, int codeSolvedTime, LocalDateTime codeSolvedDate) {
+    public CodeVO(String userId, String codeTitle, String codeReadme, String codeSource, String codeLikes, String codeLevel, int codeProblemId, int codeSolvedTime, LocalDateTime codeSolveDate) {
         this.userId = userId;
         this.codeTitle = codeTitle;
         this.codeReadme = codeReadme;
@@ -42,6 +42,6 @@ public class CodeVO {
         this.codeLevel = codeLevel;
         this.codeProblemId = codeProblemId;
         this.codeSolvedTime = codeSolvedTime;
-        this.codeSolvedDate = codeSolvedDate;
+        this.codeSolveDate = codeSolveDate;
     }
 }
