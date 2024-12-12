@@ -32,7 +32,7 @@
         <result property="userId" column="user_id" />
         <result property="codeTitle" column="code_title" />
         <result property="codeProblemid" column="code_problemid" />
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeSolveDate" column="code_solvedate" />
     </resultMap>
 
     <insert id="upload" parameterType="CodeVo">
