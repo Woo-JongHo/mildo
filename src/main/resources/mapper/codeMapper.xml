@@ -45,9 +45,9 @@
             code_level,
             code_problemid,
             code_solvedtime,
-            code_solvedate
+            codeSolveddate
         )
-        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolvedate})
+        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolveddate})
     </insert>
 
     <insert id="dummyCode" parameterType="CodeVo">
