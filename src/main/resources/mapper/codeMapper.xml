@@ -15,7 +15,7 @@
         <result property="codeLevel" column="code_level" />
         <result property="codeProblemId" column="code_problemid" />
         <result property="codeSolvedTime" column="code_solvedtime" />
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeSolvedDate" column="code_solveddate" />
     </resultMap>
 
     <resultMap id="commentResult" type="commentVO">

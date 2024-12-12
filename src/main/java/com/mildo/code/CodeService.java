@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,8 +49,9 @@ public class CodeService {
         int problemId = Integer.parseInt(request.getProblemId());
         // "lv2" -> "2"로 변경 (자료형 유지를 위해 charAt 등과 같은 것을 사용하지 않음)
         String level = request.getLevel();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = format.parse(dateInfo);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date = LocalDateTime.parse(dateInfo, formatter);
 
         log.info("UploadRequest processed:");
         log.info("ID: {}", id);
@@ -64,7 +66,7 @@ public class CodeService {
 
         // TODO: 추가 로직 작성 필요(코드 아이디에 대한 의견 필요)
         // codeLikes의 값이 Y / N 임.
-        CodeVO vo = new CodeVO (id, filename, readmeText, sourceText, "N", level, problemId, 0, dateInfo);
+        CodeVO vo = new CodeVO (id, filename, readmeText, sourceText, "N", level, problemId, 0, date);
 
         codeRepository.upload(vo);
 
