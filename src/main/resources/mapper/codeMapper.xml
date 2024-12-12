@@ -22,6 +22,7 @@
         <result property="commentId" column="comment_id" />
         <result property="codeId" column="code_id" />
         <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
         <result property="commentContent" column="comment_content" />
         <result property="commentDate" column="comment_date" />
     </resultMap>
@@ -141,11 +142,13 @@
     <select id="CommentList" resultMap="commentResult">
         SELECT comment_id,
                code_id,
-               user_id,
+               users.user_id,
+               users.user_name,
                comment_content,
                comment_date
         FROM COMMENT
-        where code_id = #{codeId}
+        JOIN USERS ON users.user_id = comment.user_id
+        where comment.code_id = #{codeId}
         ORDER BY comment_date DESC
     </select>
 
