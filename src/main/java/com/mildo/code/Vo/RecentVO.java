@@ -13,7 +13,7 @@ public class RecentVO {
     private String codeTitle;
     private int codeProblemid;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private Timestamp codeSolvedDate;
+    private Timestamp codeSolveDate;
     private Long minutesAgo;
 
     public RecentVO(){}

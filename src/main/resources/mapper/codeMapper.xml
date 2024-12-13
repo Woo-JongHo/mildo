@@ -15,7 +15,7 @@
         <result property="codeLevel" column="code_level" />
         <result property="codeProblemId" column="code_problemid" />
         <result property="codeSolvedTime" column="code_solvedtime" />
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeSolveDate" column="code_solvedate" />
     </resultMap>
 
     <resultMap id="commentResult" type="commentVO">
@@ -32,7 +32,7 @@
         <result property="userId" column="user_id" />
         <result property="codeTitle" column="code_title" />
         <result property="codeProblemid" column="code_problemid" />
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeSolveDate" column="code_solvedate" />
     </resultMap>
 
     <insert id="upload" parameterType="CodeVo">
@@ -44,9 +44,10 @@
             code_likes,
             code_level,
             code_problemid,
-            code_solvedtime
+            code_solvedtime,
+            code_solvedate
         )
-        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime})
+        VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolveDate})
     </insert>
 
     <insert id="dummyCode" parameterType="CodeVo">
@@ -163,6 +164,8 @@
                 JOIN
             users U ON C.user_id = U.user_id
         WHERE U.study_id = #{studyId}
+          AND C.code_solvedate IS NOT NULL
+
         ORDER BY
             c.code_solvedate DESC
             LIMIT 5;
