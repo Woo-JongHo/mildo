@@ -34,7 +34,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String Page(){
-        log.info("aaaaaaaaaaaaaaa");
+        log.info("aaaaaaaaaaaaaa");
         return "index";
     }
 
@@ -42,10 +42,10 @@ public class HomeController {
     public RedirectView home(@AuthenticationPrincipal OidcUser principal, HttpServletRequest request) {
         log.info("principal = {}", principal);
 
-        OAuth2AuthorizedClient client = authorizedClientService
-                .loadAuthorizedClient("google", principal.getName());
-        String accessToken = client.getAccessToken().getTokenValue();
-        log.info("accessToken = {}", accessToken);
+//        OAuth2AuthorizedClient client = authorizedClientService
+//                .loadAuthorizedClient("google", principal.getName());
+//        String accessToken = client.getAccessToken().getTokenValue();
+//        log.info("accessToken = {}", accessToken);
 
         UserVO user = userService.login(principal);
         log.info("user = {}", user);
@@ -61,7 +61,6 @@ public class HomeController {
 
     @GetMapping("/llogin")
     public RedirectView home() {
-        log.info("sssssssssss");
         String redirectUrl = "/oauth2/authorization/google";
 
         return new RedirectView(redirectUrl);
