@@ -34,7 +34,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String Page(){
-        log.info("aaaaaaaaaaaaaa");
+        log.info("aaaaaaaaaaaaaa22");
         return "index";
     }
 
