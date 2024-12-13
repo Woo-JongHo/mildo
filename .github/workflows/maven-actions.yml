@@ -36,6 +36,18 @@ jobs:
     - name: Build with Maven (Skip Tests)
       run: mvn -B -DskipTests=true package
 
+    - name: Build Docker image
+      run: mvn dockerfile:build
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker image
+      run: docker push mildo:latest
+
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # 스냅샷 제출 작업 세팅
     # - name: Update dependency graph
