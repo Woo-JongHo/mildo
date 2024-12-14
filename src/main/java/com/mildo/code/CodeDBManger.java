@@ -17,14 +17,11 @@ import java.util.Map;
 @Slf4j
 public class CodeDBManger extends DBManger {
 
-    public static int dummyCode(String userId) {
-        int re = -1;
+    public static void dummyCode(String userId) {
         SqlSession session = sqlSessionFactory.openSession();
-        re = session.insert("code.dummyCode", userId);
+        session.insert("code.dummyCode", userId);
         session.commit();
         session.close();
-
-        return re;
     }
 
     public static ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
@@ -44,8 +41,6 @@ public class CodeDBManger extends DBManger {
         } finally {
             session.close();
         }
-
-        System.out.println("result값 보기 " + results);
 
         return results;
     }
@@ -132,7 +127,6 @@ public class CodeDBManger extends DBManger {
     public static List<RecentVO> getRecent(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
         List<RecentVO> list = session.selectList("code.getRecent", studyId);
-        log.info("list = {}", list);
         session.commit();
         session.close();
         return list;
