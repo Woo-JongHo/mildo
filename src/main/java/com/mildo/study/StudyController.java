@@ -27,13 +27,14 @@ public class StudyController {
 
     @GetMapping
     public String index() {
-        log.info("index");
         return "Study Home";
     }
 
+    // 유저 생성
     @ResponseBody
     @PostMapping(value="/{userId}/create", produces="application/json; charset=UTF-8")
     public Map<String, Object> create(@PathVariable String userId, @RequestBody StudyVO studyVO) {
+
         // 유저 아이디 검증 (존재하는 아이디인지 + 토큰 검증)
         Map<String, Object> response = new HashMap<>();
         UserVO userVO = userService.finduserId(userId);
@@ -49,19 +50,18 @@ public class StudyController {
         return response;
     }
 
-    // studyId로 스터디 리스트 가져오기 | 호출 방법 /api/%23E3R4/memberList
+    //스터디별 유저 리스트
     @GetMapping("/{studyId}/memberList")
     public List<StudyVO> studyList(@PathVariable String studyId) {
         studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
-        log.info("studyId = {}", studyId);
-        return studyService.studyList(studyId); // 멤버 리스트
+        return studyService.studyList(studyId);
     }
 
-    // 멤버 수
+    //스터디 인원 세기
     @GetMapping("/{studyId}/membersCount")
     public Map<String, Object> membersCount(@PathVariable String studyId) {
         studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
-        int totalMembers = studyService.totalMembers(studyId);  // 멤버 수
+        int totalMembers = studyService.totalMembers(studyId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("totalMembers", totalMembers);
@@ -69,22 +69,20 @@ public class StudyController {
         return response;
     }
 
-
-    // 남은 일수, 진행 한 수
+    //스터디  남은 일수, 진행 한 수
     @GetMapping("/{studyId}/studyDays")
     public RemainingDaysDTO studyDay(@PathVariable String studyId) {
         studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
-        log.info("studyId = {}", studyId);
-
         return studyService.studyDays(studyId);
     }
+
+    //스터디 이름
     @GetMapping("/{studyId}/studyName")
     public String getStudyName(@PathVariable String studyId) {
-
         return studyService.getStudyName(studyId);
     }
 
-    // studyId로 스터디 등수 가져오기 | 호출 방법 /api/%23E3R4/rank
+    // studyId로 스터디 등수 가져오기
     @GetMapping("/{studyId}/rank")
     public ResponseEntity<List<StudyVO>> ranks(@PathVariable String studyId) {
         List<StudyVO> totalrank = studyService.totalrank(studyId);
@@ -115,6 +113,7 @@ public class StudyController {
         }
     }
 
+    //스터디 밀도심기
     @GetMapping("{studyId}/monthData")
     public List<Map<String, Object>> monthData(@PathVariable String studyId){
         return studyService.Mildo(studyId);
@@ -131,8 +130,6 @@ public class StudyController {
     @PutMapping("/{studyId}/update-leader")
     public ResponseEntity<String> updateLeader(@PathVariable String studyId, @RequestBody Map<String, String> requestBody){
         String newLeaderId = requestBody.get("newLeaderId");
-        log.info("newLeaderId = {}", newLeaderId);
-
         String leaderId = studyService.updateLeader(studyId, newLeaderId);
 
         if (leaderId.isEmpty())

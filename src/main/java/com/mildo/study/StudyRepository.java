@@ -50,16 +50,11 @@ public class StudyRepository {
     }
 
     public Object getStudyMemberIdByMonth(String studyId, String month, String subDate) {
-        log.info("month = {}", month);
         return StudyDBManger.getStudyMemberIdByMonth(studyId, month, subDate);
     }
 
     public boolean checkstudyIdPassword(EnteStudy enteStudy) {
         return StudyDBManger.checkstudyIdPassword(enteStudy);
-    }
-
-    public void enterStudy(String studyId, String password, String userId) {
-        StudyDBManger.enterStudy(studyId, password, userId);
     }
 
     public int updateStudyName(String studyId, String studyName) {
