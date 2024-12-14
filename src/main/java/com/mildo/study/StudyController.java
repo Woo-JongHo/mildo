@@ -21,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/study")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StudyController {
     private final StudyService studyService;
     private final UserService userService;

@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/code")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CodeController {
 
     private final CodeService codeService;
