@@ -47,7 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             pathMatcher.match("/", requestURI) ||
             pathMatcher.match("/login/oauth2/code/google", requestURI) ||
             pathMatcher.match("/auth/refresh", requestURI) ||
-                pathMatcher.match("/llogin", requestURI) ||
+            pathMatcher.match("/llogin", requestURI) ||
+            pathMatcher.match("/home", requestURI) ||
+            pathMatcher.match("/login-failed", requestURI) ||
             requestURI.startsWith("/public")) {
             filterChain.doFilter(request, response);
             return;
