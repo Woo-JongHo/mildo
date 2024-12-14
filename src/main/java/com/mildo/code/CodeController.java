@@ -99,10 +99,10 @@ public class CodeController {
 
         if (title != null) { // 검색 조건이 있을 때
             List<CodeVO> res = codeService.solvedListSearchTrue(userId, title, currentPage, category);
-            return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 실패");
+            return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("검색 실패");
         } else {
             List<CodeVO> res = codeService.solvedListSearchFail(userId, currentPage, category);
-            return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 실패");
+            return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("검색 실패");
         }
     }
 
