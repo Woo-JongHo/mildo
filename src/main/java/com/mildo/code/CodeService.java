@@ -61,8 +61,13 @@ public class CodeService {
     }
 
     public List<CodeVO> solvedListSearchTrue(String userId, String title, int currentPage, String category) {
+        // userId가 존재하지 않는 아이디일 경우
+        Integer listCount = codeRepository.totalSolved(userId);
+        if(listCount == null)
+            return null;
+
         // 리스트 페이지 별로 주는 메서드
-        PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
+        PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, 5, 9);
 
         // 검색조건이 없고 레벨 순으로 주는 메서드
         if (title == null && "level".equals(category))
@@ -80,8 +85,12 @@ public class CodeService {
     }
 
     public List<CodeVO> solvedListSearchFail(String userId, int currentPage, String category) {
+        // userId가 존재하지 않는 아이디일 경우
+        Integer listCount = codeRepository.totalSolved(userId);
+        if(listCount == null)
+            return null;
         // 리스트 페이지 별로 주는 메서드
-        PageInfo pi = Pagenation.getPageInfo(codeRepository.totalSolved(userId), currentPage, 5, 9);
+        PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, 5, 9);
 
         if ("level".equals(category))
             return codeRepository.solvedListCategory(pi, userId);
