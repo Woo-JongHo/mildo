@@ -24,13 +24,6 @@ public class CodeController {
     private final CodeService codeService;
     private final UserService userService;
 
-    // FIXME: 어떤 용도인지 알 수 없음
-    @PostMapping("/dummyCode")
-    public String login(String userId) {
-        codeService.dummyCode(userId);
-        return "Login Succeed!";
-    }
-
     //연동하기 버튼으로 스터디와 아이디 확인
     // ResponseEntity로 서로 응답 상호작용
     @CrossOrigin(origins = "chrome-extension://kmleenknngfkjncchnbfenfamoighddf")
