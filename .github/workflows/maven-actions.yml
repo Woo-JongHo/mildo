@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -37,7 +37,6 @@ jobs:
       run: mvn -B -DskipTests=true package
 
     - name: Build Docker image
-      working-directory: V4
       run: mvn dockerfile:build
 
     - name: docker image build
