@@ -103,4 +103,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 다음 필터로 요청 전달
         filterChain.doFilter(request, response);
     }
+
+    /**
+     * 인증 실패 응답 처리 (CORS 헤더 추가)
+     */
+    private void handleUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
+        // CORS 관련 헤더 추가
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        // 응답 상태 및 메시지 설정
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(message);
+    }
+
 }
