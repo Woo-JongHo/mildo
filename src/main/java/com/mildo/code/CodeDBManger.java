@@ -55,9 +55,9 @@ public class CodeDBManger extends DBManger {
     }
 
     // 문제 푼 총 수량
-    public static int totalSolved(String userId) {
+    public static Integer totalSolved(String userId) {
         SqlSession session = sqlSessionFactory.openSession();
-        int totalSolved = session.selectOne("code.totalSolved", userId);
+        Integer totalSolved = session.selectOne("code.totalSolved", userId);
         session.commit();
         session.close();
         return totalSolved;
