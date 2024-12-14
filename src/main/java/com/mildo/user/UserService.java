@@ -102,7 +102,7 @@ public class UserService {
         return userRepository.studyGetOut(userId);
     }
 
-    public int userTotalSolved(String userId) {
+    public Integer userTotalSolved(String userId) {
         return codeRepository.totalSolved(userId);
     }
 

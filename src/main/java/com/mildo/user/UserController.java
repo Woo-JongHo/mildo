@@ -67,12 +67,18 @@ public class UserController {
 
     @ResponseBody
     @GetMapping(value="/{userId}/userTotalSolved", produces="application/json; charset=UTF-8")
-    public Map<String, Object> userTotalSolved(@PathVariable String userId){
-        int res = userService.userTotalSolved(userId);
+    public ResponseEntity<Map<String, Object>> userTotalSolved(@PathVariable String userId){
+        Integer res = userService.userTotalSolved(userId);
+
+        if (res == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "userId not found");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        }
 
         Map<String, Object> response = new HashMap<>();
         response.put("user_solvedproblem", res);
-        return response;
+        return ResponseEntity.ok(response);
     }
 
     @ResponseBody
