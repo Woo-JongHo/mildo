@@ -73,7 +73,7 @@ public class UserController {
         if (res == null) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", "userId not found");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
 
         Map<String, Object> response = new HashMap<>();
