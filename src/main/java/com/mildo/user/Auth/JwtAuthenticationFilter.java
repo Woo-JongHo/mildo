@@ -65,10 +65,14 @@
 //            token = token.substring(7); // "Bearer " 부분 제거
 //            try {
 //                // 토큰 검증 및 만료 시간 확인
+//
+//                log.info("token = {}", token);
 //                Claims claims = Jwts.parser()
 //                        .setSigningKey(SECRET_KEY)
 //                        .parseClaimsJws(token)
 //                        .getBody();
+//
+//                log.info("claims = {}", claims);
 //
 //                BlackTokenVO tokenVo = userRepository.checkBlackList(token); // 블랙리스트에 있는 토큰인지 검사
 //                if(tokenVo != null){ // 블랙리스트에 토큰이 있으면 보안이 위험

@@ -25,16 +25,16 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CodeRepository codeRepository;
-    private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
+    private final JwtTokenProvider jwtTokenProvider;
 
     public UserVO login(OidcUser principal) {
         String email = principal.getAttribute("email");
         String name = principal.getAttribute("name");
-        String number = (String) principal.getAttributes().get("sub");  // sub는 String 타입
+        String number = (String) principal.getAttributes().get("sub");
         UserVO users = new UserVO();
-        UserVO user = userRepository.findUser(number); // 회원 인지 조회
+        UserVO user = userRepository.findUser(number);
 
-        if (user == null) { // 회원이 아니면 ID찾아서 회원 정보 업데이트 시켜줌
+        if (user == null) {
             String userId = userRepository.findNullUserId();
             users.setUserId(userId);
             users.setUserEmail(email);
@@ -62,7 +62,6 @@ public class UserService {
         String refreshToken = jwtTokenProvider.createRefreshToken(userId);
 
         Date expiration = jwtTokenProvider.getExpirationFromRefreshToken(refreshToken);
-        // refreshToken 만료시간 형변환
         java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
 
         token.setUserId(userId);
@@ -70,25 +69,22 @@ public class UserService {
         token.setRefreshToken(refreshToken);
         token.setExpirationTime(sqlExpiration);
 
-        if(vo == null){ // 토큰이 없으면 INSERT
+        if(vo == null){
             userRepository.saveToken(token);
-        } else { // 토큰이 있으면 UPDATE
+        } else {
             userRepository.saveUpdateToken(token);
         }
         return token;
     }
 
-    // 블랙리스트 초기화
     public void blackrest(Timestamp timestamp){
         userRepository.blackrest(timestamp);
     }
 
-    // 필터에서 토큰 조회
     public String findRefreshTokenByUserId(String userId){
         return userRepository.findRefreshTokenByUserId(userId);
     }
 
-    // 코드별 푼 문제 갯수
     public List<LevelCountDTO> solvedLevelsList(String userId) {
         return userRepository.solvedLevelsList(userId);
     }
@@ -114,13 +110,10 @@ public class UserService {
         return userRepository.serviceOut(userId);
     }
 
-    // 로그아웃
     public String blackToken(String userId) {
         TokenVO vo = userRepository.findToken(userId);
 
         if(vo.getAccessToken() == null) return "토큰이 없음";
-
-        // 토큰이 유효한지도 확인해야겠네
 
         Date expiration = jwtTokenProvider.getExpirationFromToken(vo.getAccessToken());
         java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
@@ -128,19 +121,19 @@ public class UserService {
         BlackTokenVO black = new BlackTokenVO();
         black.setBlackToken(vo.getAccessToken());
         black.setExpirationTime(sqlExpiration);
-        userRepository.saveBlackToken(black); // 블랙리스트 추가
+        userRepository.saveBlackToken(black);
 
-        userRepository.tokenNull(userId); // 토큰 비워 주기
+        userRepository.tokenNull(userId);
 
         return "로그아웃 성공";
     }
 
     public int changUserInfo(String userId, UserVO vo){
-        if(vo.getUserName() != null && vo.getUserTheme() != null){ // 이름 테마 둘다 변경
+        if(vo.getUserName() != null && vo.getUserTheme() != null){
             return userRepository.changUserInfo(userId, vo);
-        } else if(vo.getUserName() == null){ // 테마만 변경
+        } else if(vo.getUserName() == null){
             return userRepository.changUserTheme(userId, vo.getUserTheme());
-        } else if(vo.getUserTheme() == null){ // 이름만 변경
+        } else if(vo.getUserTheme() == null){
             return userRepository.changUserName(userId, vo.getUserName());
         }
         return 0;
