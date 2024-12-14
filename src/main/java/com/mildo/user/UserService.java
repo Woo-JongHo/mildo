@@ -86,7 +86,8 @@ public class UserService {
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId) {
-        return userRepository.solvedLevelsList(userId);
+        UserVO user = userRepository.finduserId(userId);
+        return user == null ? null : userRepository.solvedLevelsList(userId);
     }
 
     public void updateStudyId(EnteStudy enteStudy) {
@@ -103,11 +104,14 @@ public class UserService {
     }
 
     public Integer userTotalSolved(String userId) {
-        return codeRepository.totalSolved(userId);
+        UserVO user = userRepository.finduserId(userId);
+        return user == null ? null : codeRepository.totalSolved(userId);
+//        return codeRepository.totalSolved(userId);
     }
 
     public int serviceOut(String userId) {
-        return userRepository.serviceOut(userId);
+        UserVO user = userRepository.finduserId(userId);
+        return user == null ? null : userRepository.serviceOut(userId);
     }
 
     public String blackToken(String userId) {

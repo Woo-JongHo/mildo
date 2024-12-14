@@ -23,17 +23,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.addAllowedOrigin("https://podofarm.xyz/"); // 프론트엔드 도메인
-//        config.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
-//        config.addAllowedHeader("*"); // 모든 헤더 허용
-//        config.setAllowCredentials(true); // 쿠키 포함 요청 허용
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);
-//        return new CorsFilter(source);
-//    }
-
 }
