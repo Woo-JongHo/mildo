@@ -25,7 +25,7 @@
     </resultMap>
 
     <resultMap id="codeResult" type="codeVO">
-        <result property="codeSolvedDate" column="code_solvedate" />
+        <result property="codeSolveDate" column="code_solvedate" />
         <result property="codeTitle" column="code_title" />
         <result property="codeLevel" column="code_level" />
         <result property="codeSolvedTime" column="code_solvedtime" />

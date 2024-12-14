@@ -1,12 +1,8 @@
 package com.mildo.user;
 
-import com.mildo.study.Vo.StudyVO;
-import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +23,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider; // JWT 토큰 생성 클래스
 
-    // userId로 회원 조회
     @ResponseBody
     @GetMapping(value = "/{userId}/info", produces = "application/json; charset=UTF-8")
     public ResponseEntity<UserVO> userInfo(@PathVariable String userId) {
@@ -48,12 +40,11 @@ public class UserController {
         TokenVO token = userService.makeToken(userId);
 
         if (token == null || token.getRefreshToken() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 상태코드를 400 로 보냄
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         return ResponseEntity.ok(token);
     }
 
-    // userId로 레벨 별 푼 문제 카운트 조회 | 요청 방법:/api/%23G909/solvedLevels
     @ResponseBody
     @GetMapping(value="/{userId}/solvedLevels", produces="application/json; charset=UTF-8")
     public ResponseEntity<List<LevelCountDTO>> solvedLevelsId(@PathVariable String userId){
@@ -61,25 +52,17 @@ public class UserController {
         return ResponseEntity.ok(solvedLevels);
     }
 
-    @ResponseBody // userId로 스터디 탈퇴
+    @ResponseBody
     @GetMapping(value="/{userId}/studyOut", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> studyOut(@PathVariable String userId){
         UserVO user = userService.finduserId(userId);
 
-        if("Y".equals(user.getUserLeader())){ // 리더인지 확인
+        if("Y".equals(user.getUserLeader())){
             return ResponseEntity.ok("리더는 탈퇴 위임하고 해");
         } else {
             int res = userService.studyGetOut(userId);
             return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
         }
-    }
-
-    @GetMapping("/login-failed")
-    public ResponseEntity<String> faillLogin(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        log.info("session = {}", session.getId());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("로그인 실패");
     }
 
     @ResponseBody
@@ -92,7 +75,7 @@ public class UserController {
         return response;
     }
 
-    @ResponseBody // userId로 회원 탈퇴
+    @ResponseBody
     @GetMapping(value="/{userId}/service-out", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> serviceOut(@PathVariable String userId){
         int res = userService.serviceOut(userId);
@@ -101,7 +84,6 @@ public class UserController {
 
     @GetMapping("/{userId}/google-logout")
     public ResponseEntity<String> googleLogout(@PathVariable String userId, HttpServletRequest request) {
-        // 세션 무효화
         request.getSession().invalidate();
 
         String result = userService.blackToken(userId);
