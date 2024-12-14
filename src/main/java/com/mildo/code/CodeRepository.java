@@ -32,7 +32,7 @@ public class CodeRepository {
     }
 
     // 문제 푼 총 수량
-    public int totalSolved(String userId){
+    public Integer totalSolved(String userId){
         return CodeDBManger.totalSolved(userId);
     }
 

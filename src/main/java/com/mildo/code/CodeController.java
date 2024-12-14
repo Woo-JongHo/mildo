@@ -102,7 +102,7 @@ public class CodeController {
             return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 실패");
         } else {
             List<CodeVO> res = codeService.solvedListSearchFail(userId, currentPage, category);
-            return ResponseEntity.ok(res);
+            return res != null ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 실패");
         }
     }
 
