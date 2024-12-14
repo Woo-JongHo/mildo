@@ -11,7 +11,6 @@ import com.mildo.db.DBManger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.List;
 
 @Slf4j
 public class StudyDBManger extends DBManger {
@@ -22,7 +21,6 @@ public class StudyDBManger extends DBManger {
         re = session.update("Study.create", s);
         session.commit();
         session.close();
-
         return re;
     }
 
@@ -101,7 +99,6 @@ public class StudyDBManger extends DBManger {
     public static List<String> getStudyMemberIdByMonth(String studyId, String month, String subDate) {
         List<String> names;
 
-//        log.info(studyId + month + "DB에서 studyId and month check");
         SqlSession session = sqlSessionFactory.openSession();
         try {
             Map<String, Object> params = new HashMap<>();
@@ -110,7 +107,6 @@ public class StudyDBManger extends DBManger {
             params.put("subDate", subDate);
 
             names = session.selectList("Study.getStudyMemberIdByMonth", params);
-//            System.out.println(names + "스터디원아이디");
         } finally {
             session.close();
         }
@@ -125,11 +121,6 @@ public class StudyDBManger extends DBManger {
         SqlSession session = sqlSessionFactory.openSession();
 
         try {
-            // 파라미터 맵 생성
-//            Map<String, Object> params = new HashMap<>();
-//            params.put("study_Id", studyId);
-//            params.put("study_password", password);
-
             Integer count = session.selectOne("Study.checkstudyIdPassword", enteStudy);
 
             if (count != null && count > 0) {
@@ -139,11 +130,6 @@ public class StudyDBManger extends DBManger {
             session.close(); // 세션 닫기
         }
         return isValid; // 유효 여부 반환
-    }
-
-    public static void enterStudy(String studyId, String password, String userId) {
-
-
     }
 
     public static int  updateStudyName(String studyId, String studyName) {
@@ -170,13 +156,10 @@ public class StudyDBManger extends DBManger {
 
     public static int deleteStudy(String studyId) {
         SqlSession session = sqlSessionFactory.openSession();
-        Map<String, Object> params = new HashMap<>();
 
         int rowsAffected = session.update("Study.deleteStudy", studyId);
         if(rowsAffected == 0)   // 해당 스터디가 존재하지 않을 경우 삭제되지 않음
             return rowsAffected;
-
-//        rowsAffected = session.update("Study.resetUserStudyInfo", studyId);
 
         session.commit();
         session.close();
@@ -266,4 +249,5 @@ public class StudyDBManger extends DBManger {
 
         return studyName;
     }
+
 }

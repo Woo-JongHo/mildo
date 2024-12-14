@@ -26,40 +26,10 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final UserRepository userRepository;
     private final CodeService codeService;
-    private static int studyNextNo = 1;
 
     LocalDate currentDate = LocalDate.now();
 
     public String create(String userId, StudyVO studyVO) {
-
-//        StudyVO studyVo = findStudyNo(studyNextNo);
-//
-//        // 스터디 아이디가 무결성을 유지하는지 검증
-//        if (studyVo.getStudyName() != null) {
-//            studyNextNo = findStudyNextNo();
-//            studyVo = findStudyNo(studyNextNo);
-//        }
-//
-//        log.info("Study No: {}", studyNextNo);
-//
-//        Date date = new Date(System.currentTimeMillis()); // 현재 시간
-//        log.info("현재 날짜: {}", date);
-//
-//        Date newDate = addOneYear(date);
-//
-//        studyVo.setStudyName(name);
-//        studyVo.setStudyPassword(password);
-//        studyVo.setStudyStart(date);
-//        studyVo.setStudyEnd(newDate);
-//
-//        studyRepository.create(studyVo);
-//
-//        // 유저 Leader 및 studyId값 변경
-//        userRepository.createStudy(userId, studyVo.getStudyId(), date);
-//        log.info("Created Study: {}, Leader : {}", studyVo, userId);
-//        if (studyNextNo++ % 1000 == 0)
-//            create1000StudyId();
-
         String studyId = studyRepository.findNullStudyId();
 
         Date date = new Date(System.currentTimeMillis()); // 현재 시간
@@ -71,13 +41,8 @@ public class StudyService {
         studyVo.setStudyPassword(studyVO.getStudyPassword());
         studyVo.setStudyStart(date);
         studyVo.setStudyEnd(newDate);
-        log.info("studyVo = {}", studyVo);
-
         studyRepository.saveStudy(studyVo); // 스터디 생성
         userRepository.createStudy(userId, studyVo.getStudyId(), date); // 스터디 리더, 스터디 아이디 추가
-
-        log.info("studyId = {}", studyId);
-        log.info("studyVo.getStudyId() = {}", studyVo.getStudyId());
 
         return studyId;
     }
@@ -123,9 +88,6 @@ public class StudyService {
     public RemainingDaysDTO  studyDays(String studyId){
         RemainingDaysDTO el = studyRepository.studyDays(studyId);
         RemainingDaysDTO re = studyRepository.studyDaysRe(studyId);
-        log.info("el = {}", el);
-        log.info("re = {}", re);
-
         RemainingDaysDTO result = new RemainingDaysDTO();
         result.setElapsedDays(el.getElapsedDays());
         result.setRemainingDays(re.getRemainingDays());
@@ -141,29 +103,20 @@ public class StudyService {
     public List<String> studyMonthList(String studyId) {
 
         String study_start = studyRepository.getStartMonth(studyId);
-//        log.info(study_start + "start_month 찍히는것확인");
 
         int start_years = Integer.parseInt(study_start.substring(0,4));
         int start_month = Integer.parseInt(study_start.substring(5,7));
-//        log.info("start_years " + start_years);
-//        log.info("start_month " + start_month);
 
         int current_years = currentDate.getYear();
         int current_month = currentDate.getMonthValue();
-//        log.info("current_years" + current_years);
-//        log.info("current_month" + current_month);
-
 
         int yearDiff = current_years - start_years;
         int monthDiff;
-
-//        log.info(yearDiff + "----------yearDiff");
 
         if (yearDiff == 0)
             monthDiff = current_month - start_month;
         else
             monthDiff = (yearDiff * 12) + (current_month - start_month);
-
 
         List<String> monthList = new ArrayList<>();
         monthList.add(study_start.substring(0,7));
@@ -184,8 +137,6 @@ public class StudyService {
             study_start = yearString + "-" + monthString;
             monthList.add(study_start);
         }
-//        System.out.println("STUDY에 맞는 MONTH LIST : " +  monthList);
-
         return monthList;
     }
 
@@ -197,21 +148,6 @@ public class StudyService {
 
         return daysInMonth;
     }
-
-    //날짜 입력란. 이번달의 일수를 확인
-    public int DayCheck(){
-        LocalDate currentDate = LocalDate.now();
-        YearMonth yearMonth = YearMonth.of(currentDate.getYear(), currentDate.getMonth());
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        return daysInMonth;
-    }
-
-
-    private int getLastDayOfMonth(int year, int month){
-        return java.time.YearMonth.of(year, month).lengthOfMonth();
-    }
-
 
     //밀도심기 로직
     public List<Map<String, Object>> Mildo(String studyId) {
@@ -288,7 +224,7 @@ public class StudyService {
     }
 
     public int deleteStudyUser(String studyId) {
-        int res = studyRepository.deleteStudyCode(studyId); // 스터디 코드 다 삭제
+        int res = studyRepository.deleteStudyCode(studyId); // TODO : 이부분 확인해주세요 삭제해도되나요? 스터디 코드 다 삭제
         int res2 = studyRepository.deleteStudyComment(studyId); // 댓글 삭제
         return studyRepository.deleteStudyUser(studyId);
     }
