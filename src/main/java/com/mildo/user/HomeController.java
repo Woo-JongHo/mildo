@@ -37,7 +37,7 @@ public class HomeController {
         UserVO user = userService.login(principal);
         String userId = user.getUserId();
         String social = "google";
-        String redirectUrl = "http://podofarm.xyz/social-login/" + social + "?userId=" + userId;
+        String redirectUrl = "https://mildo.xyz//social-login/" + social + "?userId=" + userId;
         return new RedirectView(redirectUrl);
     }
 
@@ -49,7 +49,7 @@ public class HomeController {
 
     @GetMapping("/login-failed")
     public RedirectView faillLogin(HttpServletRequest request){
-        String redirectUrl = "http://podofarm.xyz";
+        String redirectUrl = "https://mildo.xyz/";
         return new RedirectView(redirectUrl);
     }
 

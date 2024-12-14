@@ -33,5 +33,5 @@ build/
 .vscode/
 
 application-secret.yml
-
+application.yml
 .dockerignore
