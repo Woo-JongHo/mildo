@@ -80,10 +80,7 @@ public class CodeRepository {
     @Transactional(rollbackFor = Exception.class)
     public void upload(CodeVO vo) {
         try {
-            // code upload
             CodeDBManger.upload(vo);
-
-            // increment USERS Table
             UserDBManger.solvedIncrement(vo.getUserId());
 
         } catch (Exception e) {
