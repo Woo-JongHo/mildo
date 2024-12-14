@@ -37,7 +37,7 @@ public class HomeController {
         UserVO user = userService.login(principal);
         String userId = user.getUserId();
         String social = "google";
-        String redirectUrl = "https://mildo.xyz//social-login/" + social + "?userId=" + userId;
+        String redirectUrl = "https://mildo.xyz/social-login/" + social + "?userId=" + userId;
         return new RedirectView(redirectUrl);
     }
 
