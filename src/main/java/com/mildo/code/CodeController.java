@@ -24,11 +24,10 @@ public class CodeController {
     private final CodeService codeService;
     private final UserService userService;
 
+    // FIXME: 어떤 용도인지 알 수 없음
     @PostMapping("/dummyCode")
     public String login(String userId) {
-        log.info("userId = {}", userId);
         codeService.dummyCode(userId);
-
         return "Login Succeed!";
     }
 
@@ -38,22 +37,11 @@ public class CodeController {
     @PostMapping("/receive-sync")
     public ResponseEntity<String> receiveSync(@RequestBody String data) {
         try {
-
             /* 연동하기 눌렀을 때 ID, 와 STUDYCODE 확인 후, 연동하는 작업 */
             ObjectMapper sync = new ObjectMapper();
             JsonNode convertSync = sync.readTree(data);
 
-            // 필요한 정보 추출
-            String userId = convertSync.get("id").asText();
-            String studyId = convertSync.get("studyId").asText();
-
-            System.out.println("익스텐션 동기화 확인 userId" + userId);
-            System.out.println("익스텐션 동기화 확인 studyId" + studyId);
-
-            // DB에 데이터가 있는지 확인
-            boolean isValid = userService.checkExtensionSync(userId, studyId);
-
-            if (isValid) {
+            if (validateUserStudySync(convertSync)) {
                 return ResponseEntity.ok("success");
             } else {
                 return ResponseEntity.ok("fail");
@@ -73,19 +61,7 @@ public class CodeController {
             ObjectMapper Data = new ObjectMapper();
             JsonNode convertData = Data.readTree(data);
 
-            // 필요한 정보 추출
-            String userId = convertData.get("id").asText();
-            String studyId = convertData.get("studyCode").asText();
-            /*
-             * sourceText - 답안
-             * readme - 문제설명
-             * filename - 문제명
-             * commitMessage - 시간초 매모리.USERNO
-             * */
-
-            // DB에 데이터가 있는지 확인
-            boolean isValid = userService.checkExtensionSync(userId, studyId);
-            if (isValid) {
+            if (validateUserStudySync(convertData)) {
                 return ResponseEntity.ok("success");
             } else {
                 return ResponseEntity.ok("fail");
@@ -94,6 +70,15 @@ public class CodeController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request");
         }
+    }
+
+    private boolean validateUserStudySync(JsonNode convertData) {
+        // 필요한 정보 추출
+        String userId = convertData.get("id").asText();
+        String studyId = convertData.get("studyCode").asText();
+
+        // DB에 데이터가 있는지 확인
+        return userService.checkExtensionSync(userId, studyId);
     }
 
     @CrossOrigin(origins = "chrome-extension://kmleenknngfkjncchnbfenfamoighddf")
@@ -108,9 +93,9 @@ public class CodeController {
     @ResponseBody
     @GetMapping(value = "/{userId}/solvedList", produces = "application/json; charset=UTF-8")
     public ResponseEntity<?> solvedListId(@PathVariable String userId,
-                                                     @RequestParam(value = "title", required = false) String title,
-                                                     @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-                                                     @RequestParam(value = "category", defaultValue = "recent") String category) {
+                                          @RequestParam(value = "title", required = false) String title,
+                                          @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+                                          @RequestParam(value = "category", defaultValue = "recent") String category) {
 
         if (title != null) { // 검색 조건이 있을 때
             List<CodeVO> res = codeService.solvedListSearchTrue(userId, title, currentPage, category);
@@ -134,6 +119,9 @@ public class CodeController {
         return ResponseEntity.ok(list);
     }
 
+    // FIXME: PathVariable 부분의 값들을 활용하지 않음
+    // 따라서 경로상에서도 지우거나, VO 객체의 값을 null 로 입력받아, 해당 데이터를 활용하는 방향은 어떨지 고민이 필요
+
     @ResponseBody // 댓글 리스트
     @GetMapping(value = "/{userId}/{codeId}/getCommentList", produces = "application/json; charset=UTF-8")
     public ResponseEntity<List<CommentVO>> getCommentList(@PathVariable int codeId, @PathVariable String userId,
@@ -145,7 +133,7 @@ public class CodeController {
     @ResponseBody // 댓글 작성
     @PostMapping(value = "/{codeId}/comment", produces = "application/json; charset=UTF-8")
     public ResponseEntity<List<CommentVO>> comment(@PathVariable int codeId, @RequestBody CommentVO comment) {
-        List<CommentVO> res = codeService.saveComment(comment);
+        List<CommentVO> res = codeService.saveComment(codeId, comment);
         return ResponseEntity.ok(res);
     }
 
