@@ -33,7 +33,6 @@ public class CodeController {
             /* 연동하기 눌렀을 때 ID, 와 STUDYCODE 확인 후, 연동하는 작업 */
             ObjectMapper sync = new ObjectMapper();
             JsonNode convertSync = sync.readTree(data);
-
             if (validateUserStudySync(convertSync)) {
                 return ResponseEntity.ok("success");
             } else {
@@ -53,6 +52,11 @@ public class CodeController {
             /* 파싱된 데이터를 옮기는 작업*/
             ObjectMapper Data = new ObjectMapper();
             JsonNode convertData = Data.readTree(data);
+
+            System.out.println("Raw Data: " + data); // 요청 원본 데이터 출력
+            ObjectMapper sync = new ObjectMapper();
+            JsonNode convertSync = sync.readTree(data);
+            System.out.println("Parsed Data: " + convertSync.toPrettyString()); // 파싱된 JsonNode 출력
 
             if (validateUserStudySync(convertData)) {
                 return ResponseEntity.ok("success");
