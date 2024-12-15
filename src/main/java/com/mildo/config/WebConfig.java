@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://localhost:5173", "http://localhost:5174", "http://localhost:5175") // 허용할 도메인 설정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
+//                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept") // 필요한 헤더 명시
                 .allowCredentials(true);
     }
 
