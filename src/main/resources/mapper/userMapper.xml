@@ -43,6 +43,12 @@
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
+    <insert id="createUserId">
+        INSERT INTO
+            USERS(user_id)
+        VALUES (#{userId})
+    </insert>
+
     <select id="findUser" parameterType="java.lang.String" resultMap="userResultMap">
         SELECT user_id,
                study_id,

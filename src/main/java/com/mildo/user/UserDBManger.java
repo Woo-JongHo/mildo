@@ -252,4 +252,14 @@ public class UserDBManger extends DBManger {
         session.commit();
         session.close();
     }
+
+    public static int createUserId(String userId) {
+        int re = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        re = session.insert("User.createUserId",userId);
+        session.commit();
+        session.close();
+
+        return re;
+    }
 }

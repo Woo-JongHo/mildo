@@ -8,6 +8,7 @@ import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
 import com.mildo.user.Vo.UserVO;
+import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -141,6 +142,15 @@ public class UserService {
             return userRepository.changUserName(userId, vo.getUserName());
         }
         return 0;
+    }
+
+    public void create1000UserId() {
+        int cnt = 0;
+        while (cnt != 1000){
+            cnt += userRepository.createUserId(CodeGenerator.generatestudyId());
+            log.debug("Created User Count: {}", cnt);
+        }
+
     }
 
 }

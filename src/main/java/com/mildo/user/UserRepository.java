@@ -106,4 +106,8 @@ public class UserRepository {
     public int changUserName(String userId, String userName) {
         return UserDBManger.changUserName(userId, userName);
     }
+
+    public int createUserId(String userId) {
+        return UserDBManger.createUserId(userId);
+    }
 }
