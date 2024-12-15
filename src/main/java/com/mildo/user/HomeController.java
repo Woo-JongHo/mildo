@@ -48,7 +48,7 @@ public class HomeController {
     }
 
     @GetMapping("/login-failed")
-    public RedirectView faillLogin(HttpServletRequest request){
+    public RedirectView faillLogin(){
         String redirectUrl = "https://mildo.xyz/";
         return new RedirectView(redirectUrl);
     }
