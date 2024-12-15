@@ -53,11 +53,6 @@ public class CodeController {
             ObjectMapper Data = new ObjectMapper();
             JsonNode convertData = Data.readTree(data);
 
-            System.out.println("Raw Data: " + data); // 요청 원본 데이터 출력
-            ObjectMapper sync = new ObjectMapper();
-            JsonNode convertSync = sync.readTree(data);
-            System.out.println("Parsed Data: " + convertSync.toPrettyString()); // 파싱된 JsonNode 출력
-
             if (validateUserStudySync(convertData)) {
                 return ResponseEntity.ok("success");
             } else {
@@ -74,7 +69,9 @@ public class CodeController {
         String userId = convertData.get("id").asText();
         String studyId = convertData.get("studyCode").asText();
 
-        // DB에 데이터가 있는지 확인
+        System.out.println("id" + userId);
+        System.out.println("studyId" + studyId);
+
         return userService.checkExtensionSync(userId, studyId);
     }
 
