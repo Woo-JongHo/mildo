@@ -147,7 +147,8 @@ public class StudyController {
         int res = studyService.deleteStudyUser(studyId); // 회원 정보 수정, 코드, 댓글 다 삭제
         
         boolean isValid =  studyService.deleteStudy(studyId); // 스터디 삭제인 듯
-        if (isValid) {
+        log.info("isValid = {}", isValid);
+        if (!isValid) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
         }
 

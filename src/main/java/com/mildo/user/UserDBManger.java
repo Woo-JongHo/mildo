@@ -19,6 +19,7 @@ import java.util.Map;
 public class UserDBManger extends DBManger {
 
     public static UserVO findUser(String number) {
+        log.info("AAA");
         SqlSession session = sqlSessionFactory.openSession();
         UserVO re = session.selectOne("User.findUser", number);
         session.commit();
