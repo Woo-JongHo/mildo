@@ -1,7 +1,7 @@
 package com.mildo.study;
 
 import com.mildo.code.CodeService;
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import com.mildo.user.UserRepository;
@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
 
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -96,7 +95,9 @@ public class StudyService {
     }
 
     public List<StudyVO> totalrank(String studyId){
-        return studyRepository.totalrank(studyId);
+        List<StudyVO> totalRank = studyRepository.totalrank(studyId);
+
+        return totalRank;
     }
 
     //Study의 시작일(YYYY-MM) 현재 날짜까지의 리스트를 뽑는 메소드
@@ -206,7 +207,7 @@ public class StudyService {
         return mildoList;
     }
 
-    public boolean checkstudyIdPassword(EnteStudy enteStudy) {
+    public boolean checkstudyIdPassword(EnterStudy enteStudy) {
         return studyRepository.checkstudyIdPassword(enteStudy);
     }
 

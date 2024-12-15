@@ -1,7 +1,7 @@
 package com.mildo.user;
 
 import com.mildo.db.DBManger;
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
@@ -106,7 +106,7 @@ public class UserDBManger extends DBManger {
         return solvedLevels;
     }
 
-    public static void updateStudyId(EnteStudy enteStudy) {
+    public static void updateStudyId(EnterStudy enteStudy) {
         SqlSession session = sqlSessionFactory.openSession();
         try {
             session.update("User.updateStudyId", enteStudy);
