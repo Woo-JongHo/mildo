@@ -67,7 +67,7 @@ public class CodeController {
     private boolean validateUserStudySync(JsonNode convertData) {
         // 필요한 정보 추출
         String userId = convertData.get("id").asText();
-        String studyId = convertData.get("studyCode").asText();
+        String studyId = convertData.get("studyId").asText();
 
         System.out.println("id" + userId);
         System.out.println("studyId" + studyId);
