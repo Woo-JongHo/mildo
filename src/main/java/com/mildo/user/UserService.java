@@ -112,7 +112,7 @@ public class UserService {
 
     public int serviceOut(String userId) {
         UserVO user = userRepository.finduserId(userId);
-        return user == null ? null : userRepository.serviceOut(userId);
+        return user == null ? -1 : userRepository.serviceOut(userId);
     }
 
     public String blackToken(String userId) {
