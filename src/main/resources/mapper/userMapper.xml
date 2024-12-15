@@ -54,7 +54,7 @@
                user_no,
                user_theme,
                user_date
-        FROM USERS
+        FROM users
         WHERE user_googleid = #{number}
     </select>
 
