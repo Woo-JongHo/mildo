@@ -77,7 +77,6 @@ public class StudyController {
             return ResponseEntity.status(UNAUTHORIZED).body(response);
 
         }
-
         int totalMembers = studyService.totalMembers(studyId);
 
         response.put("totalMembers", totalMembers);
