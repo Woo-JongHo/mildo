@@ -19,7 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://mildo.xyz", "http://www.mildo.xyz", "https://mildo.xyz", "https://www.mildo.xyz",
                         "http://localhost:5173", "http://localhost:5174", "http://localhost:5175") // 허용할 도메인 설정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .allowedHeaders("Authorization", "Content-Type") // 허용할 헤더
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
