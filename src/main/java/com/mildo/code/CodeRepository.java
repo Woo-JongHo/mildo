@@ -19,10 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CodeRepository {
 
-    public void dummyCode(String userId){
-        CodeDBManger.dummyCode(userId);
-    }
-
     public ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
         return CodeDBManger.getSolvedByDaySelectedMonth(userId, month);
     }

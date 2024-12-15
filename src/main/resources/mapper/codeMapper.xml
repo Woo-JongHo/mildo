@@ -50,17 +50,6 @@
         VALUES (#{userId}, #{codeTitle}, #{codeReadme}, #{codeSource}, #{codeLikes}, #{codeLevel}, #{codeProblemId}, #{codeSolvedTime}, #{codeSolveDate})
     </insert>
 
-    <insert id="dummyCode" parameterType="CodeVo">
-        INSERT INTO CODE (
-        user_id,
-        ,
-        code_title,
-        code_level,
-        code_problemid
-        )
-        VALUES (#{userId}, 1, 'code_title', 'code_level', 1)
-    </insert>
-
     <!-- 날짜별 푼 문제 -->
     <select id="getSolvedByDaySelectedMonth" resultType="java.util.Map" parameterType="java.lang.String">
         WITH date_count AS (

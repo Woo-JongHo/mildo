@@ -17,13 +17,6 @@ import java.util.Map;
 @Slf4j
 public class CodeDBManger extends DBManger {
 
-    public static void dummyCode(String userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-        session.insert("code.dummyCode", userId);
-        session.commit();
-        session.close();
-    }
-
     public static ArrayList<Map<String, String>> getSolvedByDaySelectedMonth(String userId, String month) {
         ArrayList<Map<String, String>> results = new ArrayList<>();
         SqlSession session = sqlSessionFactory.openSession();
