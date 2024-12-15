@@ -1,7 +1,7 @@
 package com.mildo.user;
 
 
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
 import com.mildo.user.Vo.TokenVO;
@@ -54,7 +54,7 @@ public class UserRepository {
          return UserDBManger.solvedLevelsList(userId);
     }
 
-    public void updateStudyId(EnteStudy enteStudy) {
+    public void updateStudyId(EnterStudy enteStudy) {
         UserDBManger.updateStudyId(enteStudy);
     }
 

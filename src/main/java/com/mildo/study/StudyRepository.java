@@ -1,15 +1,13 @@
 package com.mildo.study;
 
 
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
-import com.mildo.user.UserDBManger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -53,7 +51,7 @@ public class StudyRepository {
         return StudyDBManger.getStudyMemberIdByMonth(studyId, month, subDate);
     }
 
-    public boolean checkstudyIdPassword(EnteStudy enteStudy) {
+    public boolean checkstudyIdPassword(EnterStudy enteStudy) {
         return StudyDBManger.checkstudyIdPassword(enteStudy);
     }
 

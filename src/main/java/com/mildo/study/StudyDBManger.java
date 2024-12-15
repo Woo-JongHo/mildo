@@ -1,6 +1,6 @@
 package com.mildo.study;
 
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.study.Vo.RemainingDaysDTO;
 import com.mildo.study.Vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
@@ -116,7 +116,7 @@ public class StudyDBManger extends DBManger {
         return names;
     }
 
-    public static boolean checkstudyIdPassword(EnteStudy enteStudy) {
+    public static boolean checkstudyIdPassword(EnterStudy enteStudy) {
         boolean isValid = false;
         SqlSession session = sqlSessionFactory.openSession();
 

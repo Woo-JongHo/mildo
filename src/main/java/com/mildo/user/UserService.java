@@ -2,7 +2,7 @@ package com.mildo.user;
 
 
 import com.mildo.code.CodeRepository;
-import com.mildo.study.Vo.EnteStudy;
+import com.mildo.study.Vo.EnterStudy;
 import com.mildo.user.Auth.JwtTokenProvider;
 import com.mildo.user.Vo.BlackTokenVO;
 import com.mildo.user.Vo.LevelCountDTO;
@@ -90,7 +90,7 @@ public class UserService {
         return user == null ? null : userRepository.solvedLevelsList(userId);
     }
 
-    public void updateStudyId(EnteStudy enteStudy) {
+    public void updateStudyId(EnterStudy enteStudy) {
         userRepository.updateStudyId(enteStudy);
     }
 
