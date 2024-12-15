@@ -39,6 +39,11 @@ public class StudyController {
         Map<String, Object> response = new HashMap<>();
         UserVO userVO = userService.finduserId(userId);
 
+        if(userVO == null){
+            response.put("없는 유저입니다", true);
+            return response;
+        }
+
         if(userVO.getStudyId() != null) { // 유저 studyId가 있으면 null 반납
             response.put("studyId", userVO.getStudyId());
             response.put("is_participainted", true);
@@ -53,14 +58,12 @@ public class StudyController {
     //스터디별 유저 리스트
     @GetMapping("/{studyId}/memberList")
     public List<StudyVO> studyList(@PathVariable String studyId) {
-        studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
         return studyService.studyList(studyId);
     }
 
     //스터디 인원 세기
     @GetMapping("/{studyId}/membersCount")
     public Map<String, Object> membersCount(@PathVariable String studyId) {
-        studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
         int totalMembers = studyService.totalMembers(studyId);
 
         Map<String, Object> response = new HashMap<>();
@@ -72,7 +75,6 @@ public class StudyController {
     //스터디  남은 일수, 진행 한 수
     @GetMapping("/{studyId}/studyDays")
     public RemainingDaysDTO studyDay(@PathVariable String studyId) {
-        studyId = URLDecoder.decode(studyId, StandardCharsets.UTF_8);
         return studyService.studyDays(studyId);
     }
 
