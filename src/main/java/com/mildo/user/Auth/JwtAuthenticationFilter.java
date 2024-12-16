@@ -2,6 +2,7 @@ package com.mildo.user.Auth;
 
 import com.mildo.user.UserRepository;
 import com.mildo.user.Vo.BlackTokenVO;
+import com.mildo.user.Vo.TokenVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -13,13 +14,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Slf4j
@@ -88,8 +92,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 request.setAttribute("user", claims.getSubject());
 
             } catch (ExpiredJwtException e) { // Access Token 만료 시 발생
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Access Token Expired");
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                response.getWriter().write("Access Token Expired");
+                Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
+                validateRefreshToken(request, response, filterChain, expiredClaims);
                 return;
 
             }catch (Exception e) {
@@ -102,6 +108,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 다음 필터로 요청 전달
         filterChain.doFilter(request, response);
+    }
+
+    public void validateRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Claims expiredClaims) throws IOException {
+
+        log.info("expiredClaims = {}", expiredClaims);
+        log.info("getSubject = {}", expiredClaims.getSubject());
+        TokenVO Ref = userRepository.Refresh(expiredClaims.getSubject()); // 유저 아이디로 토큰이 있나 확인
+
+        log.info("Ref = {}", Ref);
+        if(Ref != null){ // 토큰이 유효하면
+            // 새 Access Token 발급
+            String newAccessToken = Jwts.builder()
+                    .setSubject(expiredClaims.getSubject())
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1시간 후 만료
+                    .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                    .compact();
+
+            log.info("newAccessToken = {}", newAccessToken);
+
+            // HTTP 응답 헤더에 새 Access Token 설정
+            response.setHeader("Authorization", "Bearer " + newAccessToken);
+            response.getWriter().write("New Access Token");
+            return;
+        }
+
+        // Refresh Token이 유효하지 않으면 에러 응답
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Invalid or missing Refresh Token");
     }
 
 }

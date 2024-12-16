@@ -110,4 +110,6 @@ public class UserRepository {
     public int createUserId(String userId) {
         return UserDBManger.createUserId(userId);
     }
+
+    public TokenVO Refresh(String userId){return UserDBManger.Refresh(userId);}
 }
