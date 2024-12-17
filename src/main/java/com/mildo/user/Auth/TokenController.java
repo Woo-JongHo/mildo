@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -90,7 +87,8 @@ public class TokenController {
 //        }
 //    }
 
-    @GetMapping("/new-token")
+    @ResponseBody
+    @GetMapping(value="/new-token", produces="application/json; charset=UTF-8")
     public ResponseEntity<?> refreshAccessToken(HttpServletRequest request) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         userService.blackrest(timestamp); // 블랙 리스트 초기화
