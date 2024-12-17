@@ -51,6 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             pathMatcher.match("/", requestURI) ||
             pathMatcher.match("/login/oauth2/code/google", requestURI) ||
             pathMatcher.match("/auth/refresh", requestURI) ||
+            pathMatcher.match("/new-token", requestURI) ||
             pathMatcher.match("/llogin", requestURI) ||
             pathMatcher.match("/home", requestURI) ||
             pathMatcher.match("/login-failed", requestURI) ||
@@ -92,10 +93,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 request.setAttribute("user", claims.getSubject());
 
             } catch (ExpiredJwtException e) { // Access Token 만료 시 발생
-//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                response.getWriter().write("Access Token Expired");
-                Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
-                validateRefreshToken(request, response, filterChain, expiredClaims);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Access Token Expired");
+//                Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
+//                validateRefreshToken(request, response, filterChain, expiredClaims);
                 return;
 
             }catch (Exception e) {
@@ -110,33 +111,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    public void validateRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Claims expiredClaims) throws IOException {
-
-        log.info("expiredClaims = {}", expiredClaims);
-        log.info("getSubject = {}", expiredClaims.getSubject());
-        TokenVO Ref = userRepository.Refresh(expiredClaims.getSubject()); // 유저 아이디로 토큰이 있나 확인
-
-        log.info("Ref = {}", Ref);
-        if(Ref != null){ // 토큰이 유효하면
-            // 새 Access Token 발급
-            String newAccessToken = Jwts.builder()
-                    .setSubject(expiredClaims.getSubject())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1시간 후 만료
-                    .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                    .compact();
-
-            log.info("newAccessToken = {}", newAccessToken);
-
-            // HTTP 응답 헤더에 새 Access Token 설정
-            response.setHeader("Authorization", "Bearer " + newAccessToken);
-            response.getWriter().write("New Access Token");
-            return;
-        }
-
-        // Refresh Token이 유효하지 않으면 에러 응답
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("Invalid or missing Refresh Token");
-    }
+//    public void validateRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Claims expiredClaims) throws IOException {
+//
+//        log.info("expiredClaims = {}", expiredClaims);
+//        log.info("getSubject = {}", expiredClaims.getSubject());
+//        TokenVO Ref = userRepository.Refresh(expiredClaims.getSubject()); // 유저 아이디로 토큰이 있나 확인
+//
+//        log.info("Ref = {}", Ref);
+//        if(Ref != null){ // 토큰이 유효하면
+//            // 새 Access Token 발급
+//            String newAccessToken = Jwts.builder()
+//                    .setSubject(expiredClaims.getSubject())
+//                    .setIssuedAt(new Date())
+//                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1시간 후 만료
+//                    .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+//                    .compact();
+//
+//            log.info("newAccessToken = {}", newAccessToken);
+//
+//            // HTTP 응답 헤더에 새 Access Token 설정
+//            response.setHeader("Authorization", "Bearer " + newAccessToken);
+//            response.getWriter().write("New Access Token");
+//            return;
+//        }
+//
+//        // Refresh Token이 유효하지 않으면 에러 응답
+//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//        response.getWriter().write("Invalid or missing Refresh Token");
+//    }
 
 }
