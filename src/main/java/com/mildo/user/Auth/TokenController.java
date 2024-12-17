@@ -96,43 +96,35 @@ public class TokenController {
         userService.blackrest(timestamp); // 블랙 리스트 초기화
 
         String token = request.getHeader("Authorization");
-        log.info("token = {}", token);
+        token = token.substring(7);
 
         if (token == null) { // 헤더에 토큰이 없음
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Token is missing");
         }
 
-        if (token != null && token.startsWith("Bearer ")) { // 토큰이 있거나 Bearer로 시작하면
-            token = token.substring(7);
-            log.info("token = {}", token);
+        try{
+            Claims claims = Jwts.parser()
+            .setSigningKey(SECRET_KEY)
+            .parseClaimsJws(token)
+            .getBody();
 
-            try{
-                Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
-                log.info("claims = {}", claims);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("아직 토큰 유효한데?");
 
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body("아직 토큰 유효한데?");
+        } catch (ExpiredJwtException e){ // 만료된 토큰이 오게 되있음
+            Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
+            String newToken = validateRefreshToken(expiredClaims);
+            return newToken != null ? ResponseEntity.status(HttpStatus.OK).body(newToken) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh Token Expired 로그인 재시도");
 
-            } catch (ExpiredJwtException e){ // 만료된 토큰이 오게 되있음
-                Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
-                validateRefreshToken(expiredClaims);
-            }catch (Exception e) { // 유효하지 않으면
-                log.error("Exception e = {}", e.getMessage());
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body("Invalid Token");
-            }
+        }catch (Exception e) { // 유효하지 않으면
+            log.error("Exception e = {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid Token");
         }
-
-
-
-        return null;
     }
 
-    public ResponseEntity<?> validateRefreshToken(Claims expiredClaims) {
+    public String validateRefreshToken(Claims expiredClaims) {
 
         TokenVO Ref = userRepository.Refresh(expiredClaims.getSubject()); // 유저 아이디로 토큰이 있나 확인
 
@@ -145,11 +137,9 @@ public class TokenController {
                     .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                     .compact();
 
-            return ResponseEntity.ok().header("Authorization", "Bearer " + newAccessToken).body("New Access Token: " + newAccessToken);
+            return newAccessToken;
         }
-
-        // Refresh Token이 유효하지 않으면 에러 응답
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh Token Expired 로그인 재시도");
+        return null;
     }
 
 }
