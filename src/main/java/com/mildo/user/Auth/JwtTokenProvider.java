@@ -46,8 +46,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject(userId) // 사용자 userId를 subject로 설정
                 .setIssuedAt(new Date()) // 발급 시간
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7일 후 만료
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 7일 후 만료
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7일 후 만료
                 .signWith(SignatureAlgorithm.HS512, REFRESH_TOKEN_SECRET_KEY) // 서명
                 .compact();
     }
