@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             pathMatcher.match("/login/oauth2/code/google", requestURI) ||
             pathMatcher.match("/auth/refresh", requestURI) ||
             pathMatcher.match("/new-token", requestURI) ||
-            pathMatcher.match("/new-token2", requestURI) ||
+            pathMatcher.match("/check-token", requestURI) ||
             pathMatcher.match("/llogin", requestURI) ||
             pathMatcher.match("/home", requestURI) ||
             pathMatcher.match("/login-failed", requestURI) ||

@@ -95,9 +95,16 @@ public class UserDBManger extends DBManger {
         }
     }
 
-    public static String findRefreshTokenByUserId (String userId) {
+    public static void updateNewToken (TokenVO token) {
         SqlSession session = sqlSessionFactory.openSession();
-        String Refresh = session.selectOne("User.findRefreshTokenByUserId", userId);
+        session.update("User.updateNewToken", token);
+        session.commit();
+        session.close();
+    }
+
+    public static TokenVO findRefreshTokenByUserId (String RefreshToken) {
+        SqlSession session = sqlSessionFactory.openSession();
+        TokenVO Refresh = session.selectOne("User.findRefreshTokenByUserId", RefreshToken);
         session.commit();
         session.close();
         return Refresh;

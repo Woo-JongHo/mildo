@@ -47,7 +47,7 @@ public class UserController {
         }
 
         String refreshToken = token.getRefreshToken();
-        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        Cookie refreshTokenCookie = new Cookie("RefreshToken", refreshToken);
 
         refreshTokenCookie.setHttpOnly(true); // 자바스크립트 접근 불가
         refreshTokenCookie.setSecure(true); // HTTPS에서만 전송

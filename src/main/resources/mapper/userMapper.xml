@@ -132,10 +132,17 @@
         WHERE user_id = #{userId}
     </update>
 
-    <select id="findRefreshTokenByUserId" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT refresh_token
-        FROM TOKEN
+    <update id="updateNewToken">
+        UPDATE TOKEN
+        SET access_token = #{accessToken},
+            expiration_time = #{expirationTime}
         WHERE user_id = #{userId}
+    </update>
+
+    <select id="findRefreshTokenByUserId" resultMap="TokenResultMap">
+        SELECT refresh_token, expiration_time
+        FROM TOKEN
+        WHERE refresh_token = #{RefreshToken}
     </select>
 
     <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="LevelCountResultMap">

@@ -47,8 +47,12 @@ public class UserRepository {
         UserDBManger.saveUpdateToken(token);
     }
 
-    public String findRefreshTokenByUserId(String userId){
-        return UserDBManger.findRefreshTokenByUserId(userId);
+    public void updateNewToken(TokenVO token){
+        UserDBManger.updateNewToken(token);
+    }
+
+    public TokenVO findRefreshTokenByUserId(String RefreshToken){
+        return UserDBManger.findRefreshTokenByUserId(RefreshToken);
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId){
