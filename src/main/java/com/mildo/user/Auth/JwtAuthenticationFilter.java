@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             pathMatcher.match("/login/oauth2/code/google", requestURI) ||
             pathMatcher.match("/auth/refresh", requestURI) ||
             pathMatcher.match("/new-token", requestURI) ||
+            pathMatcher.match("/new-token2", requestURI) ||
             pathMatcher.match("/llogin", requestURI) ||
             pathMatcher.match("/home", requestURI) ||
             pathMatcher.match("/login-failed", requestURI) ||
@@ -93,8 +94,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 request.setAttribute("user", claims.getSubject());
 
             } catch (ExpiredJwtException e) { // Access Token 만료 시 발생
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Access Token Expired");
+                response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
 //                Claims expiredClaims = e.getClaims(); // 만료된 토큰의 Claims 가져오기
 //                validateRefreshToken(request, response, filterChain, expiredClaims);
                 return;

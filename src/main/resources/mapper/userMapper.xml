@@ -38,6 +38,11 @@
         <result property="expirationTime" column="expiration_time" />
     </resultMap>
 
+    <resultMap id="AccessResultMap" type="accessVO">
+        <result property="accessToken" column="access_token" />
+        <result property="expirationTime" column="expiration_time" />
+    </resultMap>
+
     <resultMap id="blackResultMap" type="blackTokenVO">
         <result property="blackToken" column="black_token" />
         <result property="expirationTime" column="expiration_time" />
@@ -99,6 +104,13 @@
 
     <select id="findToken" parameterType="java.lang.String" resultMap="TokenResultMap">
         SELECT *
+        FROM TOKEN
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="findAccessToken" resultMap="AccessResultMap">
+        SELECT access_token,
+               expiration_time
         FROM TOKEN
         WHERE user_id = #{userId}
     </select>

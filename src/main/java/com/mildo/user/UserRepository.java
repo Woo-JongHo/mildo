@@ -2,10 +2,7 @@ package com.mildo.user;
 
 
 import com.mildo.study.Vo.EnterStudy;
-import com.mildo.user.Vo.BlackTokenVO;
-import com.mildo.user.Vo.LevelCountDTO;
-import com.mildo.user.Vo.TokenVO;
-import com.mildo.user.Vo.UserVO;
+import com.mildo.user.Vo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -36,6 +33,10 @@ public class UserRepository {
 
     public TokenVO findToken(String userId){
         return UserDBManger.findToken(userId);
+    }
+
+    public AccessVO findAccessToken(String userId){
+        return UserDBManger.findAccessToken(userId);
     }
 
     public void saveToken(TokenVO token){

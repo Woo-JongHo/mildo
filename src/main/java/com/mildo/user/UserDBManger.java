@@ -2,10 +2,7 @@ package com.mildo.user;
 
 import com.mildo.db.DBManger;
 import com.mildo.study.Vo.EnterStudy;
-import com.mildo.user.Vo.BlackTokenVO;
-import com.mildo.user.Vo.LevelCountDTO;
-import com.mildo.user.Vo.TokenVO;
-import com.mildo.user.Vo.UserVO;
+import com.mildo.user.Vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -61,7 +58,14 @@ public class UserDBManger extends DBManger {
         TokenVO findToken = session.selectOne("User.findToken", userId);
         session.commit();
         session.close();
+        return findToken;
+    }
 
+    public static AccessVO findAccessToken(String userId) {
+        SqlSession session = sqlSessionFactory.openSession();
+        AccessVO findToken = session.selectOne("User.findAccessToken", userId);
+        session.commit();
+        session.close();
         return findToken;
     }
 

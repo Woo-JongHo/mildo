@@ -4,10 +4,7 @@ package com.mildo.user;
 import com.mildo.code.CodeRepository;
 import com.mildo.study.Vo.EnterStudy;
 import com.mildo.user.Auth.JwtTokenProvider;
-import com.mildo.user.Vo.BlackTokenVO;
-import com.mildo.user.Vo.LevelCountDTO;
-import com.mildo.user.Vo.TokenVO;
-import com.mildo.user.Vo.UserVO;
+import com.mildo.user.Vo.*;
 import com.mildo.utills.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +59,9 @@ public class UserService {
         String accessToken = jwtTokenProvider.createAccessToken(userId);
         String refreshToken = jwtTokenProvider.createRefreshToken(userId);
 
-        Date expiration = jwtTokenProvider.getExpirationFromRefreshToken(refreshToken);
+//        Date expiration = jwtTokenProvider.getExpirationFromRefreshToken(refreshToken);
+//        java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+        Date expiration = jwtTokenProvider.getExpirationFromToken(accessToken);
         java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
 
         token.setUserId(userId);
@@ -75,7 +74,12 @@ public class UserService {
         } else {
             userRepository.saveUpdateToken(token);
         }
+
         return token;
+    }
+
+    public AccessVO findAccessToken(String userId){
+        return userRepository.findAccessToken(userId);
     }
 
     public void blackrest(Timestamp timestamp){

@@ -8,6 +8,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -86,6 +87,25 @@ public class TokenController {
 //                    .body("Invalid Refresh Token.");
 //        }
 //    }
+
+    @ResponseBody
+    @GetMapping(value="/new-token2", produces="application/json; charset=UTF-8")
+    public static String getCookieValue(HttpServletRequest request, String cookieName) {
+        // 요청에서 쿠키 배열 가져오기
+        Cookie[] cookies = request.getCookies();
+        log.info("cookies = {}", cookies);
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
+                    // 해당 이름의 쿠키 값 반환
+                    return cookie.getValue();
+                }
+            }
+        }
+        // 쿠키를 찾지 못한 경우 null 반환
+        return null;
+    }
 
     @ResponseBody
     @GetMapping(value="/new-token", produces="application/json; charset=UTF-8")
