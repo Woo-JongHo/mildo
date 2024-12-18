@@ -78,6 +78,19 @@ public class UserService {
         return token;
     }
 
+    public AccessVO updateNewToken(String newToken, String userId){
+        Date expiration = jwtTokenProvider.getExpirationFromToken(newToken);
+        java.sql.Timestamp sqlExpiration = new java.sql.Timestamp(expiration.getTime());
+
+        TokenVO token = new TokenVO();
+        token.setUserId(userId);
+        token.setAccessToken(newToken);
+        token.setExpirationTime(sqlExpiration);
+
+        userRepository.updateNewToken(token);
+        return userRepository.findAccessToken(userId);
+    }
+
     public AccessVO findAccessToken(String userId){
         return userRepository.findAccessToken(userId);
     }
@@ -86,8 +99,8 @@ public class UserService {
         userRepository.blackrest(timestamp);
     }
 
-    public String findRefreshTokenByUserId(String userId){
-        return userRepository.findRefreshTokenByUserId(userId);
+    public TokenVO findRefreshTokenByUserId(String RefreshToken){
+        return userRepository.findRefreshTokenByUserId(RefreshToken);
     }
 
     public List<LevelCountDTO> solvedLevelsList(String userId) {
