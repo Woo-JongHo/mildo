@@ -139,12 +139,6 @@
         WHERE user_id = #{userId}
     </update>
 
-    <select id="findRefreshTokenByUserId" resultMap="TokenResultMap">
-        SELECT refresh_token, expiration_time
-        FROM TOKEN
-        WHERE refresh_token = #{RefreshToken}
-    </select>
-
     <select id="solvedLevelsList" parameterType="java.lang.String" resultMap="LevelCountResultMap">
         SELECT c.code_level, COUNT(*) AS solved_count
         FROM USERS u JOIN CODE c ON (u.user_id = c.user_id)

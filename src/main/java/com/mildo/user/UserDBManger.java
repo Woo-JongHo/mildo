@@ -275,11 +275,4 @@ public class UserDBManger extends DBManger {
         return re;
     }
 
-    public static TokenVO Refresh(String userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-        TokenVO re = session.selectOne("User.Refresh",userId);
-        session.commit();
-        session.close();
-        return re;
-    }
 }
