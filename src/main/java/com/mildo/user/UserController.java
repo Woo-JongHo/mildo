@@ -53,7 +53,7 @@ public class UserController {
         refreshTokenCookie.setSecure(true); // HTTPS에서만 전송
         refreshTokenCookie.setPath("/"); // 애플리케이션 전역에서 사용 가능
         refreshTokenCookie.setMaxAge(-1); // 세션 동안 유효, 브라우저 종료 시 쿠키 삭제됨
-        refreshTokenCookie.setDomain("podofarm.xyz"); // 도메인 설정 (선택적)
+        refreshTokenCookie.setDomain("podofarm.xyz"); // 도메인 설정
         refreshTokenCookie.setAttribute("SameSite", "Strict"); // SameSite 속성 설정
 
         // 쿠키를 응답에 추가
@@ -109,27 +109,27 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("userId not found");
         }
         int res = userService.serviceOut(userId);
-
-        Cookie myCookie = new Cookie("RefreshToken", null);
-        myCookie.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
-        myCookie.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
-        response.addCookie(myCookie);
-
+        deleteRefreshTokenCookie(response);
         return res > 0 ? ResponseEntity.ok("탈퇴 성공") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 실패");
     }
 
     @ResponseBody
     @GetMapping(value="/{userId}/google-logout", produces="application/json; charset=UTF-8")
     public ResponseEntity<String> googleLogout(@PathVariable String userId, HttpServletRequest request, HttpServletResponse response) {
-
-        Cookie myCookie = new Cookie("RefreshToken", null);
-        myCookie.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
-        myCookie.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
-        response.addCookie(myCookie);
-
+        deleteRefreshTokenCookie(response);
         String result = userService.blackToken(userId);
         request.getSession().invalidate();
         return "토큰이 없음".equals(result) ? ResponseEntity.ok("토큰은 없지만 로그아웃 성공") : ResponseEntity.ok("로그아웃 성공");
+    }
+
+    private void deleteRefreshTokenCookie(HttpServletResponse response) {
+        Cookie myCookie = new Cookie("RefreshToken", null);
+        myCookie.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
+        myCookie.setPath("/");
+        myCookie.setHttpOnly(true);
+        myCookie.setSecure(true);
+        myCookie.setDomain("podofarm.xyz");
+        response.addCookie(myCookie);
     }
 
     @ResponseBody
