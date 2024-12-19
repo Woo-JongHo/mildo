@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         // 인증이 필요 없는 URL
-        if (pathMatcher.match("/user/{userId}/info", requestURI)||
+        if (pathMatcher.match("/user/{userId}/info", requestURI)|| pathMatcher.match("/user/{userId}/google-logout", requestURI)||
             pathMatcher.match("/user/{userId}/tokenInfo", requestURI) ||
             pathMatcher.match("/", requestURI) ||
             pathMatcher.match("/login/oauth2/code/google", requestURI) ||

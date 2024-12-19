@@ -85,11 +85,7 @@ public class TokenController {
             Date expiration = jwtTokenProvider.getExpirationFromRefreshToken(RefreshToken);
             Timestamp now = new Timestamp(System.currentTimeMillis());
 
-            log.info("expiration = {}", expiration);
-            log.info("now = {}", now);
-
             return expiration.after(now); // 만료 시간과 현재 시간 비교
-
         } catch (ExpiredJwtException e) { // Token 만료 시 발생
             log.error("ExpiredJwtException e = {}", e.getMessage());
             return false;

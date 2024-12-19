@@ -35,21 +35,15 @@ public class UserRepository {
         return UserDBManger.findToken(userId);
     }
 
-    public AccessVO findAccessToken(String userId){
-        return UserDBManger.findAccessToken(userId);
-    }
+    public AccessVO findAccessToken(String userId){return UserDBManger.findAccessToken(userId);}
 
-    public void saveToken(TokenVO token){
-        UserDBManger.saveToken(token);
-    }
+    public void saveToken(TokenVO token){UserDBManger.saveToken(token);}
 
     public void saveUpdateToken(TokenVO token){
         UserDBManger.saveUpdateToken(token);
     }
 
-    public void updateNewToken(TokenVO token){
-        UserDBManger.updateNewToken(token);
-    }
+    public void updateNewToken(TokenVO token){UserDBManger.updateNewToken(token);}
 
     public TokenVO findRefreshTokenByUserId(String RefreshToken){
         return UserDBManger.findRefreshTokenByUserId(RefreshToken);
@@ -116,5 +110,4 @@ public class UserRepository {
         return UserDBManger.createUserId(userId);
     }
 
-    public TokenVO Refresh(String userId){return UserDBManger.Refresh(userId);}
 }
