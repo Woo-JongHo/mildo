@@ -35,7 +35,7 @@ public class TokenController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @ResponseBody
-    @GetMapping(value="/new-token2", produces="application/json; charset=UTF-8")
+    @GetMapping(value="/new-token", produces="application/json; charset=UTF-8")
     public ResponseEntity<?> getCookieValue(@CookieValue(name = "RefreshToken", required = false) String RefreshToken, HttpServletRequest request) {
         log.info("RefreshToken = {}", RefreshToken);
 

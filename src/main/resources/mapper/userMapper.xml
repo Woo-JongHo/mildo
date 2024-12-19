@@ -250,5 +250,10 @@
           AND expiration_time > CURRENT_TIMESTAMP
     </select>
 
+    <select id="findRefreshTokenByUserId" resultMap="TokenResultMap">
+        SELECT refresh_token, expiration_time
+        FROM TOKEN
+        WHERE refresh_token = #{RefreshToken}
+    </select>
 
 </mapper>
